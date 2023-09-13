@@ -1,10 +1,19 @@
 import { useState } from "react";
-import SignIn from "../components/SignIn";
+import SignIn from "../components/popups/SignIn";
+import SignUp from "../components/Popups/SignUp";
 
 function Main() {
   const [isModalSignIn, setModalSignIn] = useState(false);
-  function handleOpenPopup() {
-    setModalSignIn(true);
+  const [isModalSignUp, setModalSignUp] = useState(false);
+  function handleOpenPopup(name) {
+    switch (name) {
+      case "sign in":
+        setModalSignIn(true);
+        break;
+      case "sign up":
+        setModalSignUp(true);
+        break;
+    }
     document.body.style.overflow = "hidden";
   }
 
@@ -22,18 +31,22 @@ function Main() {
             <li className="text-sm cursor-pointer">Documentation</li>
             <li
               className="text-sm cursor-pointer"
-              onClick={() => handleOpenPopup()}
+              onClick={() => handleOpenPopup("sign in")}
             >
               Sign In
             </li>
-            <li className="cursor-pointer bg-black text-white h-7 text-sm">
+            <li
+              onClick={() => handleOpenPopup("sign up")}
+              className="cursor-pointer bg-black text-white h-7 text-sm"
+            >
               Sign Up
             </li>
           </ul>
         </nav>
       </header>
       <main>
-        {isModalSignIn && <SignIn />}
+        {isModalSignIn && <SignIn setIsOpen={setModalSignIn} />}
+        {isModalSignUp && <SignUp setIsOpen={setModalSignUp} />}
         <section className="w-[980px] mt-10 mb-[72px] flex flex-col items-center gap-y-[72px]">
           <h2 className="text-2xl">
             The original online Free PDF editor & form filler.
