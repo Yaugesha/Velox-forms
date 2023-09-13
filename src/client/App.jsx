@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./index.css";
 import Main from "./pages/Main";
+import Profile from "./pages/Profile";
 
 function App() {
   const [state, setState] = useState(null);
@@ -25,7 +26,8 @@ function App() {
 
   return (
     <>
-      <Main />
+      {/* <Main /> */}
+      <Profile />
     </>
   );
 }

@@ -32,12 +32,4 @@ function Document({ picture, title, date, type, link }) {
     </div>
   );
 }
-{
-  /* <Document
-        title={"Document name"}
-        type={"doc"}
-        date={"13 September 2023y"}
-        picture={"src/client/assets/icons/tamplates/icon-plus.svg"}
-      />*/
-}
 export default Document;

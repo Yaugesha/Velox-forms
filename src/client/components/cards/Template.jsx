@@ -10,10 +10,4 @@ function Template({ picture, title, description, link }) {
   );
 }
 
-{
-  /*<Template
-        title={"New document"}
-        picture={"src/client/assets/icons/tamplates/icon-plus.svg"}
-      /> */
-}
 export default Template;
