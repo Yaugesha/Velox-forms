@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./index.css";
 import Main from "./pages/Main";
 import Documents from "./pages/Documents";
+import TemplaytesGaliery from "./pages/TemplaytesGaliery";
 
 function App() {
   const [state, setState] = useState(null);
@@ -27,7 +28,8 @@ function App() {
   return (
     <>
       {/* <Main /> */}
-      <Documents />
+      {/* <Documents /> */}
+      <TemplaytesGaliery />
     </>
   );
 }

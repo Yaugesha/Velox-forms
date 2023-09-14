@@ -6,7 +6,7 @@ import DocumentList from "../components/cards/DocumentList";
 function Documents() {
   const templates = useRef([
     {
-      title: "New document",
+      title: "New document1",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
@@ -14,19 +14,19 @@ function Documents() {
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "New document",
+      title: "New document2",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "New document",
+      title: "New document3",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "New document",
+      title: "New document4",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "New document",
+      title: "New document5",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
   ]);
@@ -127,7 +127,11 @@ function Documents() {
           <div className="w-[980px] flex justify-between mb-7">
             {templates.current.map((template) => {
               return (
-                <Template title={template.title} picture={template.picture} />
+                <Template
+                  title={template.title}
+                  picture={template.picture}
+                  key={template.title}
+                />
               );
             })}
           </div>
@@ -198,6 +202,7 @@ function Documents() {
                     type={document.type}
                     date={document.date}
                     picture={document.picture}
+                    key={document.title}
                   />
                 );
               })}
@@ -211,6 +216,7 @@ function Documents() {
                     type={document.type}
                     date={document.date}
                     picture={document.picture}
+                    key={document.title}
                   />
                 );
               })}
