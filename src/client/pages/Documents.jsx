@@ -1,8 +1,9 @@
-import { useRef } from "react";
-import Document from "../components/cards/Document";
+import { useRef, useState } from "react";
 import Template from "../components/cards/Template";
+import Document from "../components/cards/Document";
+import DocumentList from "../components/cards/DocumentList";
 
-function Profile() {
+function Documents() {
   const templates = useRef([
     {
       title: "New document",
@@ -38,7 +39,7 @@ function Profile() {
     },
     {
       title: "Document name",
-      type: "doc",
+      type: "pdf",
       date: "13 September 2023y",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
@@ -50,7 +51,7 @@ function Profile() {
     },
     {
       title: "Document name",
-      type: "doc",
+      type: "pdf",
       date: "13 September 2023y",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
@@ -62,7 +63,7 @@ function Profile() {
     },
     {
       title: "Document name",
-      type: "doc",
+      type: "pdf",
       date: "13 September 2023y",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
@@ -74,11 +75,15 @@ function Profile() {
     },
     {
       title: "Document name",
-      type: "doc",
+      type: "pdf",
       date: "13 September 2023y",
       picture: "src/client/assets/icons/tamplates/icon-plus.svg",
     },
   ]);
+
+  const [displayDocs, setDisplayDocs] = useState("table");
+  const [nameSort, setNameSort] = useState("ascending");
+  const [dateSort, setDateSort] = useState("ascending");
   return (
     <>
       <header className="w-[980px] h-12 flex flex-row justify-between items-center border-b-2 border-solid border-black">
@@ -91,9 +96,10 @@ function Profile() {
           <ul className="flex flex-row gap-20">
             <li className="text-sm cursor-pointer">About</li>
             <li className="text-sm cursor-pointer">Documentation</li>
-            <li className="cursor-pointer bg-black text-white h-7 text-sm">
-              Profile
+            <li className="cursor-pointer bg-black text-white leading-7 text-sm">
+              Documents
             </li>
+            <li className="text-sm cursor-pointer">Profile</li>
           </ul>
         </nav>
       </header>
@@ -135,40 +141,85 @@ function Profile() {
                 type="text"
               />
               <div className="flex justify-between items-center w-[129px]">
-                <img
-                  className="cursor-pointer"
-                  src="src/client/assets/icons/sorts/icon-show-list.svg"
-                  alt="list"
-                />
-                <img
-                  className="cursor-pointer"
-                  src="src/client/assets/icons/sorts/icon-name-ascending.svg"
-                  alt="a-z"
-                />
-                <img
-                  className="cursor-pointer"
-                  src="src/client/assets/icons/sorts/icon-date-ascending.svg"
-                  alt="newest"
-                />
+                {displayDocs === "table" ? (
+                  <img
+                    onClick={() => setDisplayDocs("list")}
+                    className="cursor-pointer"
+                    src="src/client/assets/icons/sorts/icon-show-list.svg"
+                    alt="list"
+                  />
+                ) : (
+                  <img
+                    onClick={() => setDisplayDocs("table")}
+                    className="cursor-pointer"
+                    src="src/client/assets/icons/sorts/icon-show-table.svg"
+                    alt="table"
+                  />
+                )}
+                {nameSort === "ascending" ? (
+                  <img
+                    onClick={() => setNameSort("descending")}
+                    className="cursor-pointer"
+                    src="src/client/assets/icons/sorts/icon-name-ascending.svg"
+                    alt="z-a"
+                  />
+                ) : (
+                  <img
+                    onClick={() => setNameSort("ascending")}
+                    className="cursor-pointer"
+                    src="src/client/assets/icons/sorts/icon-name-descending.svg"
+                    alt="a-z"
+                  />
+                )}
+                {dateSort === "ascending" ? (
+                  <img
+                    onClick={() => setDateSort("descending")}
+                    className="cursor-pointer"
+                    src="src/client/assets/icons/sorts/icon-date-ascending.svg"
+                    alt="newest"
+                  />
+                ) : (
+                  <img
+                    onClick={() => setDateSort("ascending")}
+                    className="cursor-pointer"
+                    src="src/client/assets/icons/sorts/icon-date-descending.svg"
+                    alt="oldest"
+                  />
+                )}
               </div>
             </div>
           </div>
-          <div className="flex justify-between flex-wrap">
-            {documents.current.map((document) => {
-              return (
-                <Document
-                  title={document.title}
-                  type={document.type}
-                  date={document.date}
-                  picture={document.picture}
-                />
-              );
-            })}
-          </div>
+          {displayDocs === "table" ? (
+            <div className="flex justify-between flex-wrap gap-y-5">
+              {documents.current.map((document) => {
+                return (
+                  <Document
+                    title={document.title}
+                    type={document.type}
+                    date={document.date}
+                    picture={document.picture}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <div className="w-[980px] flex flex-col justify-between flex-wrap gap-y-5">
+              {documents.current.map((document) => {
+                return (
+                  <DocumentList
+                    title={document.title}
+                    type={document.type}
+                    date={document.date}
+                    picture={document.picture}
+                  />
+                );
+              })}
+            </div>
+          )}
         </section>
       </main>
     </>
   );
 }
 
-export default Profile;
+export default Documents;
