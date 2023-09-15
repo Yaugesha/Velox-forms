@@ -3,6 +3,7 @@ import "./index.css";
 import Main from "./pages/Main";
 import Documents from "./pages/Documents";
 import TemplaytesGaliery from "./pages/TemplaytesGaliery";
+import Profile from "./pages/Profile";
 
 function App() {
   const [state, setState] = useState(null);
@@ -29,7 +30,8 @@ function App() {
     <>
       {/* <Main /> */}
       {/* <Documents /> */}
-      <TemplaytesGaliery />
+      {/* <TemplaytesGaliery /> */}
+      <Profile />
     </>
   );
 }
