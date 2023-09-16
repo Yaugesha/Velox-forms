@@ -1,8 +1,11 @@
-function SignUp({ setIsOpen }) {
+import { useNavigate } from "react-router-dom";
+function SignUp() {
+  document.body.style.overflow = "hidden";
+  const navigate = useNavigate();
   function handleClose(e) {
     if (e.target.classList.contains("fixed")) {
-      setIsOpen(false);
       document.body.style.overflow = "auto";
+      navigate("/");
     }
   }
 

@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Main from "./pages/Main";
 import Documents from "./pages/Documents";
 import TemplaytesGaliery from "./pages/TemplaytesGaliery";
 import Profile from "./pages/Profile";
+import AccountSettings from "./components/account sections/AccountSettings";
+import SignUp from "./components/Popups/SignUp";
+import SignIn from "./components/popups/SignIn";
+import Account from "./components/account sections/Account";
 
 function App() {
   const [state, setState] = useState(null);
@@ -28,10 +33,22 @@ function App() {
 
   return (
     <>
-      {/* <Main /> */}
-      {/* <Documents /> */}
-      {/* <TemplaytesGaliery /> */}
-      <Profile />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />}>
+            <Route path="signUp" element={<SignUp />} />
+            <Route path="signIn" element={<SignIn />} />
+          </Route>
+          <Route path="profile" element={<Profile />}>
+            <Route path="documents" element={<Documents />}>
+              <Route path="templates" element={<TemplaytesGaliery />} />
+            </Route>
+            <Route path="account" element={<Account />}>
+              <Route path="settings" element={<AccountSettings />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

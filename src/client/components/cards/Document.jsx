@@ -12,20 +12,20 @@ function Document({ picture, title, date, type, link }) {
           {type === "doc" ? (
             <img
               className="h-6 w-6"
-              src={"src/client/assets/icons/documents/icon-doc.svg"}
+              src={"/src/client/assets/icons/documents/icon-doc.svg"}
               alt="doc"
             />
           ) : (
             <img
               className="h-6 w-6"
-              src={"src/client/assets/icons/documents/icon-pdf.svg"}
+              src={"/src/client/assets/icons/documents/icon-pdf.svg"}
               alt="pdf"
             />
           )}
           <p className="text-[12px] ml-1 mr-7">{date}.</p>
           <img
             className="h-6 w-6 cursor-pointer"
-            src="src/client/assets/icons/general/icon-more.svg"
+            src="/src/client/assets/icons/general/icon-more.svg"
             alt="more"
           />
         </div>

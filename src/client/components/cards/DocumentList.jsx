@@ -4,13 +4,13 @@ function DocumentList({ picture, title, date, type, link }) {
       {type === "doc" ? (
         <img
           className="h-6 w-6  mx-3.5"
-          src={"src/client/assets/icons/documents/icon-doc.svg"}
+          src={"/src/client/assets/icons/documents/icon-doc.svg"}
           alt="doc"
         />
       ) : (
         <img
           className="h-6 w-6  mx-3.5"
-          src={"src/client/assets/icons/documents/icon-pdf.svg"}
+          src={"/src/client/assets/icons/documents/icon-pdf.svg"}
           alt="pdf"
         />
       )}
@@ -22,7 +22,7 @@ function DocumentList({ picture, title, date, type, link }) {
       </span>
       <img
         className="h-6 w-6 cursor-pointer"
-        src="src/client/assets/icons/general/icon-more.svg"
+        src="/src/client/assets/icons/general/icon-more.svg"
         alt="more"
       />
     </div>

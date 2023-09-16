@@ -6,7 +6,7 @@ function AccountSettings() {
       <div className="w-[590px] h-[150px] mb-10 border-2 px-7 border-black flex items-center">
         <img
           className="w-[88px] h-[88px] border-2 border-black"
-          src="src/client/assets/icons/tamplates/icon-plus.svg"
+          src="/src/client/assets/icons/tamplates/icon-plus.svg"
           alt="avatar"
         />
         <div className="ml-5 mr-20">

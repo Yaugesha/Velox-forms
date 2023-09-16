@@ -1,22 +1,6 @@
-import { useState } from "react";
-import SignIn from "../components/popups/SignIn";
-import SignUp from "../components/Popups/SignUp";
+import { NavLink, Outlet } from "react-router-dom";
 
 function Main() {
-  const [isModalSignIn, setModalSignIn] = useState(false);
-  const [isModalSignUp, setModalSignUp] = useState(false);
-  function handleOpenPopup(name) {
-    switch (name) {
-      case "sign in":
-        setModalSignIn(true);
-        break;
-      case "sign up":
-        setModalSignUp(true);
-        break;
-    }
-    document.body.style.overflow = "hidden";
-  }
-
   return (
     <>
       <header className="w-[980px] h-12 flex flex-row justify-between items-center border-b-2 border-solid border-black">
@@ -29,24 +13,17 @@ function Main() {
           <ul className="flex flex-row gap-20">
             <li className="text-sm cursor-pointer">About</li>
             <li className="text-sm cursor-pointer">Documentation</li>
-            <li
-              className="text-sm cursor-pointer"
-              onClick={() => handleOpenPopup("sign in")}
-            >
-              Sign In
+            <li>
+              <NavLink to="signIn">Sign In</NavLink>
             </li>
-            <li
-              onClick={() => handleOpenPopup("sign up")}
-              className="cursor-pointer bg-black text-white h-7 text-sm"
-            >
-              Sign Up
+            <li className="cursor-pointer bg-black text-white h-7 text-sm">
+              <NavLink to="signUp">Sign Up</NavLink>
             </li>
           </ul>
         </nav>
       </header>
       <main>
-        {isModalSignIn && <SignIn setIsOpen={setModalSignIn} />}
-        {isModalSignUp && <SignUp setIsOpen={setModalSignUp} />}
+        <Outlet />
         <section className="w-[980px] mt-10 mb-[72px] flex flex-col items-center gap-y-[72px]">
           <h2 className="text-2xl">
             The original online Free PDF editor & form filler.

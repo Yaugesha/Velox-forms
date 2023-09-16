@@ -1,8 +1,12 @@
-function SignIn({ setIsOpen }) {
+import { Link, useNavigate } from "react-router-dom";
+
+function SignIn() {
+  document.body.style.overflow = "hidden";
+  const navigate = useNavigate();
   function handleClose(e) {
     if (e.target.classList.contains("fixed")) {
-      setIsOpen(false);
       document.body.style.overflow = "auto";
+      navigate(-1);
     }
   }
 
@@ -35,7 +39,9 @@ function SignIn({ setIsOpen }) {
           </form>
           <p className="pt-14 text-base">
             New to Velox Forms?{" "}
-            <u className="cursor-pointer">Create an account.</u>
+            <Link to="../signUp">
+              <u className="cursor-pointer">Create an account.</u>
+            </Link>
           </p>
         </div>
       </div>
