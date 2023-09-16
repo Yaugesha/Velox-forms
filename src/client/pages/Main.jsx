@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import Header from "../components/documents/Header";
+import Header from "./Header";
 
 function Main() {
   return (

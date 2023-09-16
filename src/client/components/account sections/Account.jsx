@@ -1,5 +1,5 @@
 import { Link, Outlet } from "react-router-dom";
-import Header from "../documents/Header";
+import Header from "../../pages/Header";
 
 function Account() {
   return (
