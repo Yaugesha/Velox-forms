@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
-import Template from "../components/cards/Template";
-import Document from "../components/cards/Document";
-import DocumentList from "../components/cards/DocumentList";
+import Template from "../components/documents/Template";
+import Document from "../components/documents/Document";
+import DocumentList from "../components/documents/DocumentList";
 import { NavLink } from "react-router-dom";
+import SortButton from "../components/documents/SortButton";
 
 function Documents() {
   const templates = useRef([
@@ -85,6 +86,7 @@ function Documents() {
   const [displayDocs, setDisplayDocs] = useState("table");
   const [nameSort, setNameSort] = useState("ascending");
   const [dateSort, setDateSort] = useState("ascending");
+  const [active, setActive] = useState("date");
   return (
     <>
       <header className="w-[980px] h-12 flex flex-row justify-between items-center border-b-2 border-solid border-black">
@@ -148,51 +150,25 @@ function Documents() {
                 type="text"
               />
               <div className="flex justify-between items-center w-[129px]">
-                {displayDocs === "table" ? (
-                  <img
-                    onClick={() => setDisplayDocs("list")}
-                    className="cursor-pointer"
-                    src="/src/client/assets/icons/sorts/icon-show-list.svg"
-                    alt="list"
-                  />
-                ) : (
-                  <img
-                    onClick={() => setDisplayDocs("table")}
-                    className="cursor-pointer"
-                    src="/src/client/assets/icons/sorts/icon-show-table.svg"
-                    alt="table"
-                  />
-                )}
-                {nameSort === "ascending" ? (
-                  <img
-                    onClick={() => setNameSort("descending")}
-                    className="cursor-pointer"
-                    src="/src/client/assets/icons/sorts/icon-name-ascending.svg"
-                    alt="z-a"
-                  />
-                ) : (
-                  <img
-                    onClick={() => setNameSort("ascending")}
-                    className="cursor-pointer"
-                    src="/src/client/assets/icons/sorts/icon-name-descending.svg"
-                    alt="a-z"
-                  />
-                )}
-                {dateSort === "ascending" ? (
-                  <img
-                    onClick={() => setDateSort("descending")}
-                    className="cursor-pointer"
-                    src="/src/client/assets/icons/sorts/icon-date-ascending.svg"
-                    alt="newest"
-                  />
-                ) : (
-                  <img
-                    onClick={() => setDateSort("ascending")}
-                    className="cursor-pointer"
-                    src="/src/client/assets/icons/sorts/icon-date-descending.svg"
-                    alt="oldest"
-                  />
-                )}
+                <SortButton
+                  type={"show"}
+                  kind={displayDocs}
+                  changeKind={setDisplayDocs}
+                />
+                <SortButton
+                  type={"name"}
+                  kind={nameSort}
+                  changeKind={setNameSort}
+                  setActive={setActive}
+                  active={active}
+                />
+                <SortButton
+                  type={"date"}
+                  kind={dateSort}
+                  changeKind={setDateSort}
+                  setActive={setActive}
+                  active={active}
+                />
               </div>
             </div>
           </div>

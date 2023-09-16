@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Template from "../components/cards/Template";
+import Template from "../components/documents/Template";
 
 function TemplaytesGaliery() {
   const templatesArr = useRef([
