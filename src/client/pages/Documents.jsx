@@ -2,8 +2,9 @@ import { useRef, useState } from "react";
 import Template from "../components/documents/Template";
 import Document from "../components/documents/Document";
 import DocumentList from "../components/documents/DocumentList";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import SortButton from "../components/documents/SortButton";
+import Header from "../components/documents/Header";
 
 function Documents() {
   const templates = useRef([
@@ -89,25 +90,7 @@ function Documents() {
   const [active, setActive] = useState("date");
   return (
     <>
-      <header className="w-[980px] h-12 flex flex-row justify-between items-center border-b-2 border-solid border-black">
-        <img
-          className="h-7"
-          src="/src/client/assets/icons/logo/logo-header.png"
-          alt="Logo"
-        />
-        <nav>
-          <ul className="flex flex-row gap-20">
-            <li className="text-sm cursor-pointer">About</li>
-            <li className="text-sm cursor-pointer">Documentation</li>
-            <li className="cursor-pointer bg-black text-white leading-7 text-sm">
-              Documents
-            </li>
-            <li className="text-sm cursor-pointer">
-              <NavLink to="../account/settings">Profile</NavLink>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Header isAuthorized={true} page={"Documents"} />
       <main className="w-[980px]">
         <section className="mb-8 w-[980px] flex flex-col items-center">
           <div className="w-[980px] flex justify-between items-center mt-10 mb-5">
@@ -115,13 +98,15 @@ function Documents() {
               <h3>Create new document</h3>
             </div>
             <div className="flex justify-between items-center gap-8">
-              <div className="flex w-[154px] gap-x-2.5 cursor-pointer">
-                Templates gallery
-                <img
-                  src="/src/client/assets/icons/general/icon-arrows.svg"
-                  alt="t"
-                />
-              </div>
+              <Link to="templates">
+                <div className="flex w-[154px] gap-x-2.5">
+                  Templates gallery
+                  <img
+                    src="/src/client/assets/icons/general/icon-arrows.svg"
+                    alt="t"
+                  />
+                </div>
+              </Link>
               <img
                 className="h-6 cursor-pointer"
                 src="/src/client/assets/icons/general/icon-more.svg"
@@ -202,6 +187,7 @@ function Documents() {
             </div>
           )}
         </section>
+        <Outlet />
       </main>
     </>
   );

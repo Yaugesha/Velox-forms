@@ -1,28 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
+import Header from "../documents/Header";
 
 function Account() {
   return (
     <>
-      <header className="w-[980px] h-12 mb-12 flex flex-row justify-between items-center border-b-2 border-solid border-black">
-        <img
-          className="h-7"
-          src="/src/client/assets/icons/logo/logo-header.png"
-          alt="Logo"
-        />
-        <nav>
-          <ul className="flex flex-row gap-20">
-            <li className="text-sm cursor-pointer">About</li>
-            <li className="text-sm cursor-pointer">Documentation</li>
-            <li className="text-sm">
-              <Link to="../documents">Documents</Link>
-            </li>
-            <li className="text-sm cursor-pointer  bg-black text-white leading-7">
-              Profile
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <main className="flex gap-[62px]">
+      <Header isAuthorized={true} page={"Profile"} />
+      <main className="flex gap-[62px] mt-12">
         <div className="flex flex-col gap-2.5">
           <div className="w-[328px] h-[78px] pt-3.5 pb-4 pl-7 bg-black text-white">
             <span className="text-[20px]">Account Settings</span>

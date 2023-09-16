@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import Template from "../components/documents/Template";
+import { useNavigate } from "react-router-dom";
 
 function TemplaytesGaliery() {
   const templatesArr = useRef([
@@ -8,27 +9,27 @@ function TemplaytesGaliery() {
       templaytes: [
         {
           title: "New document1",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document2",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document3",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document4",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document5",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
       ],
     },
@@ -38,17 +39,17 @@ function TemplaytesGaliery() {
         {
           title: "New document1",
           description: "description",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document",
           description: "description",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document2",
           description: "description",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
       ],
     },
@@ -58,7 +59,7 @@ function TemplaytesGaliery() {
         {
           title: "New document1",
           description: "description",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
       ],
     },
@@ -67,44 +68,48 @@ function TemplaytesGaliery() {
       templaytes: [
         {
           title: "New document1",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document2",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document3",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document4",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document5",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document6",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
         {
           title: "New document7",
-          picture: "src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
         },
       ],
     },
   ]);
+  const navigate = useNavigate();
   return (
-    <>
+    <div className="absolute top-0  bg-white">
       <header className="flex  border-b-2 border-solid border-black mb-6">
         <div className="flex items-center text-base leading-6 ">
-          <div className="inline-block items-center w-12 cursor-pointer mr-5 ml-3 p-3 font-bold leading-7 text-2xl text-[#5f6368] font-serif">
+          <div
+            onClick={() => navigate(-1)}
+            className="inline-block items-center w-12 cursor-pointer mr-5 ml-3 p-3 font-bold leading-7 text-2xl text-black font-serif"
+          >
             &larr;
           </div>
           <span className="mr-2">Templates gallery</span>
@@ -135,7 +140,7 @@ function TemplaytesGaliery() {
           })}
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

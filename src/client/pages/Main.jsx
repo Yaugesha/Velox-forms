@@ -1,27 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom";
+import Header from "../components/documents/Header";
 
 function Main() {
   return (
     <>
-      <header className="w-[980px] h-12 flex flex-row justify-between items-center border-b-2 border-solid border-black">
-        <img
-          className="h-7"
-          src="src/client/assets/icons/logo/logo-header.png"
-          alt="Logo"
-        />
-        <nav>
-          <ul className="flex flex-row gap-20">
-            <li className="text-sm cursor-pointer">About</li>
-            <li className="text-sm cursor-pointer">Documentation</li>
-            <li>
-              <NavLink to="signIn">Sign In</NavLink>
-            </li>
-            <li className="cursor-pointer bg-black text-white h-7 text-sm">
-              <NavLink to="signUp">Sign Up</NavLink>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <Header isAuthorized={false} page={"Main"} />
       <main>
         <Outlet />
         <section className="w-[980px] mt-10 mb-[72px] flex flex-col items-center gap-y-[72px]">
