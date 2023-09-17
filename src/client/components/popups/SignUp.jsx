@@ -1,13 +1,19 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 function SignUp() {
-  document.body.style.overflow = "hidden";
   const navigate = useNavigate();
   function handleClose(e) {
     if (e.target.classList.contains("fixed")) {
+      console.log("as");
       document.body.style.overflow = "auto";
       navigate("/");
     }
   }
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+  }, []);
 
   return (
     <div

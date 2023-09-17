@@ -1,7 +1,13 @@
 import { NavLink, Outlet } from "react-router-dom";
 import Header from "./Header";
+import { useEffect } from "react";
 
 function Main() {
+  useEffect(function () {
+    window.history.pushState({}, null, null);
+    console.log(document.body.style.overflow);
+  }, []);
+
   return (
     <>
       <Header isAuthorized={false} page={"Main"} />

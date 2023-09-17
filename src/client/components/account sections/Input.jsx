@@ -7,8 +7,8 @@ function Input({ placeholder, width, id }) {
       <input
         className={`w-[${width}] h-[45px] border-2 border-black pl-4`}
         placeholder={placeholder}
-        id="fullName"
-        type={`#${id}`}
+        id={`#${id}`}
+        type={`${placeholder.split(" ").at(-1)}`}
       />
     </div>
   );

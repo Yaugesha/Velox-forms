@@ -1,32 +1,40 @@
-import { Link, Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "../../pages/Header";
+import AccountNavigationTab from "./AccountNavigationTab";
 
 function Account() {
+  const location = useLocation();
+  const tab = location.pathname.split("/").at(-1);
+
   return (
     <>
       <Header isAuthorized={true} page={"Profile"} />
       <main className="flex gap-[62px] mt-12">
         <div className="flex flex-col gap-2.5">
-          <div className="w-[328px] h-[78px] pt-3.5 pb-4 pl-7 bg-black text-white">
-            <span className="text-[20px]">Account Settings</span>
-            <p className="text-xs">Data for forms</p>
-          </div>
-          <div className="w-[328px] h-[78px] pt-3.5 pb-5 pl-7 border-2 border-black">
-            <span className="text-[20px]">Account Settings</span>
-            <p className="text-[#5F5F5F] text-xs">Data for forms</p>
-          </div>
-          <div className="w-[328px] h-[78px] pt-3.5 pb-5 pl-7 border-2 border-black">
-            <span className="text-[20px]">Password & Security</span>
-            <p className="text-[#5F5F5F]] text-xs">
-              Details about your personal information
-            </p>
-          </div>
-          <div className="w-[328px] h-[78px] pt-3.5 pb-5 pl-7 border-2 border-black">
-            <span className="text-[20px]">Sign out</span>
-            <p className="text-[#5F5F5F]] text-xs">
-              Exit from your account on this device
-            </p>
-          </div>
+          <AccountNavigationTab
+            path={tab}
+            title={"Account Settings"}
+            subtitle={"Data for forms"}
+            link={"settings"}
+          />
+          <AccountNavigationTab
+            path={tab}
+            title={"Account Settings"}
+            subtitle={"Data for forms"}
+            link={""}
+          />
+          <AccountNavigationTab
+            path={tab}
+            title={"Password & Security"}
+            subtitle={"Details about your personal information"}
+            link={"security&password"}
+          />
+          <AccountNavigationTab
+            path={tab}
+            title={"Sign out"}
+            subtitle={"Exit from your account on this device"}
+            link={""}
+          />
         </div>
         <Outlet />
       </main>

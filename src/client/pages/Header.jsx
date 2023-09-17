@@ -4,7 +4,6 @@ import { Link, NavLink } from "react-router-dom";
 function Header({ isAuthorized, page }) {
   function addActive() {
     document.querySelectorAll(".text-sm.cursor-pointer").forEach((el) => {
-      console.log(el);
       if (el.textContent === page) {
         el.classList.add("bg-black");
         el.classList.add("text-white");

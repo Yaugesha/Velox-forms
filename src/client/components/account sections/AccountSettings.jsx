@@ -25,7 +25,7 @@ function AccountSettings() {
           <Input placeholder={"Full name"} width={"286px"} id={"fullName"} />
           <Input placeholder={"Email Address"} width={"286px"} id={"email"} />
           <Input placeholder={"Adress"} width={"590px"} id={"adress"} />
-          <Input placeholder={"City"} width={"286px"} id={"ciyu"} />
+          <Input placeholder={"City"} width={"286px"} id={"city"} />
           <Input placeholder={"State/Province"} width={"286px"} id={"state"} />
           <Input placeholder={"Zip Code"} width={"286px"} id={"zipCode"} />
           <Input placeholder={"Country"} width={"286px"} id={"country"} />

@@ -1,14 +1,18 @@
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignIn() {
-  document.body.style.overflow = "hidden";
   const navigate = useNavigate();
   function handleClose(e) {
     if (e.target.classList.contains("fixed")) {
       document.body.style.overflow = "auto";
-      navigate(-1);
+      navigate("/");
     }
   }
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+  }, []);
 
   return (
     <div
@@ -38,9 +42,16 @@ function SignIn() {
             </button>
           </form>
           <p className="pt-14 text-base">
-            New to Velox Forms?{" "}
+            New to Velox Forms?
             <Link to="../signUp">
-              <u className="cursor-pointer">Create an account.</u>
+              <u
+                className="cursor-pointer"
+                onClick={() =>
+                  window.history.pushState({ overflow: true }, null, null)
+                }
+              >
+                Create an account.
+              </u>
             </Link>
           </p>
         </div>
