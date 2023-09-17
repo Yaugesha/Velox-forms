@@ -17,18 +17,22 @@ function AccountSettings() {
           Update
         </div>
       </div>
-      <div>
-        <form
-          className="w-[590px] flex flex-wrap justify-between gap-[18px]"
-          action=""
-        >
+      <form className="w-[590px] flex justify-between flex-wrap " action="">
+        <div className="grid grid-rows-4 grid-cols-2 gap-[18px] mb-[18px]">
           <Input placeholder={"Full name"} width={"286px"} id={"fullName"} />
           <Input placeholder={"Email Address"} width={"286px"} id={"email"} />
-          <Input placeholder={"Adress"} width={"590px"} id={"adress"} />
+          <Input
+            placeholder={"Adress"}
+            width={"590px"}
+            id={"adress"}
+            span={true}
+          />
           <Input placeholder={"City"} width={"286px"} id={"city"} />
           <Input placeholder={"State/Province"} width={"286px"} id={"state"} />
           <Input placeholder={"Zip Code"} width={"286px"} id={"zipCode"} />
           <Input placeholder={"Country"} width={"286px"} id={"country"} />
+        </div>
+        <div className="grid grid-rows-4 grid-cols-2 gap-[18px] mb-[18px]">
           <Input
             placeholder={"Phone number"}
             width={"286px"}
@@ -39,16 +43,21 @@ function AccountSettings() {
             width={"286px"}
             id={"dateOfBirth"}
           />
-          <Input placeholder={"Adress"} width={"590px"} id={"adress"} />
           <Input
-            placeholder={"Office address"}
-            width={"286px"}
-            id={"offiveAdress"}
+            placeholder={"Office adress"}
+            width={"590px"}
+            id={"officeAdress"}
+            span={true}
           />
           <Input
             placeholder={"Place of work "}
             width={"286px"}
             id={"placeOfWork"}
+          />
+          <Input
+            placeholder={"Work phone number"}
+            width={"286px"}
+            id={"workPhoneNumber"}
           />
           <Input
             placeholder={"Work Zip Code"}
@@ -60,11 +69,11 @@ function AccountSettings() {
             width={"286px"}
             id={"passwordNo"}
           />
-          <button className="w-[590px] h-[45px] bg-black text-sm text-white flex items-center justify-center">
-            UPDATE INFORMATION
-          </button>
-        </form>
-      </div>
+        </div>
+        <button className="w-[590px] h-[45px] bg-black text-sm text-white flex items-center justify-center">
+          UPDATE INFORMATION
+        </button>
+      </form>
     </div>
   );
 }

@@ -13,10 +13,6 @@ function Documents() {
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "New document",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
       title: "New document2",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
@@ -131,6 +127,7 @@ function Documents() {
             <div className="flex items-center">
               <span>Recent documents</span>
               <input
+                placeholder="Search: file name"
                 className="w-[357px] h-8 border border-black pl-4 ml-[96px] mr-[214px]"
                 type="text"
               />

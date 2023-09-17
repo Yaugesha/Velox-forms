@@ -28,7 +28,7 @@ function AccountUpdateData() {
           id={"newPassword1"}
         />
         <Input
-          placeholder={"New passwor"}
+          placeholder={"New password"}
           width={"590px"}
           id={"newPassword2"}
         />

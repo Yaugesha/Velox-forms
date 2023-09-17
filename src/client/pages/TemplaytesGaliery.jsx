@@ -103,8 +103,8 @@ function TemplaytesGaliery() {
   ]);
   const navigate = useNavigate();
   return (
-    <div className="absolute top-0  bg-white">
-      <header className="flex  border-b-2 border-solid border-black mb-6">
+    <div className="absolute top-0 bg-white">
+      <header className="w-[980px] fixed flex border-b-2 bg-white border-solid border-black">
         <div className="flex items-center text-base leading-6 ">
           <div
             onClick={() => navigate(-1)}
@@ -116,7 +116,7 @@ function TemplaytesGaliery() {
         </div>
       </header>
       <main>
-        <div className="w-[980px] flex flex-col justify-between gap-8">
+        <div className="w-[980px] mt-8 flex flex-col justify-between gap-8">
           {templatesArr.current.map((template) => {
             return (
               <div key={template.type}>
