@@ -33,7 +33,7 @@ function Account() {
             path={tab}
             title={"Sign out"}
             subtitle={"Exit from your account on this device"}
-            link={""}
+            link={"signOut"}
           />
         </div>
         <Outlet />

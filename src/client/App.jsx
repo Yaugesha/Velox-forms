@@ -10,6 +10,7 @@ import SignUp from "./components/Popups/SignUp";
 import SignIn from "./components/popups/SignIn";
 import Account from "./components/account sections/Account";
 import AccountUpdateData from "./components/account sections/AccountUpdateData";
+import SignOut from "./components/popups/SignOut";
 
 function App() {
   const [state, setState] = useState(null);
@@ -47,6 +48,7 @@ function App() {
             <Route path="account" element={<Account />}>
               <Route path="settings" element={<AccountSettings />} />
               <Route path="security&password" element={<AccountUpdateData />} />
+              <Route path="signOut" element={<SignOut />} />
             </Route>
           </Route>
         </Routes>
