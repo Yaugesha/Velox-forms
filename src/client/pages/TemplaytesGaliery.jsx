@@ -116,7 +116,7 @@ function TemplaytesGaliery() {
         </div>
       </header>
       <main>
-        <div className="w-[980px] mt-8 flex flex-col justify-between gap-8">
+        <div className="w-[980px] mt-24 flex flex-col justify-between gap-8">
           {templatesArr.current.map((template) => {
             return (
               <div key={template.type}>

@@ -4,7 +4,7 @@ import Document from "../components/documents/Document";
 import DocumentList from "../components/documents/DocumentList";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import SortButton from "../components/documents/SortButton";
-import Header from "./Header";
+import Header from "../components/header/Header";
 
 function Documents() {
   const templates = useRef([

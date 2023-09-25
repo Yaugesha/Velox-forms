@@ -16,7 +16,7 @@ function App() {
   const [state, setState] = useState(null);
 
   const callBackendAPI = async () => {
-    const response = await fetch("/sayHello");
+    const response = await fetch("/api/v1/users");
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -41,10 +41,10 @@ function App() {
             <Route path="signUp" element={<SignUp />} />
             <Route path="signIn" element={<SignIn />} />
           </Route>
+          <Route path="documents" element={<Documents />}>
+            <Route path="templates" element={<TemplaytesGaliery />} />
+          </Route>
           <Route path="profile" element={<Profile />}>
-            <Route path="documents" element={<Documents />}>
-              <Route path="templates" element={<TemplaytesGaliery />} />
-            </Route>
             <Route path="account" element={<Account />}>
               <Route path="settings" element={<AccountSettings />} />
               <Route path="security&password" element={<AccountUpdateData />} />

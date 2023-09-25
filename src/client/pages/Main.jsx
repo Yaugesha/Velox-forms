@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
+import Header from "../components/header/Header";
 
 function Main() {
   return (
     <>
-      <Header isAuthorized={false} page={"Main"} />
+      <Header role={undefined} page={"Main"} />
       <main>
         <Outlet />
         <section className="w-[980px] mt-10 mb-[72px] flex flex-col items-center gap-y-[72px]">

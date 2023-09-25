@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function SignOut() {
   const navigate = useNavigate();
   function handleClose(e) {
-    if (e.target.classList.contains("fixed")) {
+    if (e.target.classList.contains("w-full")) {
       document.body.style.overflow = "auto";
       navigate(-1);
     }

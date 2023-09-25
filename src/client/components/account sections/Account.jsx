@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import Header from "../../pages/Header";
+import Header from "../header/Header";
 import AccountNavigationTab from "./AccountNavigationTab";
 
 function Account() {
@@ -8,7 +8,7 @@ function Account() {
 
   return (
     <>
-      <Header isAuthorized={true} page={"Profile"} />
+      <Header role={"user"} page={"Profile"} />
       <main className="flex gap-[62px] mt-12">
         <div className="flex flex-col gap-2.5">
           <AccountNavigationTab

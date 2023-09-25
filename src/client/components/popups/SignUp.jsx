@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function SignUp() {
   const navigate = useNavigate();
   function handleClose(e) {
-    if (e.target.classList.contains("fixed")) {
+    if (e.target.classList.contains("w-full")) {
       console.log("as");
       document.body.style.overflow = "auto";
       navigate("/");
