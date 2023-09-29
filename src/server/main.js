@@ -10,7 +10,7 @@ const app = express();
 //   res.send("Hello Vite + Express!");
 // });
 
-app.use("/api/v1/users", userRoutes);
+//app.use("/api/v1/users", userRoutes);
 
 ViteExpress.listen(app, 3000, () =>
   console.log("Server is listening on port 3000...")
