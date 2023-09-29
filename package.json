@@ -8,9 +8,10 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@lexical/react": "^0.12.2",
+    "@tiptap/extension-font-family": "^2.1.11",
     "@tiptap/extension-superscript": "^2.1.11",
     "@tiptap/extension-text-align": "^2.1.11",
+    "@tiptap/extension-text-style": "^2.1.11",
     "@tiptap/extension-underline": "^2.1.11",
     "@tiptap/pm": "^2.1.11",
     "@tiptap/react": "^2.1.11",

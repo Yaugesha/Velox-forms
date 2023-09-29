@@ -7,6 +7,8 @@ import LowerCase from "./marks/LowerCase";
 import CapitalizedCase from "./marks/CapitalizedCase";
 import TextAlign from "@tiptap/extension-text-align";
 import FontSize from "./marks/FontSize";
+import FontFamily from "@tiptap/extension-font-family";
+import TextStyle from "@tiptap/extension-text-style";
 
 function Editor() {
   const editor = useEditor({
@@ -20,12 +22,13 @@ function Editor() {
       CapitalizedCase,
       LowerCase,
       FontSize,
+      FontFamily,
+      TextStyle,
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
       Underline,
     ],
-    // autofocus: false,
     editorProps: {
       attributes: {
         class: "w-[7in] h-[9.25in] px-[16mm] py-[27mm] border-2 border-black",

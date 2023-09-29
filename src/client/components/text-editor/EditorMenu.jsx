@@ -1,7 +1,7 @@
 import React from "react";
 import EditorMenuButton from "./EditorMenuButton";
-import { useState } from "react";
-import EditorDropdownButton from "./EditorDropdownButton";
+import FontSizeButton from "./FontSizeButton";
+import FontStyleButton from "./FontStyleButton";
 
 const buttons = [
   "B",
@@ -20,10 +20,10 @@ const buttons = [
 function EditorMenu({ editor }) {
   if (!editor) return null;
 
-  const [selectedOption, setSelectedOption] = useState(12);
   return (
     <div>
-      <EditorDropdownButton editor={editor} />
+      <FontSizeButton editor={editor} />
+      <FontStyleButton editor={editor} />
       <div className="mb-8">
         {buttons.map((button) => (
           <EditorMenuButton name={button} editor={editor} key={button} />
