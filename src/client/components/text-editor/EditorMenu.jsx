@@ -2,6 +2,7 @@ import React from "react";
 import EditorMenuButton from "./EditorMenuButton";
 import FontSizeButton from "./FontSizeButton";
 import FontStyleButton from "./FontStyleButton";
+import ListButtons from "./ListButtons";
 
 const buttons = [
   "B",
@@ -24,6 +25,7 @@ function EditorMenu({ editor }) {
     <div>
       <FontSizeButton editor={editor} />
       <FontStyleButton editor={editor} />
+      <ListButtons editor={editor} />
       <div className="mb-8">
         {buttons.map((button) => (
           <EditorMenuButton name={button} editor={editor} key={button} />
