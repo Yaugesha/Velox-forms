@@ -40,12 +40,13 @@ function EditorDropdownButton({
 
   return (
     <div
-      className={`group relative inline-block w-${width} h-6 pl-1.5 border-[1px] border-black`}
+      className={`group relative inline-block h-8 pl-1.5 border-[1px] border-black`}
+      style={{ width: `${width * 4 + 7}px` }}
     >
       <button
         onClick={handleInputValue}
         id={type}
-        className={`flex w-${width} pr-[12px] items-center justify-between`}
+        className={`flex items-center justify-between w-${width} pr-[8px] mt-1`}
       >
         {value}
         <img
@@ -54,12 +55,13 @@ function EditorDropdownButton({
         />
       </button>
       <div
-        className={`hidden absolute w-${width} ml-[-6px] z-10 bg-white border-[1px] border-black  group-hover:flex flex-col justify-center`}
+        className={`hidden absolute ml-[-6px] z-10 bg-white border-[1px] border-black  group-hover:flex flex-col justify-center`}
+        style={{ width: `${width * 4 + 6}px` }}
       >
         {valuesArr.map((value) => (
           <button
             onClick={() => handleChoose(value)}
-            className="block hover:bg-black hover:text-white"
+            className={`block w-${width}  hover:bg-black hover:text-white`}
             key={value.value}
             style={{ fontFamily: value.value }}
           >

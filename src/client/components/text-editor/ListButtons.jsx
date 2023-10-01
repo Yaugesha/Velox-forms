@@ -1,21 +1,21 @@
 function ListButtons({ editor }) {
   return (
-    <div>
+    <div className="flex">
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className="w-8 h-7 border-[1px] border-black"
+        className="flex justify-center w-12 h-8 border-[1px] border-black"
       >
         <img
-          src="/src/client/assets/icons/general/icon-unordered-list.svg"
+          src="/src/client/assets/icons/text-editor/icon-unordered-list.svg"
           alt="ul"
         />
       </button>
       <button
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className="w-8 h-7 border-[1px] border-black"
+        className="flex justify-center w-12 h-8 border-[1px] border-black"
       >
         <img
-          src="/src/client/assets/icons/general/icon-ordered-list.svg"
+          src="/src/client/assets/icons/text-editor/icon-ordered-list.svg"
           alt="ol"
         />
       </button>

@@ -21,7 +21,7 @@ function FontStyleButton({ editor }) {
       handleClick={changeFontstyle}
       valuesArr={fonts}
       initialValue={"Inter"}
-      width={"30"}
+      width={30}
     />
   );
 }
