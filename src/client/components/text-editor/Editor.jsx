@@ -9,6 +9,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import FontSize from "./marks/FontSize";
 import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
+import { useEffect, useState } from "react";
 
 function Editor() {
   const editor = useEditor({
@@ -31,15 +32,28 @@ function Editor() {
     ],
     editorProps: {
       attributes: {
-        class: "w-[7in] h-[9.25in] px-[16mm] py-[27mm] border-2 border-black",
+        class: "border-none outline-none",
       },
     },
   });
+  const [scale, setScale] = useState(100);
 
+  useEffect(function () {
+    document.querySelector(".editor").style.transform = `scale(${scale / 100})`;
+    document.querySelector(".editor").style.position = "relative";
+    document.querySelector(".editor").style.top = `${
+      (scale / 100 - 1) * 140 * 4
+    }px`;
+  });
   return (
     <>
-      <EditorMenu editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorMenu editor={editor} scale={scale} setScale={setScale} />
+      <div className="overflow-none">
+        <div className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">
+          <EditorContent editor={editor} />
+        </div>
+      </div>
+
       {/* <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu> */}
     </>
   );

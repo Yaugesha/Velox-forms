@@ -3,6 +3,7 @@ import EditorMenuButton from "./EditorMenuButton";
 import FontSizeButton from "./FontSizeButton";
 import FontStyleButton from "./FontStyleButton";
 import ListButtons from "./ListButtons";
+import ScaleSlider from "./ScaleSlider";
 
 const buttons = [
   "B",
@@ -18,11 +19,12 @@ const buttons = [
   "align-J",
 ];
 
-function EditorMenu({ editor }) {
+function EditorMenu({ editor, scale, setScale }) {
   if (!editor) return null;
 
   return (
     <div>
+      <ScaleSlider scale={scale} setScale={setScale} />
       <FontSizeButton editor={editor} />
       <FontStyleButton editor={editor} />
       <ListButtons editor={editor} />
