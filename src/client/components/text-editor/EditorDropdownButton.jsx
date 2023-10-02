@@ -46,7 +46,7 @@ function EditorDropdownButton({
       <button
         onClick={handleInputValue}
         id={type}
-        className={`flex items-center justify-between w-${width} pr-[8px] mt-1`}
+        className={`flex items-center justify-between pr-[8px] mt-1`}
       >
         {value}
         <img

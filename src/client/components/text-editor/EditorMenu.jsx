@@ -5,6 +5,7 @@ import ListButtons from "./ListButtons";
 import ScaleSlider from "./ScaleSlider";
 import MarkButtons from "./MarkButtons";
 import AlignButtons from "./AlignButtons";
+import TableButtons from "./TableButtons";
 
 function EditorMenu({ editor, scale, setScale }) {
   if (!editor) return null;
@@ -17,6 +18,7 @@ function EditorMenu({ editor, scale, setScale }) {
       <ListButtons editor={editor} />
       <MarkButtons editor={editor} />
       <AlignButtons editor={editor} />
+      <TableButtons editor={editor} />
     </div>
   );
 }

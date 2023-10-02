@@ -9,6 +9,10 @@ import TextAlign from "@tiptap/extension-text-align";
 import FontSize from "./marks/FontSize";
 import FontFamily from "@tiptap/extension-font-family";
 import TextStyle from "@tiptap/extension-text-style";
+import Table from "@tiptap/extension-table";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
+import TableRow from "@tiptap/extension-table-row";
 import { useEffect, useState } from "react";
 
 function Editor() {
@@ -25,6 +29,12 @@ function Editor() {
       FontSize,
       FontFamily,
       TextStyle,
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
