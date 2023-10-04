@@ -8,6 +8,7 @@ import CapitalizedCase from "./marks/CapitalizedCase";
 import TextAlign from "@tiptap/extension-text-align";
 import FontSize from "./marks/FontSize";
 import FontFamily from "@tiptap/extension-font-family";
+import Field from "./marks/Field";
 import TextStyle from "@tiptap/extension-text-style";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
@@ -26,6 +27,7 @@ function Editor() {
       UpperCase,
       CapitalizedCase,
       LowerCase,
+      Field,
       FontSize,
       FontFamily,
       TextStyle,

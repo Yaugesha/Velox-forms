@@ -19,6 +19,9 @@ function EditorMenu({ editor, scale, setScale }) {
       <MarkButtons editor={editor} />
       <AlignButtons editor={editor} />
       <TableButtons editor={editor} />
+      <button onClick={() => editor.chain().focus().toggleField().run()}>
+        insert
+      </button>
     </div>
   );
 }
