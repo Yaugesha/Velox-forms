@@ -12,20 +12,27 @@ const Field = Mark.create({
   renderHTML({ HTMLAttributes }) {
     return [
       "span",
-      mergeAttributes({ class: "field bg-black text-white" }, HTMLAttributes),
+      mergeAttributes(
+        { class: `field ${this.options.id} bg-black text-white` },
+        HTMLAttributes
+      ),
       0,
     ];
   },
   addCommands() {
     return {
       setField:
-        (content) =>
+        (text, callback) =>
         ({ commands }) => {
+          callback({ class: text });
+          this.options.id = text;
           return commands.setMark(this.type, this.options);
         },
       toggleField:
-        (content) =>
+        (text, callback) =>
         ({ commands }) => {
+          callback(text);
+          this.options.id = text;
           return commands.toggleMark(this.type, this.options);
         },
     };

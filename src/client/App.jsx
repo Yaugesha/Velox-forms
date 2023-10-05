@@ -12,6 +12,7 @@ import Account from "./components/account sections/Account";
 import AccountUpdateData from "./components/account sections/AccountUpdateData";
 import SignOut from "./components/popups/SignOut";
 import Editor from "./components/text-editor/Editor";
+import Document from "./pages/Document";
 
 function App() {
   const [state, setState] = useState(null);
@@ -38,7 +39,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Editor />}>
+          <Route path="/" element={<Document />}>
             {/* <Route path="/" element={<Main />}> */}
             <Route path="signUp" element={<SignUp />} />
             <Route path="signIn" element={<SignIn />} />

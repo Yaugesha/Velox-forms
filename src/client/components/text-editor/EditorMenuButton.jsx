@@ -3,7 +3,7 @@ function EditorMenuButton({ name, editor, handleClick, buttonClass, img }) {
 
   return (
     <button className={buttonClass} onClick={handleClick}>
-      {img === undefined ? name : <img src={img} alt={name} />}
+      {img == undefined ? name : <img src={img} alt={name} />}
     </button>
   );
 }

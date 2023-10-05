@@ -16,14 +16,10 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import { useEffect, useState } from "react";
 
-function Editor() {
+function Editor({ fields, setField }) {
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        heading: {
-          levels: [1, 2, 3],
-        },
-      }),
+      StarterKit,
       UpperCase,
       CapitalizedCase,
       LowerCase,
@@ -44,7 +40,7 @@ function Editor() {
     ],
     editorProps: {
       attributes: {
-        class: "border-none outline-none",
+        class: "border-none focus:outline-none",
       },
     },
   });
@@ -58,16 +54,22 @@ function Editor() {
     }px`;
   });
   return (
-    <>
-      <EditorMenu editor={editor} scale={scale} setScale={setScale} />
+    <div>
+      <EditorMenu
+        editor={editor}
+        scale={scale}
+        setScale={setScale}
+        fields={fields}
+        setField={setField}
+      />
       <div className="overflow-none">
         <div className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">
           <EditorContent editor={editor} />
         </div>
       </div>
 
-      {/* <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu> */}
-    </>
+      <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>
+    </div>
   );
 }
 
