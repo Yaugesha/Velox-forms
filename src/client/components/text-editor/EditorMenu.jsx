@@ -29,7 +29,7 @@ function EditorMenu({ editor, scale, setScale, fields, setField }) {
           editor
             .chain()
             .focus()
-            .toggleField(
+            .setField(
               editor.view.state.selection.content().content.content[0].content
                 .content[0].text,
               setField

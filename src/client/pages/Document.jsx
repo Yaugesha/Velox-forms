@@ -13,13 +13,30 @@ function Document() {
   }
 
   function handleInput(e) {
-    const value = document.querySelector(`.field`);
-    console.log(e.target.value);
-    if (value == undefined || e.target.value == "") {
-      e.target.remove();
-      removeField(e.target.placeholder);
+    const input = e.target
+    const labels = document.querySelectorAll('label');
+    const findLabel = (input) => {
+      for (let i = 0; i < labels.length; i++) {
+        if (labels[i].htmlFor == input.id) {
+          return labels[i];
+        }
+      }
     }
-    value.innerText = e.target.value;
+    const label = findLabel(input)
+    const field = document.querySelector(`.${input.id}`);
+    field.classList.remove(input.id)
+    if (field == undefined || input.value == "") {
+      input.remove();
+      removeField(input.id);
+    }
+    else {
+      label.htmlFor = input.value
+      label.innerText = input.value
+      input.id = input.value
+      input.placeholder = input.value 
+      field.innerText = input.value;
+      field.classList.add(input.value)
+   }
   }
 
   return (

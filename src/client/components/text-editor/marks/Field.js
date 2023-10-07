@@ -5,7 +5,7 @@ const Field = Mark.create({
   toDOM: () => {
     return [
       "span",
-      { class: "field bg-black text-white", id: generateSafeHtmlId() },
+      { class:  `field ${this.options.id} bg-black text-white`, id: generateSafeHtmlId() },
       0,
     ];
   },
@@ -24,8 +24,9 @@ const Field = Mark.create({
       setField:
         (text, callback) =>
         ({ commands }) => {
-          callback({ class: text });
+          callback(text);
           this.options.id = text;
+          console.log(text)
           return commands.setMark(this.type, this.options);
         },
       toggleField:
