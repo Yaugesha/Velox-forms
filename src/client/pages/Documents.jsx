@@ -9,8 +9,9 @@ import Header from "../components/header/Header";
 function Documents() {
   const templates = useRef([
     {
-      title: "New document1",
+      title: "Create new document",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+      link: "document",
     },
     {
       title: "New document2",
@@ -116,6 +117,7 @@ function Documents() {
                 <Template
                   title={template.title}
                   picture={template.picture}
+                  link={template.link}
                   key={template.title}
                 />
               );

@@ -11,6 +11,8 @@ import SignIn from "./components/popups/SignIn";
 import Account from "./components/account sections/Account";
 import AccountUpdateData from "./components/account sections/AccountUpdateData";
 import SignOut from "./components/popups/SignOut";
+import Editor from "./components/text-editor/Editor";
+import Document from "./pages/Document";
 
 function App() {
   const [state, setState] = useState(null);
@@ -43,6 +45,7 @@ function App() {
           </Route>
           <Route path="documents" element={<Documents />}>
             <Route path="templates" element={<TemplaytesGaliery />} />
+            <Route path="document" element={<Document />} />
           </Route>
           <Route path="profile" element={<Profile />}>
             <Route path="account" element={<Account />}>
