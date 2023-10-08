@@ -16,7 +16,7 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import { useEffect, useState } from "react";
 
-function Editor({ fields, setField }) {
+function Editor({ fields, setField, unsetField}) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -61,6 +61,7 @@ function Editor({ fields, setField }) {
         setScale={setScale}
         fields={fields}
         setField={setField}
+        unsetField={unsetField}
       />
       <div className="overflow-none">
         <div className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">

@@ -9,7 +9,7 @@ import TableButtons from "./TableButtons";
 import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
-function EditorMenu({ editor, scale, setScale, fields, setField }) {
+function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
   const edit = useEditor({ extensions: [StarterKit] });
 
   if (!editor) return null;
@@ -38,6 +38,21 @@ function EditorMenu({ editor, scale, setScale, fields, setField }) {
         }}
       >
         insert
+      </button>
+      <button
+        onClick={() => {
+          editor
+            .chain()
+            .focus()
+            .unsetField(
+              editor.view.state.selection.content().content.content[0].content
+                .content[0].text,
+              unsetField
+            )
+            .run();
+        }}
+      >
+        delete
       </button>
     </div>
   );

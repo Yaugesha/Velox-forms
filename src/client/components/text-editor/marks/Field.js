@@ -36,6 +36,13 @@ const Field = Mark.create({
           this.options.id = text;
           return commands.toggleMark(this.type, this.options);
         },
+        unsetField:
+        (text, callback) =>
+        ({ commands }) => {
+          callback(text);
+          this.options.id = text;
+          return commands.unsetMark(this.type, this.options);
+        },
     };
   },
 });

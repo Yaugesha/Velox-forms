@@ -39,13 +39,13 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Document />}>
-            {/* <Route path="/" element={<Main />}> */}
+          <Route path="/" element={<Main />}>
             <Route path="signUp" element={<SignUp />} />
             <Route path="signIn" element={<SignIn />} />
           </Route>
           <Route path="documents" element={<Documents />}>
             <Route path="templates" element={<TemplaytesGaliery />} />
+            <Route path="document" element={<Document />} />
           </Route>
           <Route path="profile" element={<Profile />}>
             <Route path="account" element={<Account />}>
