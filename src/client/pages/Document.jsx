@@ -26,6 +26,7 @@ function Document() {
     const field = document.querySelector(`.${input.id}`);
     field.classList.remove(input.id);
     if (field == undefined || input.value == "") {
+      field.remove();
       label.remove();
       input.remove();
       removeField(input.id);

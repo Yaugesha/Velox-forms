@@ -32,49 +32,49 @@ function Documents() {
   ]);
   const documents = useRef([
     {
-      title: "Document name",
+      title: "Document name1",
       type: "doc",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "Document name",
+      title: "Document name2",
       type: "pdf",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "Document name",
+      title: "Document name3",
       type: "doc",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "Document name",
+      title: "Document name4",
       type: "pdf",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "Document name",
+      title: "Document name5",
       type: "doc",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "Document name",
+      title: "Document name6",
       type: "pdf",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "Document name",
+      title: "Document name7",
       type: "doc",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
     {
-      title: "Document name",
+      title: "Document name8",
       type: "pdf",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",

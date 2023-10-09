@@ -5,7 +5,10 @@ const Field = Mark.create({
   toDOM: () => {
     return [
       "span",
-      { class:  `field ${this.options.id} bg-black text-white`, id: generateSafeHtmlId() },
+      {
+        class: `field ${this.options.id} bg-black text-white`,
+        id: generateSafeHtmlId(),
+      },
       0,
     ];
   },
@@ -24,9 +27,17 @@ const Field = Mark.create({
       setField:
         (text, callback) =>
         ({ commands }) => {
+          if (text.charAt(text.length - 1) === " ") {
+            text = text.split(" ")[0];
+            //document.querySelector(`.${text}`).innerText = text.split(" ")[0];
+          }
           callback(text);
           this.options.id = text;
-          console.log(text)
+          // const fields = document.querySelectorAll(".field");
+          // for (let field of fields) {
+          //   console.log(field);
+          // }
+
           return commands.setMark(this.type, this.options);
         },
       toggleField:
@@ -36,7 +47,7 @@ const Field = Mark.create({
           this.options.id = text;
           return commands.toggleMark(this.type, this.options);
         },
-        unsetField:
+      unsetField:
         (text, callback) =>
         ({ commands }) => {
           callback(text);
