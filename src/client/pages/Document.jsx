@@ -31,12 +31,19 @@ function Document() {
       input.remove();
       removeField(input.id);
     } else {
-      label.htmlFor = input.value;
+      if (input.value.includes(" ")) {
+        const identificator = input.value.split(" ").join("-");
+        input.id = identificator;
+        field.classList.add(identificator);
+        label.htmlFor = identificator;
+      } else {
+        input.id = input.value;
+        field.classList.add(input.value);
+        label.htmlFor = input.value;
+      }
       label.innerText = input.value;
-      input.id = input.value;
       input.placeholder = input.value;
       field.innerText = input.value;
-      field.classList.add(input.value);
     }
   }
 
