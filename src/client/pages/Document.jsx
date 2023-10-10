@@ -56,6 +56,7 @@ function Document() {
                   span={field}
                   key={field}
                   handleInput={handleInput}
+                  defaultValue={field}
                 />
               );
             })}

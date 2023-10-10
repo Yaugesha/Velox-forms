@@ -4,9 +4,10 @@ const Field = Mark.create({
   name: "field",
   toDOM: () => {
     return [
-      "span",
+      "node-view",
       {
         class: `field ${this.options.id} bg-black text-white`,
+        contenteditable: "false",
         id: generateSafeHtmlId(),
       },
       0,
@@ -14,9 +15,12 @@ const Field = Mark.create({
   },
   renderHTML({ HTMLAttributes }) {
     return [
-      "span",
+      "node-view",
       mergeAttributes(
-        { class: `field ${this.options.id} bg-black text-white` },
+        {
+          class: `field ${this.options.id} bg-black text-white`,
+          contenteditable: "false",
+        },
         HTMLAttributes
       ),
       0,
@@ -33,6 +37,7 @@ const Field = Mark.create({
           }
           callback(text);
           this.options.id = text;
+          // <node-view contenteditable="false">text</node-view>;
           // const fields = document.querySelectorAll(".field");
           // for (let field of fields) {
           //   console.log(field);
