@@ -12,18 +12,16 @@ function Document() {
     setFields(fields.filter((field) => field !== fieldToRemove));
   }
 
-  function handleInput(e) {
-    const input = e.target;
+  const findLabel = (input) => {
     const labels = document.querySelectorAll("label");
-    const findLabel = (input) => {
-      for (let i = 0; i < labels.length; i++) {
-        if (labels[i].htmlFor == input.id) {
-          return labels[i];
-        }
+    for (let i = 0; i < labels.length; i++) {
+      if (labels[i].htmlFor == input.id) {
+        return labels[i];
       }
-    };
-    const label = findLabel(input);
-    const field = document.querySelector(`.${input.id}`);
+    }
+  };
+
+  function changeInputSelecors(field, input, label) {
     field.classList.remove(input.id);
     if (field == undefined || input.value == "") {
       field.remove();
@@ -41,10 +39,17 @@ function Document() {
         field.classList.add(input.value);
         label.htmlFor = input.value;
       }
-      label.innerText = input.value;
-      input.placeholder = input.value;
-      field.innerText = input.value;
     }
+  }
+
+  function handleInput(e) {
+    const input = e.target;
+    const label = findLabel(input);
+    const field = document.querySelector(`.${input.id}`);
+    changeInputSelecors(field, input, label);
+    label.innerText = input.value;
+    input.placeholder = input.value;
+    field.innerText = input.value;
   }
 
   return (
