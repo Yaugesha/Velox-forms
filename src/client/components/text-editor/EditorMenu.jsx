@@ -37,6 +37,14 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
                 .content[0].content.content[0].content.content[0].content
                 .content[0].text;
           }
+          if (
+            textContainer === "bulletList" ||
+            textContainer === "orderedList"
+          ) {
+            text =
+              editor.view.state.selection.content().content.content[0].content
+                .content[0].content.content[0].content.content[0].text;
+          }
           editor.chain().focus().setField(text, setField).run();
           if (text.charAt(text.length - 1) === " ") {
             const field = document.querySelector(`.${text}`);
