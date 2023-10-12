@@ -31,9 +31,9 @@ const Field = Mark.create({
       setField:
         (text, callback) =>
         ({ commands }) => {
+          console.log(text);
           if (text.charAt(text.length - 1) === " ") {
             text = text.split(" ")[0];
-            //document.querySelector(`.${text}`).innerText = text.split(" ")[0];
           }
           callback(text);
           this.options.id = text;

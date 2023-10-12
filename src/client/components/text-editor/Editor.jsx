@@ -16,7 +16,7 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import { useEffect, useState } from "react";
 
-function Editor({ fields, setField, unsetField}) {
+function Editor({ fields, setField, unsetField }) {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -27,12 +27,14 @@ function Editor({ fields, setField, unsetField}) {
       FontSize,
       FontFamily,
       TextStyle,
-      Table.configure({
-        resizable: true,
-      }),
+      Table,
       TableRow,
       TableHeader,
-      TableCell,
+      TableCell.configure({
+        HTMLAttributes: {
+          class: "min-w-[80px]",
+        },
+      }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),

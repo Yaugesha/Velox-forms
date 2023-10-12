@@ -26,9 +26,17 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
       <TableButtons editor={editor} />
       <button
         onClick={() => {
-          const text =
+          const textContainer =
+            editor.view.state.selection.content().content.content[0].type.name;
+          let text =
             editor.view.state.selection.content().content.content[0].content
               .content[0].text;
+          if (textContainer === "table") {
+            text =
+              editor.view.state.selection.content().content.content[0].content
+                .content[0].content.content[0].content.content[0].content
+                .content[0].text;
+          }
           editor.chain().focus().setField(text, setField).run();
           if (text.charAt(text.length - 1) === " ") {
             const field = document.querySelector(`.${text}`);
