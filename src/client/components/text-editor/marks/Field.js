@@ -18,6 +18,8 @@ const Field = Mark.create({
       "node-view",
       mergeAttributes(
         {
+          "data-id": "field",
+          "data-type": "fieldNode",
           class: `field ${this.options.id} bg-black text-white`,
           contenteditable: "false",
         },
@@ -31,7 +33,6 @@ const Field = Mark.create({
       setField:
         (text, callback) =>
         ({ commands }) => {
-          console.log(text);
           if (text.charAt(text.length - 1) === " ") {
             text = text.split(" ")[0];
           }

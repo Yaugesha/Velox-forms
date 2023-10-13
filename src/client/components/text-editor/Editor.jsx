@@ -9,6 +9,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import FontSize from "./marks/FontSize";
 import FontFamily from "@tiptap/extension-font-family";
 import Field from "./marks/Field";
+import FieldNode from "./nodes/FieldNode";
 import TextStyle from "@tiptap/extension-text-style";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
@@ -19,6 +20,7 @@ import { useEffect, useState } from "react";
 function Editor({ fields, setField, unsetField }) {
   const editor = useEditor({
     extensions: [
+      FieldNode,
       StarterKit,
       UpperCase,
       CapitalizedCase,

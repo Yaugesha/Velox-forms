@@ -26,30 +26,48 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
       <TableButtons editor={editor} />
       <button
         onClick={() => {
-          const textContainer =
-            editor.view.state.selection.content().content.content[0].type.name;
-          let text =
-            editor.view.state.selection.content().content.content[0].content
-              .content[0].text;
-          if (textContainer === "table") {
-            text =
-              editor.view.state.selection.content().content.content[0].content
-                .content[0].content.content[0].content.content[0].content
-                .content[0].text;
-          }
+          editor.commands.insertContent(
+            '<node-view data-type="fieldNode" data-id="field"></node-view>'
+          );
+          setField("field");
+        }}
+      >
+        add
+      </button>
+      <button
+        onClick={() => {
           if (
-            textContainer === "bulletList" ||
-            textContainer === "orderedList"
-          ) {
-            text =
+            editor.view.state.selection.content().content.content[0] ===
+            undefined
+          )
+            editor.chain().focus().setField("field", setField).run();
+          else {
+            const textContainer =
+              editor.view.state.selection.content().content.content[0].type
+                .name;
+            let text =
               editor.view.state.selection.content().content.content[0].content
-                .content[0].content.content[0].content.content[0].text;
-          }
-          editor.chain().focus().setField(text, setField).run();
-          if (text.charAt(text.length - 1) === " ") {
-            const field = document.querySelector(`.${text}`);
-            field.innerText = text.split(" ")[0];
-            field.insertAdjacentHTML("afterend", "<span> </span>");
+                .content[0].text;
+            if (textContainer === "table") {
+              text =
+                editor.view.state.selection.content().content.content[0].content
+                  .content[0].content.content[0].content.content[0].content
+                  .content[0].text;
+            }
+            if (
+              textContainer === "bulletList" ||
+              textContainer === "orderedList"
+            ) {
+              text =
+                editor.view.state.selection.content().content.content[0].content
+                  .content[0].content.content[0].content.content[0].text;
+            }
+            editor.chain().focus().setField(text, setField).run();
+            if (text.charAt(text.length - 1) === " ") {
+              const field = document.querySelector(`.${text}`);
+              field.innerText = text.split(" ")[0];
+              field.insertAdjacentHTML("afterend", "<span> </span>");
+            }
           }
         }}
       >
