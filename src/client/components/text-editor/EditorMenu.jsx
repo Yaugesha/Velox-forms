@@ -26,10 +26,16 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
       <TableButtons editor={editor} />
       <button
         onClick={() => {
+          const editorNode = document.querySelector(".editor");
           editor.commands.insertContent(
-            '<node-view data-type="fieldNode" data-id="field"></node-view>'
+            //'<span data-type="fieldNode"></span>'
+            '<node-view data-type="fieldNode"></node-view>'
           );
-          setField("field");
+          window
+            .getSelection()
+            .selectAllChildren(editorNode.querySelectorAll("node-view")[0]);
+          editorNode.querySelectorAll("node-view")[0].outerHTML = `field`;
+          editor.chain().focus().setField("field", setField).run();
         }}
       >
         add
@@ -40,7 +46,7 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
             editor.view.state.selection.content().content.content[0] ===
             undefined
           )
-            editor.chain().focus().setField("field", setField).run();
+            return;
           else {
             const textContainer =
               editor.view.state.selection.content().content.content[0].type
@@ -48,6 +54,7 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
             let text =
               editor.view.state.selection.content().content.content[0].content
                 .content[0].text;
+            console.log(text);
             if (textContainer === "table") {
               text =
                 editor.view.state.selection.content().content.content[0].content
@@ -66,6 +73,7 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
             if (text.charAt(text.length - 1) === " ") {
               const field = document.querySelector(`.${text}`);
               field.innerText = text.split(" ")[0];
+              console.log(field);
               field.insertAdjacentHTML("afterend", "<span> </span>");
             }
           }

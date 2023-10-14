@@ -1,6 +1,6 @@
 import Input from "../account sections/Input";
 
-function InputFields({ fields, removeField }) {
+function InputFields({ editor, fields, removeField }) {
   const findLabel = (input) => {
     const labels = document.querySelectorAll("label");
     for (let i = 0; i < labels.length; i++) {
@@ -13,7 +13,7 @@ function InputFields({ fields, removeField }) {
   function changeInputSelecors(field, input, label) {
     field.classList.remove(input.id);
     if (field == undefined || input.value == "") {
-      field.remove();
+      document.querySelector(".editor").querySelector(`p`).removeChild(field);
       label.remove();
       input.remove();
       removeField(input.id);
@@ -38,7 +38,7 @@ function InputFields({ fields, removeField }) {
     changeInputSelecors(field, input, label);
     label.innerText = input.value;
     input.placeholder = input.value;
-    field.innerText = input.value;
+    if (input.value !== "") field.innerText = input.value;
   }
 
   return (

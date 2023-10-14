@@ -22,33 +22,34 @@ const FieldNode = Node.create({
 
   atom: true,
 
-  addAttributes() {
-    return {
-      id: {
-        default: null,
-        parseHTML: (element) => element.getAttribute("data-id"),
-        renderHTML: (attributes) => {
-          if (!attributes.id) {
-            return {};
-          }
+  // addAttributes() {
+  //   return {
+  //     // id: {
+  //     //   default: null,
+  //     //   parseHTML: (element) => element.getAttribute("data-id"),
+  //     //   renderHTML: (attributes) => {
+  //     //     if (!attributes.id) {
+  //     //       return {};
+  //     //     }
 
-          return {
-            "data-id": attributes.id,
-          };
-        },
-      },
+  //     //     return {
+  //     //       "data-id": attributes.id,
+  //     //     };
+  //     //   },
+  //     // },
 
-      label: {
-        default: null,
-        parseHTML: (element) => element.getAttribute("data-label"),
-        renderHTML: (attributes) => {},
-      },
-    };
-  },
+  //     label: {
+  //       default: null,
+  //       parseHTML: (element) => element.getAttribute("data-label"),
+  //       renderHTML: (attributes) => {},
+  //     },
+  //   };
+  // },
 
   parseHTML() {
     return [
       {
+        //tag: "span",
         tag: `node-view[data-type="${this.name}"]`,
       },
     ];
@@ -56,11 +57,12 @@ const FieldNode = Node.create({
 
   renderHTML({ node, HTMLAttributes }) {
     return [
+      //"span",
       "node-view",
       mergeAttributes(
         {
           "data-type": this.name,
-          class: `field ${this.options.id} bg-black text-white`,
+          //class: `field ${this.options.id} bg-black text-white`,
           contenteditable: "false",
         },
         this.options.HTMLAttributes,

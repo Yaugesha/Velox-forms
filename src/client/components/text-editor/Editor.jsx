@@ -1,53 +1,8 @@
-import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { EditorContent, BubbleMenu } from "@tiptap/react";
 import EditorMenu from "./EditorMenu";
-import Underline from "@tiptap/extension-underline";
-import UpperCase from "./marks/UpperCase";
-import LowerCase from "./marks/LowerCase";
-import CapitalizedCase from "./marks/CapitalizedCase";
-import TextAlign from "@tiptap/extension-text-align";
-import FontSize from "./marks/FontSize";
-import FontFamily from "@tiptap/extension-font-family";
-import Field from "./marks/Field";
-import FieldNode from "./nodes/FieldNode";
-import TextStyle from "@tiptap/extension-text-style";
-import Table from "@tiptap/extension-table";
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import TableRow from "@tiptap/extension-table-row";
 import { useEffect, useState } from "react";
 
-function Editor({ fields, setField, unsetField }) {
-  const editor = useEditor({
-    extensions: [
-      FieldNode,
-      StarterKit,
-      UpperCase,
-      CapitalizedCase,
-      LowerCase,
-      Field,
-      FontSize,
-      FontFamily,
-      TextStyle,
-      Table,
-      TableRow,
-      TableHeader,
-      TableCell.configure({
-        HTMLAttributes: {
-          class: "min-w-[80px]",
-        },
-      }),
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-      }),
-      Underline,
-    ],
-    editorProps: {
-      attributes: {
-        class: "border-none focus:outline-none",
-      },
-    },
-  });
+function Editor({ editor, fields, setField, unsetField }) {
   const [scale, setScale] = useState(100);
 
   useEffect(function () {

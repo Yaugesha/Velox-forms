@@ -18,7 +18,6 @@ const Field = Mark.create({
       "node-view",
       mergeAttributes(
         {
-          "data-id": "field",
           "data-type": "fieldNode",
           class: `field ${this.options.id} bg-black text-white`,
           contenteditable: "false",
@@ -56,6 +55,7 @@ const Field = Mark.create({
       unsetField:
         (text, callback) =>
         ({ commands }) => {
+          console.log(text);
           callback(text);
           this.options.id = text;
           return commands.unsetMark(this.type, this.options);
