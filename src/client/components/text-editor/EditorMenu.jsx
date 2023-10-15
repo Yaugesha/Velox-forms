@@ -54,7 +54,6 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
             let text =
               editor.view.state.selection.content().content.content[0].content
                 .content[0].text;
-            console.log(text);
             if (textContainer === "table") {
               text =
                 editor.view.state.selection.content().content.content[0].content
@@ -73,7 +72,6 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
             if (text.charAt(text.length - 1) === " ") {
               const field = document.querySelector(`.${text}`);
               field.innerText = text.split(" ")[0];
-              console.log(field);
               field.insertAdjacentHTML("afterend", "<span> </span>");
             }
           }
@@ -83,9 +81,23 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
       </button>
       <button
         onClick={() => {
-          const text =
+          let text =
             editor.view.state.selection.content().content.content[0].content
               .content[0].text;
+          if (textContainer === "table") {
+            text =
+              editor.view.state.selection.content().content.content[0].content
+                .content[0].content.content[0].content.content[0].content
+                .content[0].text;
+          }
+          if (
+            textContainer === "bulletList" ||
+            textContainer === "orderedList"
+          ) {
+            text =
+              editor.view.state.selection.content().content.content[0].content
+                .content[0].content.content[0].content.content[0].text;
+          }
           editor.chain().focus().unsetField(text, unsetField).run();
         }}
       >

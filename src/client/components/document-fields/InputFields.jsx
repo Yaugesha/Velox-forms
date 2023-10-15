@@ -31,14 +31,21 @@ function InputFields({ editor, fields, removeField }) {
     }
   }
 
+  function alphanumericInput(input, label, field) {
+    let letters = /^[0-9a-zA-Z]+$/;
+    if (input.value.match(letters) || input.value == "" || input.value == " ") {
+      changeInputSelecors(field, input, label);
+      label.innerText = input.value;
+      input.placeholder = input.value;
+      if (input.value !== "") field.innerText = input.value;
+    } else input.value = input.value.slice(0, -1);
+  }
+
   function handleInput(e) {
     const input = e.target;
     const label = findLabel(input);
     const field = document.querySelector(`.${input.id}`);
-    changeInputSelecors(field, input, label);
-    label.innerText = input.value;
-    input.placeholder = input.value;
-    if (input.value !== "") field.innerText = input.value;
+    alphanumericInput(input, label, field);
   }
 
   return (
