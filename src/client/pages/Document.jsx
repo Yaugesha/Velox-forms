@@ -9,8 +9,7 @@ import CapitalizedCase from "../components/text-editor/marks/CapitalizedCase";
 import TextAlign from "@tiptap/extension-text-align";
 import FontSize from "../components/text-editor/marks/FontSize";
 import FontFamily from "@tiptap/extension-font-family";
-import Field from "../components/text-editor/marks/Field";
-import FieldNode from "../components/text-editor/nodes/FieldNode";
+import Field from "../components/text-editor/nodes/Extension.js";
 import TextStyle from "@tiptap/extension-text-style";
 import Table from "@tiptap/extension-table";
 import TableCell from "@tiptap/extension-table-cell";
@@ -30,7 +29,6 @@ function Document() {
 
   const editor = useEditor({
     extensions: [
-      FieldNode,
       StarterKit,
       UpperCase,
       CapitalizedCase,

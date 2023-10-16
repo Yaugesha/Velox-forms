@@ -1,6 +1,6 @@
 import Input from "../account sections/Input";
 
-function InputFields({ editor, fields, removeField }) {
+function InputFields({ fields, removeField }) {
   const findLabel = (input) => {
     const labels = document.querySelectorAll("label");
     for (let i = 0; i < labels.length; i++) {
@@ -11,6 +11,7 @@ function InputFields({ editor, fields, removeField }) {
   };
 
   function changeInputSelecors(field, input, label) {
+    const clas = input.value;
     field.classList.remove(input.id);
     if (field == undefined || input.value == "") {
       document.querySelector(".editor").querySelector(`p`).removeChild(field);
@@ -18,16 +19,16 @@ function InputFields({ editor, fields, removeField }) {
       input.remove();
       removeField(input.id);
     } else {
-      if (input.value.includes(" ")) {
-        const identificator = input.value.split(" ").join("-");
-        input.id = identificator;
-        field.classList.add(identificator);
-        label.htmlFor = identificator;
-      } else {
-        input.id = input.value;
-        field.classList.add(input.value);
-        label.htmlFor = input.value;
-      }
+      // if (input.value.includes(" ")) {
+      //   const identificator = input.value.split(" ").join("-");
+      //   input.id = identificator;
+      //   field.classList.add(identificator);
+      //   label.htmlFor = identificator;
+      // } else {
+      input.id = hash; //input.value;
+      field.classList.add(hash); //input.value);
+      label.htmlFor = hash; //input.value;
+      //}
     }
   }
 
@@ -45,7 +46,8 @@ function InputFields({ editor, fields, removeField }) {
     const input = e.target;
     const label = findLabel(input);
     const field = document.querySelector(`.${input.id}`);
-    alphanumericInput(input, label, field);
+    changeInputSelecors(field, input, label);
+    //alphanumericInput(input, label, field);
   }
 
   return (
@@ -54,14 +56,14 @@ function InputFields({ editor, fields, removeField }) {
         <h1>Document fields</h1>
         <div>
           <form>
-            {fields.map((field) => {
+            {fields.map((field, index) => {
               return (
                 <Input
                   placeholder={field}
                   width={"285px"}
                   id={field}
                   span={field}
-                  key={field}
+                  key={index}
                   handleInput={handleInput}
                   defaultValue={field}
                   pattern={" "}

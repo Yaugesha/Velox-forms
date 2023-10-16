@@ -7,13 +7,18 @@ import TextDecorationButtons from "./TextDecorationButtons";
 import TextCaseButtons from "./TextCaseButtons";
 import AlignButtons from "./AlignButtons";
 import TableButtons from "./TableButtons";
-import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 
-function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
-  const edit = useEditor({ extensions: [StarterKit] });
-
+function EditorMenu({ editor, scale, setScale, fields, setField, unsetField }) {
   if (!editor) return null;
+
+  const handleInsertField = () => {
+    setField("field");
+    editor
+      .chain()
+      .focus()
+      .insertContent("<field><node-view>field</node-view></field>")
+      .run();
+  };
 
   return (
     <div className="w-[793px] h-30 flex items-center justify-between flex-wrap gap-2 mb-8 py-3 px-5 border-2 border-black">
@@ -25,83 +30,10 @@ function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
       <AlignButtons editor={editor} />
       <TableButtons editor={editor} />
       <button
-        onClick={() => {
-          const editorNode = document.querySelector(".editor");
-          editor.commands.insertContent(
-            //'<span data-type="fieldNode"></span>'
-            '<node-view data-type="fieldNode"></node-view>'
-          );
-          window
-            .getSelection()
-            .selectAllChildren(editorNode.querySelectorAll("node-view")[0]);
-          editorNode.querySelectorAll("node-view")[0].outerHTML = `field`;
-          editor.chain().focus().setField("field", setField).run();
-        }}
+        className="inlene-block border-[1px] border-black px-1 py-[3px]"
+        onClick={handleInsertField}
       >
-        add
-      </button>
-      <button
-        onClick={() => {
-          if (
-            editor.view.state.selection.content().content.content[0] ===
-            undefined
-          )
-            return;
-          else {
-            const textContainer =
-              editor.view.state.selection.content().content.content[0].type
-                .name;
-            let text =
-              editor.view.state.selection.content().content.content[0].content
-                .content[0].text;
-            if (textContainer === "table") {
-              text =
-                editor.view.state.selection.content().content.content[0].content
-                  .content[0].content.content[0].content.content[0].content
-                  .content[0].text;
-            }
-            if (
-              textContainer === "bulletList" ||
-              textContainer === "orderedList"
-            ) {
-              text =
-                editor.view.state.selection.content().content.content[0].content
-                  .content[0].content.content[0].content.content[0].text;
-            }
-            editor.chain().focus().setField(text, setField).run();
-            if (text.charAt(text.length - 1) === " ") {
-              const field = document.querySelector(`.${text}`);
-              field.innerText = text.split(" ")[0];
-              field.insertAdjacentHTML("afterend", "<span> </span>");
-            }
-          }
-        }}
-      >
-        insert
-      </button>
-      <button
-        onClick={() => {
-          let text =
-            editor.view.state.selection.content().content.content[0].content
-              .content[0].text;
-          if (textContainer === "table") {
-            text =
-              editor.view.state.selection.content().content.content[0].content
-                .content[0].content.content[0].content.content[0].content
-                .content[0].text;
-          }
-          if (
-            textContainer === "bulletList" ||
-            textContainer === "orderedList"
-          ) {
-            text =
-              editor.view.state.selection.content().content.content[0].content
-                .content[0].content.content[0].content.content[0].text;
-          }
-          editor.chain().focus().unsetField(text, unsetField).run();
-        }}
-      >
-        delete
+        Add field
       </button>
       <ScaleSlider scale={scale} setScale={setScale} />
     </div>

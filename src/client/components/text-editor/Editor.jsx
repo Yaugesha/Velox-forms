@@ -12,6 +12,7 @@ function Editor({ editor, fields, setField, unsetField }) {
       (scale / 100 - 1) * 140 * 4
     }px`;
   });
+
   return (
     <div>
       <EditorMenu
