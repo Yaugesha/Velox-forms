@@ -19,7 +19,6 @@ function InputFields({ fields, removeField }) {
 
   function changeInputSelecors(field, input, label) {
     const selector = generateClassName(input.value);
-    console.log(field);
     field.classList.remove(input.id);
     if (field == undefined || input.value == "") {
       document

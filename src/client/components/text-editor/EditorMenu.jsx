@@ -16,8 +16,9 @@ function EditorMenu({ editor, scale, setScale, fields, setField, unsetField }) {
     editor
       .chain()
       .focus()
-      .insertContent("<field><node-view>field</node-view></field>")
+      .insertContent("<field>field</field>&nbsp;")
       .run();
+      
   };
 
   return (
