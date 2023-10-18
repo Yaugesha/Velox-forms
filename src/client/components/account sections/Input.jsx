@@ -1,4 +1,4 @@
-function Input({ placeholder, width, id, span, handleInput, defaultValue }) {
+function Input({ placeholder, width, id, span, handleInput, defaultValue, typeClass }) {
   return (
     <div
       className={`w-[${width}] flex flex-col gap-2 ${span ? "col-span-2" : ""}`}
@@ -8,7 +8,7 @@ function Input({ placeholder, width, id, span, handleInput, defaultValue }) {
       </label>
       <input
         onChange={handleInput}
-        className={`w-[100%] h-[45px] border-2 border-black pl-4`}
+        className={`w-[100%] h-[45px] border-2 border-black pl-4 ${typeClass}`}
         placeholder={placeholder}
         id={`${id}`}
         type={`${placeholder.split(" ").at(-1)}`}

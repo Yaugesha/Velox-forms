@@ -12,6 +12,8 @@ export default Node.create({
 
   content: "text*",
 
+  atom: true,
+
   addAttributes() {
     return { count: { default: 0 } };
   },

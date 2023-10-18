@@ -5,6 +5,10 @@ import { useEffect, useState } from "react";
 function Editor({ editor, fields, setField, unsetField }) {
   const [scale, setScale] = useState(100);
 
+  function handleClickOnPage() {
+    editor.commands.focus('end')
+  }
+
   useEffect(function () {
     document.querySelector(".editor").style.transform = `scale(${scale / 100})`;
     document.querySelector(".editor").style.position = "relative";
@@ -23,8 +27,9 @@ function Editor({ editor, fields, setField, unsetField }) {
         setField={setField}
         unsetField={unsetField}
       />
-      <div className="overflow-none">
-        <div className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">
+      <div className="overflow-none" >
+        <div onClick={handleClickOnPage}
+             className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">
           <EditorContent editor={editor} />
         </div>
       </div>

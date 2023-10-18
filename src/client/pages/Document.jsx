@@ -55,10 +55,30 @@ function Document() {
         class: "border-none focus:outline-none",
       },
     },
+    onUpdate() {
+      const fields = document.querySelectorAll(".react-component");
+      const fieldInputs = document.querySelectorAll(".field-input");
+      //fields.forEach(field => console.log(field.firstChild))
+      const isFieldForInputExist = (fields, input) => {
+        for(const field of fields.entries()) {
+          if(field[1].className.includes(input.id)) 
+            return true;
+        }
+        return false;
+      }
+      fieldInputs.forEach((input) => {
+        if(!isFieldForInputExist(fields, input)) {
+          const inputElement = input.parentElement;
+          inputElement.removeChild(input);
+          inputElement.removeChild(inputElement.firstChild);
+          removeField(input.id);
+        }
+      })
+    }
   });
 
   return (
-    <div className="absolute top-0 w-[1280px] flex justify-between bg-white">
+    <div className="w-[1280px] flex gap-64 bg-white">
       <Editor
         editor={editor}
         fields={fields}

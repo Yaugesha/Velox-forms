@@ -32,6 +32,7 @@ function InputFields({ fields, removeField }) {
       input.id = selector;
       field.classList.add(selector);
       label.htmlFor = selector;
+      label.innerText = input.value;
       field.innerText = input.value;
     }
   }
@@ -59,7 +60,7 @@ function InputFields({ fields, removeField }) {
                   key={index}
                   handleInput={handleInput}
                   defaultValue={field}
-                  pattern={" "}
+                  typeClass={"field-input"}
                 />
               );
             })}

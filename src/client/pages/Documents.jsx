@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import Template from "../components/documents/Template";
 import Document from "../components/documents/Document";
 import DocumentList from "../components/documents/DocumentList";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, useLocation, Outlet } from "react-router-dom";
 import SortButton from "../components/documents/SortButton";
 import Header from "../components/header/Header";
 
@@ -85,9 +85,12 @@ function Documents() {
   const [nameSort, setNameSort] = useState("ascending");
   const [dateSort, setDateSort] = useState("ascending");
   const [active, setActive] = useState("date");
+  const location = useLocation()
+  console.log(location.pathname.split("/"))
   return (
     <>
-      <Header isAuthorized={true} page={"Documents"} />
+    {location.pathname.split("/")[2] === "document" ? <Outlet/> :
+      <><Header isAuthorized={true} page={"Documents"} />
       <main className="w-[980px]">
         <section className="mb-8 w-[980px] flex flex-col items-center">
           <div className="w-[980px] flex justify-between items-center mt-10 mb-5">
@@ -186,8 +189,8 @@ function Documents() {
             </div>
           )}
         </section>
-        <Outlet />
       </main>
+    </>} 
     </>
   );
 }
