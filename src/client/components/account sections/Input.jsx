@@ -1,11 +1,32 @@
-function Input({ placeholder, width, id, span, handleInput, defaultValue, typeClass }) {
+function Input({
+  placeholder,
+  width,
+  id,
+  span,
+  handleInput,
+  defaultValue,
+  typeClass,
+  buttonHandler,
+}) {
   return (
     <div
       className={`w-[${width}] flex flex-col gap-2 ${span ? "col-span-2" : ""}`}
     >
-      <label className="text-xs tracking[5%]" htmlFor={`${id}`}>
-        {placeholder}
-      </label>
+      <div className={`${id}_label`}>
+        <label className="text-xs tracking[5%]" htmlFor={`${id}`}>
+          {placeholder}
+        </label>
+        {buttonHandler !== undefined ? (
+          <button
+            className="ml-4 px-2 border-[1px] border-black"
+            onClick={() => buttonHandler(id)}
+          >
+            insert
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
       <input
         onChange={handleInput}
         className={`w-[100%] h-[45px] border-2 border-black pl-4 ${typeClass}`}

@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 function Editor({ editor, fields, setField, unsetField }) {
   const [scale, setScale] = useState(100);
 
-  function handleClickOnPage() {
-    editor.commands.focus('end')
+  function handleClickOnPage(event) {
+    if (event.target.className.includes("editor mt-[15]"))
+      editor.commands.focus("end");
   }
 
   useEffect(function () {
@@ -27,9 +28,11 @@ function Editor({ editor, fields, setField, unsetField }) {
         setField={setField}
         unsetField={unsetField}
       />
-      <div className="overflow-none" >
-        <div onClick={handleClickOnPage}
-             className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">
+      <div className="overflow-none">
+        <div
+          onClick={handleClickOnPage}
+          className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black"
+        >
           <EditorContent editor={editor} />
         </div>
       </div>

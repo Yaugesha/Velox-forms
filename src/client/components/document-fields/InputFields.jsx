@@ -1,47 +1,72 @@
 import Input from "../account sections/Input";
 
-function InputFields({ fields, removeField }) {
+function InputFields({ editor, fields, rewriteFields, removeField }) {
+  function updateFieldsArray(input) {
+    const newFields = fields.map((field) => {
+      console.log(field, input.id);
+      if (field === input.id) {
+        return input.value;
+      } else return field;
+    });
+    rewriteFields(newFields);
+  }
+
   function generateClassName(inputString) {
     const cleanedString = inputString.replace(/\W+/g, "-").toLowerCase();
-    const prefix = "custom-class-";
-    const className = `${prefix}${cleanedString}`;
+    //const prefix = "custom-class-";
+    const className = cleanedString; //`${prefix}${cleanedString}`;
     return className;
   }
 
-  const findLabel = (input) => {
-    const labels = document.querySelectorAll("label");
-    for (let i = 0; i < labels.length; i++) {
-      if (labels[i].htmlFor == input.id) {
-        return labels[i];
-      }
-    }
-  };
-
-  function changeInputSelecors(field, input, label) {
-    const selector = generateClassName(input.value);
-    field.classList.remove(input.id);
+  function changeInputSelecors(field, input) {
     if (field == undefined || input.value == "") {
-      document
-        .querySelector(".editor")
-        .querySelector(`p`)
-        .removeChild(field.parentNode);
-      label.remove();
-      input.remove();
-      removeField(input.id);
+      deleteFieldWithInput(field, input);
     } else {
-      input.id = selector;
-      field.classList.add(selector);
-      label.htmlFor = selector;
-      label.innerText = input.value;
-      field.innerText = input.value;
+      //updateFieldInput(input)
     }
+  }
+
+  function updateField(field, input) {
+    field.classList.remove(input.id);
+    field.classList.add(generateClassName(input.value));
+    field.innerText = input.value;
+  }
+
+  // function updateFieldInput(input) {
+  //   const labelContainer = document.querySelector(`.${input.id}_label`)
+  //   labelContainer.classList.remove(`${input.id}_label`)
+  //   input.id = generateClassName(input.value);
+  //   const label = labelContainer.firstChild;
+  //   label.htmlFor = input.id;
+  //   label.innerText = input.value;
+  //   labelContainer.classList.add(`${input.id}_label`)
+  // }
+
+  function deleteFieldWithInput(field, input) {
+    document
+      .querySelector(".editor")
+      .querySelector(`p`)
+      .removeChild(field.parentNode);
+    document.querySelector(`.${input.id}_label`).remove();
+    input.remove();
+    removeField(input.id);
   }
 
   function handleInput(e) {
     const input = e.target;
-    const label = findLabel(input);
-    const field = document.querySelector(`.${input.id}`);
-    changeInputSelecors(field, input, label);
+    const prevInputValue = input.id;
+    const fields = document.querySelectorAll(`.${input.id}`);
+    updateFieldsArray(input);
+    changeInputSelecors(fields[0], input);
+    fields.forEach((field) => {
+      if (field.textContent === prevInputValue) {
+        updateField(field, input);
+      }
+    });
+  }
+
+  function handleAddField(field) {
+    editor.chain().focus().insertContent(`<field>${field}</field>&nbsp;`).run();
   }
 
   return (
@@ -51,6 +76,7 @@ function InputFields({ fields, removeField }) {
         <div>
           <form>
             {fields.map((field, index) => {
+              console.log(field + index);
               return (
                 <Input
                   placeholder={field}
@@ -59,8 +85,9 @@ function InputFields({ fields, removeField }) {
                   span={field}
                   key={index}
                   handleInput={handleInput}
-                  defaultValue={field}
+                  //defaultValue={field}
                   typeClass={"field-input"}
+                  buttonHandler={handleAddField}
                 />
               );
             })}

@@ -58,23 +58,21 @@ function Document() {
     onUpdate() {
       const fields = document.querySelectorAll(".react-component");
       const fieldInputs = document.querySelectorAll(".field-input");
-      //fields.forEach(field => console.log(field.firstChild))
       const isFieldForInputExist = (fields, input) => {
-        for(const field of fields.entries()) {
-          if(field[1].className.includes(input.id)) 
-            return true;
+        for (const field of fields.entries()) {
+          if (field[1].className.includes(input.id)) return true;
         }
         return false;
-      }
+      };
       fieldInputs.forEach((input) => {
-        if(!isFieldForInputExist(fields, input)) {
+        if (!isFieldForInputExist(fields, input)) {
           const inputElement = input.parentElement;
           inputElement.removeChild(input);
           inputElement.removeChild(inputElement.firstChild);
           removeField(input.id);
         }
-      })
-    }
+      });
+    },
   });
 
   return (
@@ -85,7 +83,12 @@ function Document() {
         setField={addField}
         unsetField={removeField}
       />
-      <InputFields editor={editor} fields={fields} removeField={removeField} />
+      <InputFields
+        editor={editor}
+        fields={fields}
+        rewriteFields={setFields}
+        removeField={removeField}
+      />
     </div>
   );
 }
