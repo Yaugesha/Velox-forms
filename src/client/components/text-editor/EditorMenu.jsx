@@ -12,9 +12,17 @@ function EditorMenu({ editor, scale, setScale, fields, setField, unsetField }) {
   if (!editor) return null;
 
   const handleInsertField = () => {
-    if (fields.find((field) => field === "field") === undefined)
+    let index;
+    if (fields.find((field) => field === "field") === undefined) {
+      index = fields.length;
       setField("field");
-    editor.chain().focus().insertContent("<field>field</field>&nbsp;").run();
+    } else index = fields.length - 1;
+    console.log(fields);
+    editor
+      .chain()
+      .focus()
+      .insertContent(`<field index="${index}">field</field>&nbsp;`)
+      .run();
   };
 
   return (

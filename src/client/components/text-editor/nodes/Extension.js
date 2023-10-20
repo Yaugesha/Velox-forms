@@ -15,7 +15,7 @@ export default Node.create({
   atom: true,
 
   addAttributes() {
-    return { count: { default: 0 } };
+    return { index: { default: 0 } };
   },
 
   parseHTML() {

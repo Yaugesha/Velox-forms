@@ -6,12 +6,11 @@ import Documents from "./pages/Documents";
 import TemplaytesGaliery from "./pages/TemplaytesGaliery";
 import Profile from "./pages/Profile";
 import AccountSettings from "./components/account sections/AccountSettings";
-import SignUp from "./components/Popups/SignUp";
+import SignUp from "./components/popups/SignUp";
 import SignIn from "./components/popups/SignIn";
 import Account from "./components/account sections/Account";
 import AccountUpdateData from "./components/account sections/AccountUpdateData";
 import SignOut from "./components/popups/SignOut";
-import Editor from "./components/text-editor/Editor";
 import Document from "./pages/Document";
 
 function App() {
