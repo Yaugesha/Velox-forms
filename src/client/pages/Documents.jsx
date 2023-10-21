@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import Template from "../components/documents/Template";
-import Document from "../components/documents/Document";
+import TemplateCard from "../components/documents/TemplateCard";
+import DocumentCard from "../components/documents/DocumentCard";
 import DocumentList from "../components/documents/DocumentList";
 import { Link, useLocation, Outlet } from "react-router-dom";
 import SortButton from "../components/documents/SortButton";
@@ -86,10 +86,10 @@ function Documents() {
   const [dateSort, setDateSort] = useState("ascending");
   const [active, setActive] = useState("date");
   const location = useLocation()
-  console.log(location.pathname.split("/"))
+  console.log(location.pathname.split("/")[2])
   return (
     <>
-    {location.pathname.split("/")[2] === "document" ? <Outlet/> :
+    {location.pathname.split("/")[2] !== undefined ? <Outlet/> :
       <><Header isAuthorized={true} page={"Documents"} />
       <main className="w-[980px]">
         <section className="mb-8 w-[980px] flex flex-col items-center">
@@ -117,7 +117,7 @@ function Documents() {
           <div className="w-[980px] flex justify-between mb-7">
             {templates.current.map((template) => {
               return (
-                <Template
+                <TemplateCard
                   title={template.title}
                   picture={template.picture}
                   link={template.link}
@@ -163,7 +163,7 @@ function Documents() {
             <div className="flex justify-between flex-wrap gap-y-5">
               {documents.current.map((document) => {
                 return (
-                  <Document
+                  <DocumentCard
                     title={document.title}
                     type={document.type}
                     date={document.date}

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Template from "../components/documents/Template";
+import Template from "../components/documents/TemplateCard";
 import { useNavigate } from "react-router-dom";
 
 function TemplaytesGaliery() {
@@ -103,7 +103,8 @@ function TemplaytesGaliery() {
   ]);
   const navigate = useNavigate();
   return (
-    <div className="absolute top-0 bg-white">
+    <div>
+      <div className="fixed w-[980px] h-24 bg-white"></div>
       <header className="w-[980px] fixed flex border-b-2 bg-white border-solid border-black">
         <div className="flex items-center text-base leading-6 ">
           <div
@@ -115,8 +116,8 @@ function TemplaytesGaliery() {
           <span className="mr-2">Templates gallery</span>
         </div>
       </header>
-      <main>
-        <div className="w-[980px] mt-24 flex flex-col justify-between gap-8">
+      <main className="pt-24"> 
+        <div className="w-[980px] flex flex-col justify-between gap-8">
           {templatesArr.current.map((template) => {
             return (
               <div key={template.type}>
