@@ -1,24 +1,13 @@
 import { useEditor } from "@tiptap/react";
-import Editor from "../components/text-editor/Editor";
-import StarterKit from "@tiptap/starter-kit";
 import InputFields from "../components/document-fields/InputFields";
-import Underline from "@tiptap/extension-underline";
-import UpperCase from "../components/text-editor/marks/UpperCase";
-import LowerCase from "../components/text-editor/marks/LowerCase";
-import CapitalizedCase from "../components/text-editor/marks/CapitalizedCase";
-import TextAlign from "@tiptap/extension-text-align";
-import FontSize from "../components/text-editor/marks/FontSize";
-import FontFamily from "@tiptap/extension-font-family";
-import Field from "../components/text-editor/nodes/Extension.js";
-import TextStyle from "@tiptap/extension-text-style";
-import Table from "@tiptap/extension-table";
-import TableCell from "@tiptap/extension-table-cell";
-import TableHeader from "@tiptap/extension-table-header";
-import TableRow from "@tiptap/extension-table-row";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import config from "../components/text-editor/editorConfig";
 
 function Document() {
   const [fields, setFields] = useState([]);
+
+  const navigate = useNavigate();
 
   function addField(newField) {
     setFields([...fields, newField]);
@@ -27,69 +16,56 @@ function Document() {
     setFields(fields.filter((field) => field !== fieldToRemove));
   }
 
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      UpperCase,
-      CapitalizedCase,
-      LowerCase,
-      Field,
-      FontSize,
-      FontFamily,
-      TextStyle,
-      Table,
-      TableRow,
-      TableHeader,
-      TableCell.configure({
-        HTMLAttributes: {
-          class: "min-w-[80px]",
-        },
-      }),
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-      }),
-      Underline,
-    ],
-    editorProps: {
-      attributes: {
-        class: "border-none focus:outline-none",
-      },
-    },
-    onUpdate() {
-      const fields = document.querySelectorAll(".react-component");
-      const fieldInputs = document.querySelectorAll(".field-input");
-      const isFieldForInputExist = (fields, input) => {
-        for (const field of fields.entries()) {
-          if (field[1].className.includes(input.id)) return true;
-        }
-        return false;
-      };
-      fieldInputs.forEach((input) => {
-        if (!isFieldForInputExist(fields, input)) {
-          const inputElement = input.parentElement;
-          inputElement.removeChild(input);
-          inputElement.removeChild(inputElement.firstChild);
-          removeField(input.id);
-        }
-      });
-    },
-  });
+  const editor = useEditor(config);
 
   return (
-    <div className="w-[1280px] flex gap-64 bg-white">
-      <Editor
-        editor={editor}
-        fields={fields}
-        setField={addField}
-        unsetField={removeField}
-      />
-      <InputFields
-        editor={editor}
-        fields={fields}
-        rewriteFields={setFields}
-        removeField={removeField}
-      />
-    </div>
+    <>
+      <header className="w-[1280px] flex mb-4 border-b-2 bg-white border-solid border-black">
+        <div className="flex items-center text-base leading-6 ">
+          <div
+            onClick={() => navigate(-1)}
+            className="inline-block items-center w-12 cursor-pointer mr-5 ml-3 p-3 font-bold leading-7 text-2xl text-black font-serif"
+          >
+            &larr;
+          </div>
+          <span className="mr-2 pt-2">Document</span>
+        </div>
+        <div className="flex self-center  w-30 h-8 gap-2">
+          <div className="flex self-center cursor-pointer">
+            <img
+              src="/src/client/assets/icons/text-editor/icon-template-mode-editing.svg"
+              alt="editing-mode"
+            />
+          </div>
+          <div className="flex self-center cursor-pointer">
+            <img
+              src="/src/client/assets/icons/text-editor/icon-document-mode-preview.svg"
+              alt="editing-mode"
+            />
+          </div>
+          <div className="flex self-center cursor-pointer">
+            <img
+              src="/src/client/assets/icons/text-editor/icon-document-mode-editing.svg"
+              alt="editing-mode"
+            />
+          </div>
+        </div>
+      </header>
+      <div className="w-[1280px] flex gap-64 bg-white">
+        <Editor
+          editor={editor}
+          fields={fields}
+          setField={addField}
+          unsetField={removeField}
+        />
+        <InputFields
+          editor={editor}
+          fields={fields}
+          rewriteFields={setFields}
+          removeField={removeField}
+        />
+      </div>
+    </>
   );
 }
 

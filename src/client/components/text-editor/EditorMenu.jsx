@@ -1,12 +1,12 @@
 import React from "react";
-import FontSizeButton from "./FontSizeButton";
-import FontStyleButton from "./FontStyleButton";
-import ListButtons from "./ListButtons";
-import ScaleSlider from "./ScaleSlider";
-import TextDecorationButtons from "./TextDecorationButtons";
-import TextCaseButtons from "./TextCaseButtons";
-import AlignButtons from "./AlignButtons";
-import TableButtons from "./TableButtons";
+import FontSizeButton from "./buttons/FontSizeButton";
+import FontStyleButton from "./buttons/FontStyleButton";
+import ListButtons from "./buttons/ListButtons";
+import ScaleSlider from "./buttons/ScaleSlider";
+import TextDecorationButtons from "./buttons/TextDecorationButtons";
+import TextCaseButtons from "./buttons/TextCaseButtons";
+import AlignButtons from "./buttons/AlignButtons";
+import TableButtons from "./buttons/TableButtons";
 
 function EditorMenu({ editor, scale, setScale, fields, setField, unsetField }) {
   if (!editor) return null;
