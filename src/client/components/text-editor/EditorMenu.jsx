@@ -17,7 +17,6 @@ function EditorMenu({ editor, scale, setScale, fields, setField, unsetField }) {
       index = fields.length;
       setField("field");
     } else index = fields.length - 1;
-    console.log(fields);
     editor
       .chain()
       .focus()

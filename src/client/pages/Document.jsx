@@ -1,13 +1,30 @@
 import { useEditor } from "@tiptap/react";
 import InputFields from "../components/document-fields/InputFields";
+import Editor from "../components/text-editor/Editor";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import config from "../components/text-editor/editorConfig";
+import DocumentHeader from "../components/header/DocumentHeader";
 
 function Document() {
   const [fields, setFields] = useState([]);
 
-  const navigate = useNavigate();
+  const buttons = [
+    {
+      image:
+        "/src/client/assets/icons/text-editor/icon-template-mode-editing.svg",
+      alt: "template editing",
+    },
+    {
+      image:
+        "/src/client/assets/icons/text-editor/icon-document-mode-preview.svg",
+      alt: "document view",
+    },
+    {
+      image:
+        "/src/client/assets/icons/text-editor/icon-document-mode-editing.svg",
+      alt: "document filling",
+    },
+  ];
 
   function addField(newField) {
     setFields([...fields, newField]);
@@ -20,37 +37,7 @@ function Document() {
 
   return (
     <>
-      <header className="w-[1280px] flex mb-4 border-b-2 bg-white border-solid border-black">
-        <div className="flex items-center text-base leading-6 ">
-          <div
-            onClick={() => navigate(-1)}
-            className="inline-block items-center w-12 cursor-pointer mr-5 ml-3 p-3 font-bold leading-7 text-2xl text-black font-serif"
-          >
-            &larr;
-          </div>
-          <span className="mr-2 pt-2">Document</span>
-        </div>
-        <div className="flex self-center  w-30 h-8 gap-2">
-          <div className="flex self-center cursor-pointer">
-            <img
-              src="/src/client/assets/icons/text-editor/icon-template-mode-editing.svg"
-              alt="editing-mode"
-            />
-          </div>
-          <div className="flex self-center cursor-pointer">
-            <img
-              src="/src/client/assets/icons/text-editor/icon-document-mode-preview.svg"
-              alt="editing-mode"
-            />
-          </div>
-          <div className="flex self-center cursor-pointer">
-            <img
-              src="/src/client/assets/icons/text-editor/icon-document-mode-editing.svg"
-              alt="editing-mode"
-            />
-          </div>
-        </div>
-      </header>
+      <DocumentHeader width="1280px" page="Document" navButtons={buttons} />
       <div className="w-[1280px] flex gap-64 bg-white">
         <Editor
           editor={editor}
