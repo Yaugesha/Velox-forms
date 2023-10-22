@@ -1,14 +1,18 @@
+import { useContext } from "react";
 import Input from "../account sections/Input";
+import DocumentContext from "../../contexts/DocumentContext";
 
-function InputFields({ editor, fields, rewriteFields, removeField }) {
+function InputFields() {
+  const context = useContext(DocumentContext);
+
   function updateFieldsArray(input) {
-    const inputIndex = input.classList[6].split("-")[1]
-    const newFields = fields.map((field, index) => {
+    const inputIndex = input.classList[6].split("-")[1];
+    const newFields = context.fields.map((field, index) => {
       if (index == inputIndex) {
         return input.value;
       } else return field;
     });
-    rewriteFields(newFields);
+    context.setFields(newFields);
   }
 
   function generateClassName(inputString) {
@@ -21,7 +25,7 @@ function InputFields({ editor, fields, rewriteFields, removeField }) {
     if (field == undefined || input.value == "") {
       deleteFieldWithInput(field, input);
     } else {
-      updateField(field, input)
+      updateField(field, input);
     }
   }
 
@@ -36,7 +40,7 @@ function InputFields({ editor, fields, rewriteFields, removeField }) {
       .querySelector(".editor")
       .querySelector(`p`)
       .removeChild(field.parentNode);
-    removeField(input.id);
+    context.removeField(input.id);
     input.remove();
   }
 
@@ -52,7 +56,11 @@ function InputFields({ editor, fields, rewriteFields, removeField }) {
   }
 
   function handleAddField(field) {
-    editor.chain().focus().insertContent(`<field>${field}</field>&nbsp;`).run();
+    context.editor
+      .chain()
+      .focus()
+      .insertContent(`<field>${field}</field>&nbsp;`)
+      .run();
   }
 
   return (
@@ -61,7 +69,7 @@ function InputFields({ editor, fields, rewriteFields, removeField }) {
         <h1>Document fields</h1>
         <div>
           <form>
-            {fields.map((field, index) => {
+            {context.fields.map((field, index) => {
               return (
                 <Input
                   placeholder={field}
