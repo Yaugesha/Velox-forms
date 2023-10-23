@@ -1,7 +1,7 @@
 import { useEditor } from "@tiptap/react";
 import InputFields from "../components/document-fields/InputFields";
 import Editor from "../components/text-editor/Editor";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import config from "../components/text-editor/editorConfig";
 import DocumentHeader from "../components/header/DocumentHeader";
 import DocumentContext from "../contexts/DocumentContext";
@@ -54,13 +54,66 @@ function Document() {
     setScale,
   };
 
-  return (
-    <DocumentContext.Provider value={documentProps}>
-      <DocumentHeader width="1280px" page="Document" navButtons={buttons} />
+  const initialMode = {
+    template: (
       <div className="w-[1280px] flex gap-64 bg-white">
         <Editor />
         <InputFields />
       </div>
+    ),
+  };
+
+  function changeMode(state, action) {
+    switch (action.name) {
+      case "template editing": {
+        editor.setEditable(true);
+        return {
+          ...state,
+          template: (
+            <div className="w-[1280px] flex gap-64 bg-white">
+              <Editor />
+              <InputFields />
+            </div>
+          ),
+        };
+      }
+      case "document view": {
+        editor.setEditable(false);
+        return {
+          ...state,
+          template: (
+            <div className="w-[1280px] flex justify-center bg-white">
+              <Editor />
+            </div>
+          ),
+        };
+      }
+      case "document filling": {
+        editor.setEditable(false);
+        return {
+          ...state,
+          template: (
+            <div className="w-[1280px] flex gap-64 bg-white">
+              <Editor />
+              <InputFields />
+            </div>
+          ),
+        };
+      }
+    }
+  }
+
+  const [mode, dispatch] = useReducer(changeMode, initialMode);
+
+  return (
+    <DocumentContext.Provider value={documentProps}>
+      <DocumentHeader
+        width="1280px"
+        page="Document"
+        navButtons={buttons}
+        handleCLick={dispatch}
+      />
+      {mode.template}
     </DocumentContext.Provider>
   );
 }

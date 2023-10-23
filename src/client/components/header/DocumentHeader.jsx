@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function DocumentHeader({ width, position, page, navButtons }) {
+function DocumentHeader({ width, position, page, navButtons, handleCLick }) {
   const navigate = useNavigate();
 
   return (
@@ -20,7 +20,11 @@ function DocumentHeader({ width, position, page, navButtons }) {
         {navButtons !== undefined
           ? navButtons.map((button, index) => {
               return (
-                <div className="flex self-center cursor-pointer" key={index}>
+                <div
+                  className="flex self-center cursor-pointer"
+                  key={index}
+                  onClick={() => handleCLick({ name: button.alt })}
+                >
                   <img src={button.image} alt={button.alt} />
                 </div>
               );
