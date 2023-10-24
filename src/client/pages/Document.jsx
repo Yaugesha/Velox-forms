@@ -8,7 +8,7 @@ import DocumentContext from "../contexts/DocumentContext";
 import SaveDocuent from "../components/popups/SaveDocuent";
 
 function Document() {
-  const editor = useEditor(config);
+  const editor = useEditor(config(removeField));
 
   const [fields, setFields] = useState([]);
   const [scale, setScale] = useState(100);
