@@ -5,12 +5,14 @@ import { useState, useEffect, useReducer } from "react";
 import config from "../components/text-editor/editorConfig";
 import DocumentHeader from "../components/header/DocumentHeader";
 import DocumentContext from "../contexts/DocumentContext";
+import SaveDocuent from "../components/popups/SaveDocuent";
 
 function Document() {
   const editor = useEditor(config);
 
   const [fields, setFields] = useState([]);
   const [scale, setScale] = useState(100);
+  const [isPopupOpen, setPopup] = useState(false);
 
   useEffect(function () {
     document.querySelector(".editor").style.transform = `scale(${scale / 100})`;
@@ -56,7 +58,7 @@ function Document() {
 
   const initialMode = {
     template: (
-      <div className="w-[1280px] flex gap-64 bg-white">
+      <div className="w-[1280px] flex justify-between bg-white">
         <Editor />
         <InputFields />
       </div>
@@ -112,8 +114,18 @@ function Document() {
         page="Document"
         navButtons={buttons}
         handleCLick={dispatch}
-      />
+      >
+        <div
+          className="self-center px-1 border-2 border-black"
+          onClick={() => {
+            setPopup(true);
+          }}
+        >
+          Save document
+        </div>
+      </DocumentHeader>
       {mode.template}
+      {isPopupOpen ? <SaveDocuent setIsOpen={setPopup} /> : ""}
     </DocumentContext.Provider>
   );
 }

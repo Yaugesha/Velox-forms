@@ -1,11 +1,18 @@
 import { useNavigate } from "react-router-dom";
 
-function DocumentHeader({ width, position, page, navButtons, handleCLick }) {
+function DocumentHeader({
+  children,
+  width,
+  position,
+  page,
+  navButtons,
+  handleCLick,
+}) {
   const navigate = useNavigate();
 
   return (
     <header
-      className={`${position} w-[${width}] flex mb-4 border-b-2 bg-white border-solid border-black`}
+      className={`${position} w-[${width}] flex justify-between mb-4 border-b-2 bg-white border-solid border-black`}
     >
       <div className="flex items-center text-base leading-6 ">
         <div
@@ -31,6 +38,7 @@ function DocumentHeader({ width, position, page, navButtons, handleCLick }) {
             })
           : ""}
       </div>
+      {children}
     </header>
   );
 }

@@ -5,6 +5,8 @@ import DocumentContext from "../../contexts/DocumentContext";
 function InputFields() {
   const context = useContext(DocumentContext);
 
+  if (context.fields.length === 0) return;
+
   function updateFieldsArray(input) {
     const inputIndex = input.classList[6].split("-")[1];
     const newFields = context.fields.map((field, index) => {
@@ -64,11 +66,11 @@ function InputFields() {
   }
 
   return (
-    <div>
+    <div className="w-[285px]">
       <div>
-        <h1>Document fields</h1>
+        <h1 className="mb-3">Document fields</h1>
         <div>
-          <form>
+          <form className="flex flex-col gap-3">
             {context.fields.map((field, index) => {
               return (
                 <Input
