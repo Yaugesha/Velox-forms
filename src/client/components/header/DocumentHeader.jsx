@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function DocumentHeader({
@@ -9,6 +10,19 @@ function DocumentHeader({
   handleCLick,
 }) {
   const navigate = useNavigate();
+
+  useEffect(function () {
+    const buttons = document.querySelectorAll(".editor-mode-btn");
+    buttons.forEach((button) =>
+      button.addEventListener("click", (e) => {
+        buttons.forEach((button) =>
+          button.firstChild.classList.remove("invert")
+        );
+        if (e.target.alt) e.target.classList.add("invert");
+        else e.target.firstChild.classList.add("invert");
+      })
+    );
+  }, []);
 
   return (
     <header
@@ -23,12 +37,12 @@ function DocumentHeader({
         </div>
         <span className="mr-2 pt-2">{page}</span>
       </div>
-      <div className="flex self-center w-30 h-8 gap-2">
+      <div className="flex self-center w-30 h-8 ">
         {navButtons !== undefined
           ? navButtons.map((button, index) => {
               return (
                 <div
-                  className="flex self-center cursor-pointer"
+                  className="w-8 h-8 flex self-center cursor-pointer editor-mode-btn border-2 border-black"
                   key={index}
                   onClick={() => handleCLick({ name: button.alt })}
                 >

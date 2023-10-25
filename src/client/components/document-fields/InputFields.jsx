@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Input from "../account sections/Input";
 import DocumentContext from "../../contexts/DocumentContext";
 
-function InputFields() {
+function InputFields({ display }) {
   const context = useContext(DocumentContext);
 
   if (context.fields.length === 0) return;
@@ -66,28 +66,26 @@ function InputFields() {
   }
 
   return (
-    <div className="w-[285px]">
+    <div className={`w-[285px] ${display}`}>
+      <h1 className="mb-3">Document fields</h1>
       <div>
-        <h1 className="mb-3">Document fields</h1>
-        <div>
-          <form className="flex flex-col gap-3">
-            {context.fields.map((field, index) => {
-              return (
-                <Input
-                  placeholder={field}
-                  width={"285px"}
-                  id={field}
-                  span={field}
-                  key={index}
-                  handleInput={handleInput}
-                  //defaultValue={field}
-                  typeClass={`field-input index-${index}`}
-                  buttonHandler={handleAddField}
-                />
-              );
-            })}
-          </form>
-        </div>
+        <form className="flex flex-col gap-3">
+          {context.fields.map((field, index) => {
+            return (
+              <Input
+                placeholder={field}
+                width={"285px"}
+                id={field}
+                span={field}
+                key={index}
+                handleInput={handleInput}
+                //defaultValue={field}
+                typeClass={`field-input index-${index}`}
+                buttonHandler={handleAddField}
+              />
+            );
+          })}
+        </form>
       </div>
     </div>
   );

@@ -57,12 +57,8 @@ function Document() {
   };
 
   const initialMode = {
-    template: (
-      <div className="w-[1280px] flex justify-between bg-white">
-        <Editor />
-        <InputFields />
-      </div>
-    ),
+    showMenu: "block",
+    displayInput: "block",
   };
 
   function changeMode(state, action) {
@@ -71,35 +67,24 @@ function Document() {
         editor.setEditable(true);
         return {
           ...state,
-          template: (
-            <div className="w-[1280px] flex gap-64 bg-white">
-              <Editor />
-              <InputFields />
-            </div>
-          ),
+          showMenu: "block",
+          displayInput: "block",
         };
       }
       case "document view": {
         editor.setEditable(false);
         return {
           ...state,
-          template: (
-            <div className="w-[1280px] flex justify-center bg-white">
-              <Editor />
-            </div>
-          ),
+          showMenu: "hidden",
+          displayInput: "hidden",
         };
       }
       case "document filling": {
         editor.setEditable(false);
         return {
           ...state,
-          template: (
-            <div className="w-[1280px] flex gap-64 bg-white">
-              <Editor />
-              <InputFields />
-            </div>
-          ),
+          showMenu: "hidden",
+          displayInput: "block",
         };
       }
     }
@@ -124,7 +109,10 @@ function Document() {
           Save document
         </div>
       </DocumentHeader>
-      {mode.template}
+      <div className="w-[1280px] flex gap-64 bg-white">
+        <Editor displayMenu={mode.showMenu} />
+        <InputFields display={mode.displayInput} />
+      </div>
       {isPopupOpen ? <SaveDocuent setIsOpen={setPopup} /> : ""}
     </DocumentContext.Provider>
   );

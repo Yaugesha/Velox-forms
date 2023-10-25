@@ -9,7 +9,7 @@ import AlignButtons from "./buttons/AlignButtons";
 import TableButtons from "./buttons/TableButtons";
 import DocumentContext from "../../contexts/DocumentContext";
 
-function EditorMenu() {
+function EditorMenu({ display }) {
   const context = useContext(DocumentContext);
 
   if (!context.editor) return null;
@@ -28,7 +28,10 @@ function EditorMenu() {
   };
 
   return (
-    <div className="w-[793px] h-30 flex items-center justify-between flex-wrap gap-2 mb-8 py-3 px-5 border-2 border-black">
+    <div
+      className={`w-[793px] h-30 flex items-center justify-between
+      flex-wrap gap-2 mb-8 py-3 px-5 border-2 border-black ${display}`}
+    >
       <FontStyleButton editor={context.editor} />
       <FontSizeButton editor={context.editor} />
       <TextDecorationButtons editor={context.editor} />

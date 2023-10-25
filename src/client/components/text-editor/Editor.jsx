@@ -3,7 +3,7 @@ import EditorMenu from "./EditorMenu";
 import { useContext } from "react";
 import DocumentContext from "../../contexts/DocumentContext";
 
-function Editor() {
+function Editor({ displayMenu }) {
   const context = useContext(DocumentContext);
 
   function handleClickOnPage(event) {
@@ -13,7 +13,7 @@ function Editor() {
 
   return (
     <div>
-      <EditorMenu />
+      <EditorMenu display={displayMenu} />
       <div className="overflow-none">
         <div
           onClick={handleClickOnPage}
