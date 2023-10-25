@@ -1,59 +1,53 @@
-import React from "react";
-import FontSizeButton from "./FontSizeButton";
-import FontStyleButton from "./FontStyleButton";
-import ListButtons from "./ListButtons";
-import ScaleSlider from "./ScaleSlider";
-import MarkButtons from "./MarkButtons";
-import AlignButtons from "./AlignButtons";
-import TableButtons from "./TableButtons";
-import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import React, { useContext } from "react";
+import FontSizeButton from "./buttons/FontSizeButton";
+import FontStyleButton from "./buttons/FontStyleButton";
+import ListButtons from "./buttons/ListButtons";
+import ScaleSlider from "./buttons/ScaleSlider";
+import TextDecorationButtons from "./buttons/TextDecorationButtons";
+import TextCaseButtons from "./buttons/TextCaseButtons";
+import AlignButtons from "./buttons/AlignButtons";
+import TableButtons from "./buttons/TableButtons";
+import DocumentContext from "../../contexts/DocumentContext";
+import HistoryButtons from "./buttons/HistoryButtons";
 
-function EditorMenu({ editor, scale, setScale, setField, unsetField }) {
-  const edit = useEditor({ extensions: [StarterKit] });
+function EditorMenu({ display }) {
+  const context = useContext(DocumentContext);
 
-  if (!editor) return null;
+  if (!context.editor) return null;
+
+  const handleInsertField = () => {
+    let index;
+    if (context.fields.find((field) => field === "field") === undefined) {
+      index = context.fields.length;
+      context.addField("field");
+    } else index = context.fields.length - 1;
+    context.editor
+      .chain()
+      .focus()
+      .insertContent(`<field index="${index}">field</field>&nbsp;`)
+      .run();
+  };
 
   return (
-    <div className="mb-8">
-      <EditorContent editor={edit} />
-      <ScaleSlider scale={scale} setScale={setScale} />
-      <FontSizeButton editor={editor} />
-      <FontStyleButton editor={editor} />
-      <ListButtons editor={editor} />
-      <MarkButtons editor={editor} />
-      <AlignButtons editor={editor} />
-      <TableButtons editor={editor} />
+    <div
+      className={`w-[793px] h-30 flex items-center justify-between
+      flex-wrap gap-2 mb-8 py-3 px-5 border-2 border-black ${display}`}
+    >
+      <FontStyleButton editor={context.editor} />
+      <FontSizeButton editor={context.editor} />
+      <TextDecorationButtons editor={context.editor} />
+      <TextCaseButtons editor={context.editor} />
+      <ListButtons editor={context.editor} />
+      <AlignButtons editor={context.ditor} />
+      <TableButtons editor={context.editor} />
       <button
-        onClick={() => {
-          editor
-            .chain()
-            .focus()
-            .setField(
-              editor.view.state.selection.content().content.content[0].content
-                .content[0].text,
-              setField
-            )
-            .run();
-        }}
+        className="inlene-block border-[1px] border-black px-1 py-[3px]"
+        onClick={handleInsertField}
       >
-        insert
+        Add field
       </button>
-      <button
-        onClick={() => {
-          editor
-            .chain()
-            .focus()
-            .unsetField(
-              editor.view.state.selection.content().content.content[0].content
-                .content[0].text,
-              unsetField
-            )
-            .run();
-        }}
-      >
-        delete
-      </button>
+      <HistoryButtons editor={context.editor} />
+      <ScaleSlider scale={context.scale} setScale={context.setScale} />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useRef } from "react";
-import Template from "../components/documents/Template";
-import { useNavigate } from "react-router-dom";
+import Template from "../components/documents/TemplateCard";
+import DocumentHeader from "../components/header/DocumentHeader";
 
 function TemplaytesGaliery() {
   const templatesArr = useRef([
@@ -101,22 +101,13 @@ function TemplaytesGaliery() {
       ],
     },
   ]);
-  const navigate = useNavigate();
+
   return (
-    <div className="absolute top-0 bg-white">
-      <header className="w-[980px] fixed flex border-b-2 bg-white border-solid border-black">
-        <div className="flex items-center text-base leading-6 ">
-          <div
-            onClick={() => navigate(-1)}
-            className="inline-block items-center w-12 cursor-pointer mr-5 ml-3 p-3 font-bold leading-7 text-2xl text-black font-serif"
-          >
-            &larr;
-          </div>
-          <span className="mr-2">Templates gallery</span>
-        </div>
-      </header>
-      <main>
-        <div className="w-[980px] mt-24 flex flex-col justify-between gap-8">
+    <div>
+      <div className="fixed w-[980px] h-24 bg-white"></div>
+      <DocumentHeader width="980px" page="Templates galiery" position="fixed" />
+      <main className="pt-24">
+        <div className="w-[980px] flex flex-col justify-between gap-8">
           {templatesArr.current.map((template) => {
             return (
               <div key={template.type}>
