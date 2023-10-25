@@ -8,6 +8,7 @@ import TextCaseButtons from "./buttons/TextCaseButtons";
 import AlignButtons from "./buttons/AlignButtons";
 import TableButtons from "./buttons/TableButtons";
 import DocumentContext from "../../contexts/DocumentContext";
+import HistoryButtons from "./buttons/HistoryButtons";
 
 function EditorMenu({ display }) {
   const context = useContext(DocumentContext);
@@ -45,6 +46,7 @@ function EditorMenu({ display }) {
       >
         Add field
       </button>
+      <HistoryButtons editor={context.editor} />
       <ScaleSlider scale={context.scale} setScale={context.setScale} />
     </div>
   );
