@@ -1,4 +1,4 @@
-function Document({ picture, title, date, type, link }) {
+function DocumentCard({ picture, title, date, type, link }) {
   return (
     <div className="w-[225px] h-[340px] border-[1px] border-[#dadce0]">
       <div className="flex justify-center items-center w-[225px] h-[260px] border-b-[1px]">
@@ -33,4 +33,4 @@ function Document({ picture, title, date, type, link }) {
     </div>
   );
 }
-export default Document;
+export default DocumentCard;
