@@ -17,22 +17,22 @@ function App() {
   const [state, setState] = useState(null);
 
   const callBackendAPI = async () => {
-    const response = await fetch("/api/v1/users");
+    const response = await fetch("/api/v1/users/");
     const body = await response.json();
 
     if (response.status !== 200) {
       throw Error(body.message);
     }
-    console.log(body.text);
-    return body.text;
+    console.log(body);
+    return body;
   };
 
   // получение GET маршрута с сервера Express, который соответствует GET из server.js
-  useEffect(() => {
-    callBackendAPI()
-      .then((res) => setState(res))
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   callBackendAPI()
+  //     .then((res) => setState(res))
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   return (
     <>
