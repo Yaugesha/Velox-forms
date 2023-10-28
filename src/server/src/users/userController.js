@@ -1,6 +1,14 @@
 const pool = require("../../db");
 const queries = require("./queries");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const result = dotenv.config();
+
+if (result.error) {
+  throw result.error;
+}
+const jwtKey = result.parsed.JWT_SECRETE_KEY;
 
 class userController {
   async getUsers(req, res) {
@@ -23,14 +31,19 @@ class userController {
 
   async loginUser(req, res) {
     const { email, password } = req.body;
-    pool.query(queries.checkEmailExists, [email], (error, results) => {
-      if (!results.rows.length) res.send("User with this email does not exist");
-      pool.query(queries.getUserPassword, [email], (error, results) => {
-        if (error) throw error;
-        if (results.rows[0].password === password)
-          res.status(201).send("Authorized succesfully");
-        else res.status(400).send("Incorrect user password");
-      });
+    pool.query(queries.getUserLoginData, [email], (error, results) => {
+      if (error) throw error;
+      if (results.rows.length !== 0) {
+        if (results.rows[0].password === password) {
+          const userId = results.rows[0].user_id;
+          const token = jwt.sign({ id: userId }, jwtKey);
+          res.status(201).send({
+            id: userId,
+            jwt: token,
+            mesege: "Authorized succesfully",
+          });
+        } else res.status(400).send("Incorrect user data");
+      } else res.status(400).send("Incorrect user data");
     });
   }
 
@@ -43,9 +56,8 @@ class userController {
 
     //is email unique
     pool.query(queries.checkEmailExists, [email], (error, results) => {
-      if (results.rows.length) {
-        res.send("User with this email has already exists");
-      }
+      if (results.rows.length)
+        return res.send("User with this email has already exists");
       pool.query(
         queries.addUser,
         [user_id, email, password, role],
