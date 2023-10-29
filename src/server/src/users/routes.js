@@ -1,11 +1,12 @@
 const { Router } = require("express");
 const controller = require("./userController");
 const { check } = require("express-validator");
+const authMiddleware = require("./authMiddleware");
 
 const router = Router();
 
 router.get("/", controller.getUsers);
-router.get("/:id", controller.getUserById);
+router.post("/user", authMiddleware, controller.getUserById);
 router.post(
   "/regist",
   [
