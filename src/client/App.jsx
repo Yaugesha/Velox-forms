@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Main from "./pages/Main";
@@ -14,48 +13,26 @@ import SignOut from "./components/popups/SignOut";
 import Document from "./pages/Document";
 
 function App() {
-  const [state, setState] = useState(null);
-
-  const callBackendAPI = async () => {
-    const response = await fetch("/api/v1/users/");
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message);
-    }
-    console.log(body);
-    return body;
-  };
-
-  // получение GET маршрута с сервера Express, который соответствует GET из server.js
-  // useEffect(() => {
-  //   callBackendAPI()
-  //     .then((res) => setState(res))
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Main />}>
-            <Route path="signUp" element={<SignUp />} />
-            <Route path="signIn" element={<SignIn />} />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />}>
+          <Route path="signUp" element={<SignUp />} />
+          <Route path="signIn" element={<SignIn />} />
+        </Route>
+        <Route path="documents" element={<Documents />}>
+          <Route path="templates" element={<TemplaytesGaliery />} />
+          <Route path="document" element={<Document />} />
+        </Route>
+        <Route path="profile" element={<Profile />}>
+          <Route path="account" element={<Account />}>
+            <Route path="settings" element={<AccountSettings />} />
+            <Route path="security&password" element={<AccountUpdateData />} />
+            <Route path="signOut" element={<SignOut />} />
           </Route>
-          <Route path="documents" element={<Documents />}>
-            <Route path="templates" element={<TemplaytesGaliery />} />
-            <Route path="document" element={<Document />} />
-          </Route>
-          <Route path="profile" element={<Profile />}>
-            <Route path="account" element={<Account />}>
-              <Route path="settings" element={<AccountSettings />} />
-              <Route path="security&password" element={<AccountUpdateData />} />
-              <Route path="signOut" element={<SignOut />} />
-            </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

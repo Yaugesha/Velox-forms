@@ -35,8 +35,7 @@ class userController {
         if (results.rows[0].password === password) {
           const userId = results.rows[0].user_id;
           const token = jwt.sign({ id: userId }, jwtKey);
-          res.status(201).send({
-            id: userId,
+          res.status(200).send({
             jwt: token,
             mesege: "Authorized succesfully",
           });
