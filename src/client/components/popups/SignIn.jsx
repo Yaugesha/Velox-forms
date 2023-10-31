@@ -1,14 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
-import Popup from "./Popup";
 import { useState } from "react";
-import authStore from "../../stores/authStore";
 import { observer } from "mobx-react";
+import { jwtDecode } from "jwt-decode";
+import authStore from "../../stores/authStore";
+import Popup from "./Popup";
 
 const SignIn = observer(() => {
   const navigate = useNavigate();
 
   function handleClose(e) {
-    if (e.target.classList.contains("w-full")) {
+    if (e.target.classList.contains("w-full") || e.target.type === "submit") {
+      console.log("close");
       document.body.style.overflow = "auto";
       navigate("/");
     }
@@ -34,7 +36,9 @@ const SignIn = observer(() => {
       throw Error(result.message);
     }
     localStorage.setItem("jwt", result.jwt);
+    const role = jwtDecode(result.jwt).role;
     authStore.login();
+    authStore.setRole(role);
   };
 
   return (
@@ -63,8 +67,9 @@ const SignIn = observer(() => {
         />
         <button
           type="submit"
-          onClick={() => {
+          onClick={(e) => {
             callBackendAPI();
+            handleClose(e);
           }}
           className="bg-black w-[120px] h-8 text-white text-base"
         >

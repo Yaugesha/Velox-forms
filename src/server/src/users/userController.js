@@ -50,7 +50,7 @@ class userController {
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.status(400).json(errors);
 
-    const { user_id, email, password, role } = req.body;
+    const { email, password } = req.body;
 
     //is email unique
     pool.query(queries.checkEmailExists, [email], (error, results) => {
@@ -58,11 +58,20 @@ class userController {
         return res.send("User with this email has already exists");
       pool.query(
         queries.addUser,
-        [user_id, email, password, role],
+        [email, password, "user"],
         (error, results) => {
           if (error) throw error;
-          res.status(201).send("User registred succesfully");
-          console.log("User created");
+          pool.query(queries.getUserByEmail, [email], (error, results) => {
+            if (error) throw error;
+            const userId = results.rows[0];
+            console.log(userId);
+            const token = jwt.sign({ id: userId, role: "user" }, jwtKey);
+            res.status(200).send({
+              jwt: token,
+              messege: "User registred succesfully",
+            });
+            console.log("User created");
+          });
         }
       );
     });

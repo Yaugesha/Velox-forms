@@ -1,9 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import Popup from "./Popup";
 import { useState } from "react";
+import { observer } from "mobx-react";
+import { jwtDecode } from "jwt-decode";
+import authStore from "../../stores/authStore";
+import Popup from "./Popup";
 
-function SignUp() {
+const SignUp = observer(() => {
   const navigate = useNavigate();
+
   function handleClose(e) {
     if (e.target.classList.contains("w-full")) {
       console.log("as");
@@ -23,10 +27,8 @@ function SignUp() {
         "Content-Type": "application/json;charset=utf-8",
       },
       body: JSON.stringify({
-        user_id: "4",
         email: email,
         password: password,
-        role: "user",
       }),
     });
     const result = await response.json();
@@ -34,8 +36,10 @@ function SignUp() {
     if (response.status !== 200) {
       throw Error(result.message);
     }
-    console.log(result);
-    return result;
+    localStorage.setItem("jwt", result.jwt);
+    const role = jwtDecode(result.jwt).role;
+    authStore.login();
+    authStore.setRole(role);
   };
 
   return (
@@ -45,7 +49,7 @@ function SignUp() {
         <p className="text-3xl mx-5">Sign Up</p>
         <hr className="w-[120px] border-black" />
       </span>
-      <form className="flex justify-center items-center flex-col gap-8">
+      <div className="flex justify-center items-center flex-col gap-8">
         <input
           onInput={(e) => {
             setEmail(e.target.value);
@@ -71,16 +75,19 @@ function SignUp() {
           type="password"
         />
         <button
-          onClick={() => {
-            if (password === confirmPassword) callBackendAPI();
+          onClick={(e) => {
+            if (password === confirmPassword) {
+              callBackendAPI();
+              handleClose(e);
+            }
           }}
           className="bg-black w-[200px] h-8 mt-4 text-white text-base"
         >
           Create Account
         </button>
-      </form>
+      </div>
     </Popup>
   );
-}
+});
 
 export default SignUp;
