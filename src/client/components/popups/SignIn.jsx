@@ -1,8 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import Popup from "./Popup";
 import { useState } from "react";
+import authStore from "../../stores/authStore";
+import { observer } from "mobx-react";
 
-function SignIn() {
+const SignIn = observer(() => {
   const navigate = useNavigate();
 
   function handleClose(e) {
@@ -32,6 +34,7 @@ function SignIn() {
       throw Error(result.message);
     }
     localStorage.setItem("jwt", result.jwt);
+    authStore.login();
   };
 
   return (
@@ -83,6 +86,6 @@ function SignIn() {
       </p>
     </Popup>
   );
-}
+});
 
 export default SignIn;

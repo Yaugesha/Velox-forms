@@ -34,7 +34,8 @@ class userController {
       if (results.rows.length !== 0) {
         if (results.rows[0].password === password) {
           const userId = results.rows[0].user_id;
-          const token = jwt.sign({ id: userId }, jwtKey);
+          const role = results.rows[0].role;
+          const token = jwt.sign({ id: userId, role: role }, jwtKey);
           res.status(200).send({
             jwt: token,
             mesege: "Authorized succesfully",
@@ -64,6 +65,17 @@ class userController {
           console.log("User created");
         }
       );
+    });
+  }
+
+  async refreshToken(req, res) {
+    const userId = req.user.id;
+    const role = req.user.role;
+    console.log(req.user);
+    const token = jwt.sign({ id: userId, role: role }, jwtKey);
+    res.status(200).send({
+      jwt: token,
+      mesege: "Token refreshed",
     });
   }
 }

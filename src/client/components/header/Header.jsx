@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import authStore from "../../stores/authStore";
 import HeaderTab from "./HeaderTab";
+import { observer } from "mobx-react";
 
-function Header({ page, role = "user" }) {
+const Header = observer(({ page }) => {
   function addActive() {
     document.querySelectorAll(".text-sm.cursor-pointer").forEach((el) => {
       if (el.textContent === page) {
@@ -14,7 +16,7 @@ function Header({ page, role = "user" }) {
   }
 
   let tabs = [];
-  switch (role) {
+  switch (authStore.role) {
     case "user":
       tabs = [
         { name: "About", link: "" },
@@ -58,6 +60,6 @@ function Header({ page, role = "user" }) {
       </nav>
     </header>
   );
-}
+});
 
 export default Header;

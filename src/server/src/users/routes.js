@@ -25,5 +25,6 @@ router.post(
   controller.registUser
 );
 router.post("/login", controller.loginUser);
+router.post("/check-auth", authMiddleware, controller.refreshToken);
 
 module.exports = router;

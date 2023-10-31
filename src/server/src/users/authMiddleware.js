@@ -13,7 +13,9 @@ const jwtKey = () => {
 module.exports = (req, res, next) => {
   const authHeader = req.body.jwt;
 
-  if (!authHeader) return res.status(400);
+  if (!authHeader) {
+    return res.status(400).send("You have no token");
+  }
   const data = jwt.verify(authHeader, jwtKey());
   req.user = data;
   next();
