@@ -9,7 +9,10 @@ const SignIn = observer(() => {
   const navigate = useNavigate();
 
   function handleClose(e) {
-    if (e.target.classList.contains("w-full") || e.target.type === "submit") {
+    if (
+      e.target.classList.contains("w-full") ||
+      e.target.classList.contains("submit-btn")
+    ) {
       console.log("close");
       document.body.style.overflow = "auto";
       navigate("/");
@@ -71,7 +74,7 @@ const SignIn = observer(() => {
             callBackendAPI();
             handleClose(e);
           }}
-          className="bg-black w-[120px] h-8 text-white text-base"
+          className="bg-black w-[120px] h-8 text-white text-base submit-btn"
         >
           Sign in
         </button>

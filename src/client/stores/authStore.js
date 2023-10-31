@@ -12,7 +12,6 @@ class AuthStore {
       login: action,
       logout: action,
       setRole: action,
-      getRole: action,
     });
   }
 
@@ -22,14 +21,11 @@ class AuthStore {
 
   logout() {
     this.isAuthenticated = false;
+    this.role = null;
   }
 
   setRole(role) {
     this.role = role;
-  }
-
-  getRole() {
-    return this.role;
   }
 }
 

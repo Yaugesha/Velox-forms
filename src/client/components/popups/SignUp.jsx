@@ -9,7 +9,10 @@ const SignUp = observer(() => {
   const navigate = useNavigate();
 
   function handleClose(e) {
-    if (e.target.classList.contains("w-full")) {
+    if (
+      e.target.classList.contains("w-full") ||
+      e.target.classList.contains("submit-btn")
+    ) {
       console.log("as");
       document.body.style.overflow = "auto";
       navigate("/");
@@ -81,7 +84,7 @@ const SignUp = observer(() => {
               handleClose(e);
             }
           }}
-          className="bg-black w-[200px] h-8 mt-4 text-white text-base"
+          className="bg-black w-[200px] h-8 mt-4 text-white text-base submit-btn"
         >
           Create Account
         </button>
