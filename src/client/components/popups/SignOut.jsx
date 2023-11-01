@@ -7,11 +7,14 @@ const SignOut = observer(() => {
   const navigate = useNavigate();
 
   function handleClose(e) {
-    if (e.target.classList.contains("w-full")) {
+    if (
+      e.target.classList.contains("w-full") ||
+      e.target.classList.contains("cancel-btn")
+    ) {
       document.body.style.overflow = "auto";
       navigate(-1);
     }
-    if (e.target.classList.contains("submit-btn")) {
+    if (e.target.classList.contains("exit-btn")) {
       document.body.style.overflow = "auto";
       navigate("/");
     }
@@ -36,7 +39,7 @@ const SignOut = observer(() => {
           onClick={(e) => {
             handleClose(e);
           }}
-          className="bg-black w-[140px] h-14 mt-4 flex items-center justify-center text-white submit-btn"
+          className="bg-black w-[140px] h-14 mt-4 flex items-center justify-center text-white cancel-btn"
         >
           Cancel
         </button>
@@ -45,7 +48,7 @@ const SignOut = observer(() => {
             handleClose(e);
             handleSignOut();
           }}
-          className="bg-black w-[162px] h-14 mt-4 flex items-center justify-center text-white submit-btn"
+          className="bg-black w-[162px] h-14 mt-4 flex items-center justify-center text-white exit-btn"
         >
           Sign Out
         </button>

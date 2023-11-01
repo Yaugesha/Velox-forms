@@ -13,7 +13,6 @@ const SignUp = observer(() => {
       e.target.classList.contains("w-full") ||
       e.target.classList.contains("submit-btn")
     ) {
-      console.log("as");
       document.body.style.overflow = "auto";
       navigate("/");
     }

@@ -41,7 +41,7 @@ function SaveDocuent({ setIsOpen }) {
         />
         <label htmlFor="template-chbox">Save template of this document</label>
       </div>
-      <Input placeholder={"Template roup"} width={"285px"} />
+      <Input placeholder={"Template group"} width={"285px"} />
       <div className="w-[285px] flex justify-center items-center gap-4 mt-8">
         <input
           className="w-6 h-6 accent-black"
