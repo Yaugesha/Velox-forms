@@ -87,6 +87,38 @@ class userController {
       mesege: "Token refreshed",
     });
   }
+
+  async chengeEmail(req, res) {
+    const { id, role } = req.user;
+    const newEmail = req.body.email;
+    const recievedPassword = req.body.password;
+    pool.query(queries.checkEmailExists, [newEmail], (error, results) => {
+      if (results.rows.length)
+        return res.status(400).send("User with this email has already exists");
+      pool.query(queries.getUserById, [id], (error, results) => {
+        if (error) throw error;
+        const currentEmail = results.rows[0].email;
+        const password = results.rows[0].password;
+        if (recievedPassword !== password)
+          return res.status(400).send("Incorrect password");
+        else {
+          pool.query(
+            queries.changeUserEmail,
+            [currentEmail, newEmail],
+            (error, results) => {
+              if (error) throw error;
+              const token = jwt.sign({ id: id, role: role }, jwtKey);
+              res.status(200).send({
+                jwt: token,
+                messege: "User email changed succesfully",
+              });
+              console.log("User email changed");
+            }
+          );
+        }
+      });
+    });
+  }
 }
 
 module.exports = new userController();

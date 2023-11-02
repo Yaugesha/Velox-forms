@@ -28,7 +28,9 @@ function Input({
         )}
       </div>
       <input
-        onChange={handleInput}
+        onChange={(e) => {
+          handleInput(e.target.value);
+        }}
         className={`w-[100%] h-[45px] border-2 border-black pl-4 ${typeClass}`}
         placeholder={placeholder}
         id={`${id}`}

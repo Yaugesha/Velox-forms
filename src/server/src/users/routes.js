@@ -26,5 +26,6 @@ router.post(
 );
 router.post("/login", controller.loginUser);
 router.post("/check-auth", authMiddleware, controller.refreshToken);
+router.post("/change-email", authMiddleware, controller.chengeEmail);
 
 module.exports = router;

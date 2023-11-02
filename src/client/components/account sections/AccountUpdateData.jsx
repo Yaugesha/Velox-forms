@@ -1,19 +1,57 @@
+import { useState } from "react";
 import Input from "./Input";
 
 function AccountUpdateData() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const callBackendAPI = async () => {
+    const jwt = localStorage.getItem("jwt");
+    const response = await fetch("/api/v1/users/change-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        jwt: jwt,
+        email: email,
+        password: password,
+      }),
+    });
+    const result = await response.json();
+
+    if (response.status !== 200) {
+      throw Error(result.message);
+    }
+    localStorage.setItem("jwt", result.jwt);
+  };
+
   return (
     <div>
-      <form
+      <div
         className="w-[590px] flex flex-wrap justify-between gap-[18px] mb-12"
         action=""
       >
-        <Input placeholder={"Email"} width={"590px"} id={"email"} />
-        <Input placeholder={"Password"} width={"590px"} id={"password"} />
-        <button className="w-[590px] h-[45px] bg-black text-sm text-white flex items-center justify-center">
+        <Input
+          placeholder={"Email"}
+          width={"590px"}
+          id={"email"}
+          handleInput={setEmail}
+        />
+        <Input
+          placeholder={"Password"}
+          width={"590px"}
+          id={"password"}
+          handleInput={setPassword}
+        />
+        <button
+          onClick={callBackendAPI}
+          className="w-[590px] h-[45px] bg-black text-sm text-white flex items-center justify-center"
+        >
           CHANGE EMAIL
         </button>
-      </form>
-      <form
+      </div>
+      <div
         className="w-[590px] flex flex-wrap justify-between gap-[18px]"
         action=""
       >
@@ -35,7 +73,7 @@ function AccountUpdateData() {
         <button className="w-[590px] h-[45px] bg-black text-sm text-white flex items-center justify-center">
           CHANGE PASSWORD
         </button>
-      </form>
+      </div>
     </div>
   );
 }
