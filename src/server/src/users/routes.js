@@ -2,6 +2,11 @@ const { Router } = require("express");
 const controller = require("./userController");
 const { check } = require("express-validator");
 const authMiddleware = require("./authMiddleware");
+const {
+  userValidationRules,
+  validate,
+  passwordValidationRules,
+} = require("./passwordValidator.js");
 
 const router = Router();
 
@@ -26,6 +31,13 @@ router.post(
 );
 router.post("/login", controller.loginUser);
 router.post("/check-auth", authMiddleware, controller.refreshToken);
-router.post("/change-email", authMiddleware, controller.chengeEmail);
+router.post("/change-email", authMiddleware, controller.changeEmail);
+router.post(
+  "/change-password",
+  authMiddleware,
+  passwordValidationRules(),
+  validate,
+  controller.changePassword
+);
 
 module.exports = router;

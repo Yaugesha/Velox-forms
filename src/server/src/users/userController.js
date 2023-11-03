@@ -88,7 +88,7 @@ class userController {
     });
   }
 
-  async chengeEmail(req, res) {
+  async changeEmail(req, res) {
     const { id, role } = req.user;
     const newEmail = req.body.email;
     const recievedPassword = req.body.password;
@@ -117,6 +117,30 @@ class userController {
           );
         }
       });
+    });
+  }
+
+  async changePassword(req, res) {
+    const { newPassword, currentPassword } = req.body;
+    const id = req.user.id;
+    pool.query(queries.getUserPassword, [id], (error, results) => {
+      if (error) throw error;
+      if (currentPassword !== results.rows[0].password) {
+        return res.status(400).send("Input incorrect current password");
+      }
+      pool.query(
+        queries.changeUserPassword,
+        [id, newPassword],
+        (error, results) => {
+          if ((error, results)) {
+            if (error) throw error;
+            const token = jwt.sign({ id: id, role: req.user.role }, jwtKey);
+            res
+              .status(200)
+              .send({ jwt: token, messege: "Password chnged succesfully" });
+          }
+        }
+      );
     });
   }
 }
