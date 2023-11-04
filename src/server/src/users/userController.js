@@ -1,6 +1,7 @@
-const pool = require("../../db");
+const { pool } = require("../../db");
 const queries = require("./queries");
 const { validationResult } = require("express-validator");
+const { User } = require("../../models/models");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const result = dotenv.config();
