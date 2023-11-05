@@ -34,7 +34,7 @@ function DropdownButton({ type, handleClick, valuesArr, initialValue, width }) {
       style={{ width: width + "px" }}
     >
       <button
-        onClick={handleInputValue}
+        //onClick={handleInputValue}
         id={type}
         className={`w-[100%] flex items-center justify-between pr-[8px] mt-1`}
       >

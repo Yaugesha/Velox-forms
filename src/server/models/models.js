@@ -21,7 +21,7 @@ const Document = sequelize.define(
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     title: { type: DataTypes.STRING },
     date: { type: DataTypes.DATE },
-    data: { type: DataTypes.STRING },
+    data: { type: DataTypes.TEXT },
     file: { type: DataTypes.BLOB },
   },
   {
@@ -36,7 +36,20 @@ const Template = sequelize.define(
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     title: { type: DataTypes.STRING },
     date: { type: DataTypes.DATE },
-    data: { type: DataTypes.STRING },
+    data: { type: DataTypes.TEXT },
+  },
+  {
+    timestamps: false,
+    createdAt: false,
+  }
+);
+
+const TemplateCategory = sequelize.define(
+  "template category",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING },
+    description: { type: DataTypes.TEXT },
   },
   {
     timestamps: false,
@@ -50,8 +63,15 @@ Document.belongsTo(User);
 User.hasMany(Template);
 Template.belongsTo(User);
 
+TemplateCategory.hasMany(Template);
+Template.belongsTo(TemplateCategory);
+
+User.hasMany(TemplateCategory);
+TemplateCategory.belongsTo(User);
+
 module.exports = {
   User,
   Document,
   Template,
+  TemplateCategory,
 };
