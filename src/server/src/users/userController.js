@@ -4,6 +4,7 @@ const { validationResult } = require("express-validator");
 const { User } = require("../../models/models");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const { where } = require("sequelize");
 const result = dotenv.config();
 
 if (result.error) {
@@ -30,20 +31,14 @@ class userController {
 
   async loginUser(req, res) {
     const { email, password } = req.body;
-    pool.query(queries.getUserLoginData, [email], (error, results) => {
-      if (error) throw error;
-      if (results.rows.length !== 0) {
-        if (results.rows[0].password === password) {
-          const userId = results.rows[0].user_id;
-          const role = results.rows[0].role;
-          const token = jwt.sign({ id: userId, role: role }, jwtKey);
-          res.status(200).send({
-            jwt: token,
-            mesege: "Authorized succesfully",
-          });
-        } else res.status(400).send("Incorrect user data");
-      } else res.status(400).send("Incorrect user data");
-    });
+    const user = await User.findOne({ where: { email } });
+    if (user.password === password && user) {
+      const token = jwt.sign({ id: user.id, role: user.role }, jwtKey);
+      res.status(200).send({
+        jwt: token,
+        mesege: "Authorized succesfully",
+      });
+    } else res.status(400).send("Incorrect user data");
   }
 
   async registUser(req, res) {
@@ -52,29 +47,20 @@ class userController {
     if (!errors.isEmpty()) return res.status(400).json(errors);
 
     const { email, password } = req.body;
-
-    //is email unique
-    pool.query(queries.checkEmailExists, [email], (error, results) => {
-      if (results.rows.length)
-        return res.send("User with this email has already exists");
-      pool.query(
-        queries.addUser,
-        [email, password, "user"],
-        (error, results) => {
-          if (error) throw error;
-          pool.query(queries.getUserByEmail, [email], (error, results) => {
-            if (error) throw error;
-            const userId = results.rows[0];
-            console.log(userId);
-            const token = jwt.sign({ id: userId, role: "user" }, jwtKey);
-            res.status(200).send({
-              jwt: token,
-              messege: "User registred succesfully",
-            });
-            console.log("User created");
-          });
-        }
-      );
+    User.findOrCreate({
+      where: { email: email },
+      defaults: { password: password, role: "user" },
+    }).then(([user, created]) => {
+      if (created) {
+        const id = user.id;
+        const token = jwt.sign({ id: id, role: "user" }, jwtKey);
+        res.status(200).send({
+          jwt: token,
+          messege: "User registred succesfully",
+        });
+        console.log("User created");
+      } else
+        return res.status(400).send("User with this email has already exists");
     });
   }
 
@@ -93,55 +79,41 @@ class userController {
     const { id, role } = req.user;
     const newEmail = req.body.email;
     const recievedPassword = req.body.password;
-    pool.query(queries.checkEmailExists, [newEmail], (error, results) => {
-      if (results.rows.length)
-        return res.status(400).send("User with this email has already exists");
-      pool.query(queries.getUserById, [id], (error, results) => {
-        if (error) throw error;
-        const currentEmail = results.rows[0].email;
-        const password = results.rows[0].password;
-        if (recievedPassword !== password)
-          return res.status(400).send("Incorrect password");
-        else {
-          pool.query(
-            queries.changeUserEmail,
-            [currentEmail, newEmail],
-            (error, results) => {
-              if (error) throw error;
-              const token = jwt.sign({ id: id, role: role }, jwtKey);
-              res.status(200).send({
-                jwt: token,
-                messege: "User email changed succesfully",
-              });
-              console.log("User email changed");
-            }
-          );
+    const user = await User.findOne({ where: { id: id } });
+    if (recievedPassword === user.password) {
+      User.update({ email: newEmail }, { where: { email: user.email } }).then(
+        (result) => {
+          // if this email hasn't been used by another user
+          if (result[0] === 1) {
+            const token = jwt.sign({ id: id, role: role }, jwtKey);
+            console.log("Email changed");
+            res.status(200).send({
+              jwt: token,
+              messege: "User email changed succesfully",
+            });
+          } else
+            return res
+              .status(400)
+              .send("User with this email has already exists");
         }
-      });
-    });
+      );
+    } else return res.status(400).send("Incorrect password");
   }
 
   async changePassword(req, res) {
     const { newPassword, currentPassword } = req.body;
     const id = req.user.id;
-    pool.query(queries.getUserPassword, [id], (error, results) => {
-      if (error) throw error;
-      if (currentPassword !== results.rows[0].password) {
-        return res.status(400).send("Input incorrect current password");
-      }
-      pool.query(
-        queries.changeUserPassword,
-        [id, newPassword],
-        (error, results) => {
-          if ((error, results)) {
-            if (error) throw error;
-            const token = jwt.sign({ id: id, role: req.user.role }, jwtKey);
-            res
-              .status(200)
-              .send({ jwt: token, messege: "Password chnged succesfully" });
-          }
-        }
-      );
+    const role = req.user.role;
+    const user = await User.findByPk(id);
+    if (user.password !== currentPassword)
+      return res.status(400).send("Current password doesn't match");
+    User.update({ password: newPassword }, { where: { id: id } }).then(() => {
+      const token = jwt.sign({ id: id, role: role }, jwtKey);
+      console.log("Email changed");
+      res.status(200).send({
+        jwt: token,
+        messege: "User password changed succesfully",
+      });
     });
   }
 }

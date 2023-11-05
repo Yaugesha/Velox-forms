@@ -8,16 +8,21 @@ const port = dotenv.config().parsed.PORT;
 
 const pool = new Pool({
   host: process.env.HOST,
-  user: process.env.USER,
+  user: process.env.DB_USER,
   port: process.env.PORT,
   password: process.env.PASSWORD,
   database: process.env.DATABASE,
 });
 
-const sequelize = new Sequelize(env.DATABASE, env.USER, env.PASSWORD, {
-  dialect: "postgres",
-  host,
-  port,
-});
+const sequelize = new Sequelize(
+  process.env.DATABASE,
+  process.env.DB_USER,
+  process.env.PASSWORD,
+  {
+    dialect: "postgres",
+    host,
+    port,
+  }
+);
 
 module.exports = { sequelize, pool };
