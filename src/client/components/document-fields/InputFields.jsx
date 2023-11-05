@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import Input from "../account sections/Input";
+import Input from "./Input";
 import DocumentContext from "../../contexts/DocumentContext";
 
 function InputFields({ display }) {
@@ -18,7 +18,10 @@ function InputFields({ display }) {
   }
 
   function generateClassName(inputString) {
-    const cleanedString = inputString.replace(/\W+/g, "-").toLowerCase();
+    const cleanedString = inputString
+      .replace(/\W+/g, "-")
+      .replace(/[^a-zA-Z0-9]/g, "")
+      .toLowerCase();
     const className = cleanedString;
     return className;
   }
@@ -34,6 +37,7 @@ function InputFields({ display }) {
   function updateField(field, input) {
     field.classList.remove(input.id);
     field.classList.add(generateClassName(input.value));
+    console.log(generateClassName(input.value));
     field.innerText = input.value;
   }
 
@@ -42,19 +46,21 @@ function InputFields({ display }) {
       .querySelector(".editor")
       .querySelector(`p`)
       .removeChild(field.parentNode);
-    context.removeField(input.id);
     input.remove();
+    context.removeField(input.id);
+    const label = document.querySelector(`.${input.id}_label`);
+    label ? (label.outerHTML = "") : "";
   }
 
   function handleInput(e) {
     const input = e.target;
     const fields = document.querySelectorAll(`.${input.id}`);
-    updateFieldsArray(input);
     fields.forEach((field) => {
       if (field.classList[5] === input.classList[6]) {
         changeInputSelecors(field, input);
       }
     });
+    updateFieldsArray(input);
   }
 
   function handleAddField(field) {
@@ -69,23 +75,21 @@ function InputFields({ display }) {
     <div className={`w-[285px] ${display}`}>
       <h1 className="mb-3">Document fields</h1>
       <div>
-        <form className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3">
           {context.fields.map((field, index) => {
             return (
               <Input
                 placeholder={field}
                 width={"285px"}
                 id={field}
-                span={field}
                 key={index}
                 handleInput={handleInput}
-                //defaultValue={field}
                 typeClass={`field-input index-${index}`}
                 buttonHandler={handleAddField}
               />
             );
           })}
-        </form>
+        </div>
       </div>
     </div>
   );
