@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { observer } from "mobx-react";
 import authStore from "./stores/authStore";
+import Template from "./pages/Template";
 
 const App = observer(() => {
   useEffect(function () {
@@ -54,6 +55,7 @@ const App = observer(() => {
           </Route>
           <Route path="documents" element={<Documents />}>
             <Route path="templates" element={<TemplaytesGaliery />} />
+            <Route path="template" element={<Template />} />
             <Route path="document" element={<Document />} />
           </Route>
           <Route path="profile" element={<Profile />}>

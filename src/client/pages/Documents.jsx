@@ -11,7 +11,7 @@ function Documents() {
     {
       title: "Create new document",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-      link: "document",
+      link: "template",
     },
     {
       title: "New document2",
