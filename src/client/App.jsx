@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Main from "./pages/Main";
 import Documents from "./pages/Documents";
-import TemplaytesGaliery from "./pages/TemplaytesGaliery";
+import TemplatesGaliery from "./pages/TemplatesGaliery";
 import Profile from "./pages/Profile";
 import AccountSettings from "./components/account sections/AccountSettings";
 import SignUp from "./components/popups/SignUp";
@@ -54,7 +54,7 @@ const App = observer(() => {
             <Route path="signIn" element={<SignIn />} />
           </Route>
           <Route path="documents" element={<Documents />}>
-            <Route path="templates" element={<TemplaytesGaliery />} />
+            <Route path="templates" element={<TemplatesGaliery />} />
             <Route path="template" element={<Template />} />
             <Route path="document" element={<Document />} />
           </Route>

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import TemplateCard from "../components/documents/TemplateCard";
 import DocumentCard from "../components/documents/DocumentCard";
 import DocumentList from "../components/documents/DocumentList";
@@ -7,30 +7,15 @@ import SortButton from "../components/documents/SortButton";
 import Header from "../components/header/Header";
 
 function Documents() {
-  const templates = useRef([
+  const [templates, setTemplates] = useState([
     {
       title: "Create new document",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
       link: "template",
     },
-    {
-      title: "New document2",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "New document3",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "New document4",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "New document5",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
   ]);
-  const documents = useRef([
+
+  const documents = [
     {
       title: "Document name1",
       type: "doc",
@@ -79,7 +64,36 @@ function Documents() {
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
-  ]);
+  ];
+
+  useEffect(function () {
+    const jwt = localStorage.getItem("jwt");
+    const getTemplates = async () => {
+      const response = await fetch("/api/v1/templates/recent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          jwt: jwt,
+        }),
+      });
+      const result = await response.json();
+
+      if (response.status !== 200) {
+        throw Error(result.message);
+      }
+      const recievedTemplates = result.templates.map((template) => {
+        return {
+          title: template.title,
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+        };
+      });
+      setTemplates([...templates, ...recievedTemplates]);
+    };
+
+    getTemplates();
+  }, []);
 
   const [displayDocs, setDisplayDocs] = useState("table");
   const [nameSort, setNameSort] = useState("ascending");
@@ -116,8 +130,8 @@ function Documents() {
                   />
                 </div>
               </div>
-              <div className="w-[980px] flex justify-between mb-7">
-                {templates.current.map((template) => {
+              <div className="w-[980px] flex gap-5 mb-7">
+                {templates.map((template) => {
                   return (
                     <TemplateCard
                       title={template.title}
@@ -163,7 +177,7 @@ function Documents() {
               </div>
               {displayDocs === "table" ? (
                 <div className="flex justify-between flex-wrap gap-y-5">
-                  {documents.current.map((document) => {
+                  {documents.map((document) => {
                     return (
                       <DocumentCard
                         title={document.title}
