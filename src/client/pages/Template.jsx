@@ -52,7 +52,7 @@ function Template() {
       </DocumentHeader>
       <div className="w-[1280px] flex gap-64 bg-white">
         <Editor />
-        <InputFields />
+        <InputFields isTemplate={true} />
       </div>
       {isPopupOpen ? <SaveTemplate setIsOpen={setPopup} /> : ""}
     </DocumentContext.Provider>

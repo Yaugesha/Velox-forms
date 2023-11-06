@@ -52,6 +52,7 @@ class templateController {
             return {
               title: template.title,
               picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+              link: `document?templateId=${template.id}`,
             };
           }),
         };
@@ -72,13 +73,28 @@ class templateController {
       limit: 4,
     })
       .then((result) => {
-        res
-          .status(200)
-          .send({ templates: result.rows, messege: "Templates found" });
+        res.status(200).send({
+          templates: result.rows.map((template) => {
+            return {
+              title: template.title,
+              picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+              link: `document?templateId=${template.id}`,
+            };
+          }),
+          messege: "Templates found",
+        });
       })
       .catch((error) => {
         return res.status(400).send("Templates not found");
       });
+  }
+
+  async getTemplayteLayout(req, res) {
+    const id = req.body.templateId;
+    const template = await Template.findByPk(id);
+    if (template)
+      res.status(200).send({ layout: template.data, messege: "Layout found" });
+    else res.status(400).send("Layout not found");
   }
 }
 

@@ -1,33 +1,75 @@
-import { useEditor } from "@tiptap/react";
 import InputFields from "../components/document-fields/InputFields";
-import Editor from "../components/text-editor/Editor";
 import { useState, useEffect, useReducer } from "react";
-import config from "../components/text-editor/editorConfig";
 import DocumentHeader from "../components/header/DocumentHeader";
 import DocumentContext from "../contexts/DocumentContext";
 import SaveDocuent from "../components/popups/SaveDocuent";
+import { useSearchParams } from "react-router-dom";
 
 function Document() {
-  const editor = useEditor(config(removeField));
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [fields, setFields] = useState([]);
-  const [scale, setScale] = useState(100);
   const [isPopupOpen, setPopup] = useState(false);
+  const [layout, setLayout] = useState("");
+
+  function addField(newField) {
+    setFields([...fields, newField]);
+  }
+  function removeField(fieldToRemove) {
+    setFields(fields.filter((field) => field !== fieldToRemove));
+  }
 
   useEffect(function () {
-    document.querySelector(".editor").style.transform = `scale(${scale / 100})`;
-    document.querySelector(".editor").style.position = "relative";
-    document.querySelector(".editor").style.top = `${
-      (scale / 100 - 1) * 140 * 4
-    }px`;
-  });
+    const getLayout = async () => {
+      const response = await fetch("/api/v1/templates/layout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          templateId: searchParams.get("templateId"),
+        }),
+      });
+      const result = await response.json();
+
+      if (response.status !== 200) {
+        throw Error(result.message);
+      }
+      setLayout(result.layout);
+    };
+    getLayout();
+  }, []);
+
+  useEffect(
+    function () {
+      function insertLayout() {
+        const documentLayout = document.createElement("div");
+        document.querySelector(".container").prepend(documentLayout);
+        documentLayout.outerHTML = layout;
+        findFileds();
+      }
+      function findFileds() {
+        const fields = Array.from(
+          document.querySelectorAll(".react-component")
+        );
+        if (fields.length === 0) return;
+        const sortedFields = fields.sort((a, b) => {
+          a.classList[5] - b.classList[5];
+        });
+        setFields([
+          ...new Set(
+            sortedFields.map((field) => {
+              return field.textContent;
+            })
+          ),
+        ]);
+      }
+      insertLayout();
+    },
+    [layout]
+  );
 
   const buttons = [
-    {
-      image:
-        "/src/client/assets/icons/text-editor/icon-template-mode-editing.svg",
-      alt: "template editing",
-    },
     {
       image:
         "/src/client/assets/icons/text-editor/icon-document-mode-preview.svg",
@@ -40,39 +82,21 @@ function Document() {
     },
   ];
 
-  function addField(newField) {
-    setFields([...fields, newField]);
-  }
-  function removeField(fieldToRemove) {
-    setFields(fields.filter((field) => field !== fieldToRemove));
-  }
-
   const documentProps = {
-    editor,
     fields,
     addField,
     removeField,
     setFields,
-    setScale,
   };
 
   const initialMode = {
-    showMenu: "block",
+    showMenu: "hidden",
     displayInput: "block",
   };
 
   function changeMode(state, action) {
     switch (action.name) {
-      case "template editing": {
-        editor.setEditable(true);
-        return {
-          ...state,
-          showMenu: "block",
-          displayInput: "block",
-        };
-      }
       case "document view": {
-        editor.setEditable(false);
         return {
           ...state,
           showMenu: "hidden",
@@ -80,7 +104,6 @@ function Document() {
         };
       }
       case "document filling": {
-        editor.setEditable(false);
         return {
           ...state,
           showMenu: "hidden",
@@ -109,8 +132,7 @@ function Document() {
           Save document
         </div>
       </DocumentHeader>
-      <div className="w-[1280px] flex gap-64 bg-white">
-        <Editor displayMenu={mode.showMenu} />
+      <div className="container w-[1280px] flex gap-64 bg-white">
         <InputFields display={mode.displayInput} />
       </div>
       {isPopupOpen ? <SaveDocuent setIsOpen={setPopup} /> : ""}

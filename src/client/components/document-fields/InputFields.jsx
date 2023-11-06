@@ -1,12 +1,13 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import Input from "./Input";
 import DocumentContext from "../../contexts/DocumentContext";
 
-function InputFields({ display }) {
+function InputFields({ display, isTemplate }) {
   const context = useContext(DocumentContext);
 
   if (context.fields.length === 0) return;
-
+  const inputs = useRef(context.fields);
+  console.log(inputs);
   function updateFieldsArray(input) {
     const inputIndex = input.classList[6].split("-")[1];
     const newFields = context.fields.map((field, index) => {
@@ -37,7 +38,6 @@ function InputFields({ display }) {
   function updateField(field, input) {
     field.classList.remove(input.id);
     field.classList.add(generateClassName(input.value));
-    console.log(generateClassName(input.value));
     field.innerText = input.value;
   }
 
@@ -84,8 +84,10 @@ function InputFields({ display }) {
                 id={field}
                 key={index}
                 handleInput={handleInput}
+                defaultValue={inputs.current[index]}
                 typeClass={`field-input index-${index}`}
                 buttonHandler={handleAddField}
+                isTemplate={isTemplate}
               />
             );
           })}

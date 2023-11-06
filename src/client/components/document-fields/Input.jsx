@@ -6,19 +6,22 @@ function Input({
   typeClass,
   defaultValue,
   buttonHandler,
+  isTemplate,
 }) {
   return (
     <div className={`w-[${width}] flex flex-col gap-2 col-span-2 ${id}`}>
       <div className={`${id}_label`}>
         <label className="text-xs tracking[5%]" htmlFor={`${id}`}>
-          {placeholder}
+          {isTemplate ? placeholder : defaultValue}
         </label>
-        <button
-          className="ml-4 px-2 border-[1px] border-black"
-          onClick={() => buttonHandler(id)}
-        >
-          insert
-        </button>
+        {isTemplate && (
+          <button
+            className="ml-4 px-2 border-[1px] border-black"
+            onClick={() => buttonHandler(id)}
+          >
+            insert
+          </button>
+        )}
       </div>
       <input
         onChange={handleInput}

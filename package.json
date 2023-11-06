@@ -33,6 +33,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "sequelize": "^6.34.0",
+    "tiptap": "^1.32.2",
+    "tiptap-extensions": "^1.35.2",
     "vite-express": "*"
   },
   "devDependencies": {

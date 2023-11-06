@@ -9,7 +9,7 @@ import Header from "../components/header/Header";
 function Documents() {
   const [templates, setTemplates] = useState([
     {
-      title: "Create new document",
+      title: "Create new template",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
       link: "template",
     },
@@ -83,12 +83,7 @@ function Documents() {
       if (response.status !== 200) {
         throw Error(result.message);
       }
-      const recievedTemplates = result.templates.map((template) => {
-        return {
-          title: template.title,
-          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-        };
-      });
+      const recievedTemplates = result.templates;
       setTemplates([...templates, ...recievedTemplates]);
     };
 

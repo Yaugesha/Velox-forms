@@ -16,7 +16,7 @@ function SaveTemplate({ setIsOpen }) {
       },
       body: JSON.stringify({
         token: localStorage.getItem("jwt"),
-        data: document.querySelector(".editor").outerHTML,
+        data: document.querySelector(".editor").outerHTML, //tiptap
         title: title,
         category: category,
       }),
