@@ -38,19 +38,18 @@ function DocumentHeader({
         <span className="mr-2 pt-2">{page}</span>
       </div>
       <div className="flex self-center w-30 h-8 ">
-        {navButtons !== undefined
-          ? navButtons.map((button, index) => {
-              return (
-                <div
-                  className="w-8 h-8 flex self-center cursor-pointer editor-mode-btn border-2 border-black"
-                  key={index}
-                  onClick={() => handleCLick({ name: button.alt })}
-                >
-                  <img src={button.image} alt={button.alt} />
-                </div>
-              );
-            })
-          : ""}
+        {navButtons !== undefined &&
+          navButtons.map((button, index) => {
+            return (
+              <div
+                className="w-8 h-8 flex self-center cursor-pointer editor-mode-btn border-2 border-black"
+                key={index}
+                onClick={() => handleCLick(button.alt)}
+              >
+                <img src={button.image} alt={button.alt} />
+              </div>
+            );
+          })}
       </div>
       {children}
     </header>

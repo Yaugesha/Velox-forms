@@ -1,5 +1,5 @@
 import InputFields from "../components/document-fields/InputFields";
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect } from "react";
 import DocumentHeader from "../components/header/DocumentHeader";
 import DocumentContext from "../contexts/DocumentContext";
 import SaveDocuent from "../components/popups/SaveDocuent";
@@ -11,6 +11,7 @@ function Document() {
   const [fields, setFields] = useState([]);
   const [isPopupOpen, setPopup] = useState(false);
   const [layout, setLayout] = useState("");
+  const [documentMode, setDocumentMode] = useState("document filling");
 
   function addField(newField) {
     setFields([...fields, newField]);
@@ -48,6 +49,7 @@ function Document() {
         documentLayout.outerHTML = layout;
         findFileds();
       }
+      findFileds();
       function findFileds() {
         const fields = Array.from(
           document.querySelectorAll(".react-component")
@@ -64,9 +66,32 @@ function Document() {
           ),
         ]);
       }
-      insertLayout();
+      if (documentMode === "document filling") insertLayout();
     },
     [layout]
+  );
+
+  useEffect(
+    function () {
+      if (documentMode === "document filling") {
+        const documentLayout = document.createElement("div");
+        const container = document.querySelector(".container");
+        if (container.lastChild === null) return;
+        container.firstChild.outerHTML = "";
+        container.prepend(documentLayout);
+        documentLayout.outerHTML = layout;
+      } else {
+        setLayout(document.querySelector(".editor").outerHTML);
+        const fields = document.querySelectorAll(".react-component");
+        fields.forEach((field) => {
+          field.classList.remove("bg-black");
+          field.classList.remove("text-white");
+          field.classList.remove("px-0.5");
+        });
+        document.querySelector(".editor").style = "";
+      }
+    },
+    [documentMode]
   );
 
   const buttons = [
@@ -89,42 +114,16 @@ function Document() {
     setFields,
   };
 
-  const initialMode = {
-    showMenu: "hidden",
-    displayInput: "block",
-  };
-
-  function changeMode(state, action) {
-    switch (action.name) {
-      case "document view": {
-        return {
-          ...state,
-          showMenu: "hidden",
-          displayInput: "hidden",
-        };
-      }
-      case "document filling": {
-        return {
-          ...state,
-          showMenu: "hidden",
-          displayInput: "block",
-        };
-      }
-    }
-  }
-
-  const [mode, dispatch] = useReducer(changeMode, initialMode);
-
   return (
     <DocumentContext.Provider value={documentProps}>
       <DocumentHeader
         width="1280px"
         page="Document"
         navButtons={buttons}
-        handleCLick={dispatch}
+        handleCLick={setDocumentMode}
       >
         <div
-          className="self-center px-1 border-2 border-black"
+          className="self-center px-1 border-2 border-black cursor-pointer"
           onClick={() => {
             setPopup(true);
           }}
@@ -133,7 +132,7 @@ function Document() {
         </div>
       </DocumentHeader>
       <div className="container w-[1280px] flex gap-64 bg-white">
-        <InputFields display={mode.displayInput} />
+        <InputFields />
       </div>
       {isPopupOpen ? <SaveDocuent setIsOpen={setPopup} /> : ""}
     </DocumentContext.Provider>
