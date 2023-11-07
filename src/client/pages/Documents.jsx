@@ -15,56 +15,14 @@ function Documents() {
     },
   ]);
 
-  const documents = [
+  const [documents, setDocuments] = useState([
     {
       title: "Document name1",
       type: "doc",
       date: "13 September 2023y",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
     },
-    {
-      title: "Document name2",
-      type: "pdf",
-      date: "13 September 2023y",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "Document name3",
-      type: "doc",
-      date: "13 September 2023y",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "Document name4",
-      type: "pdf",
-      date: "13 September 2023y",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "Document name5",
-      type: "doc",
-      date: "13 September 2023y",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "Document name6",
-      type: "pdf",
-      date: "13 September 2023y",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "Document name7",
-      type: "doc",
-      date: "13 September 2023y",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-    {
-      title: "Document name8",
-      type: "pdf",
-      date: "13 September 2023y",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-  ];
+  ]);
 
   useEffect(function () {
     const jwt = localStorage.getItem("jwt");
@@ -86,8 +44,27 @@ function Documents() {
       const recievedTemplates = result.templates;
       setTemplates([...templates, ...recievedTemplates]);
     };
+    const getDocumentss = async () => {
+      const response = await fetch("/api/v1/documents/all", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          jwt: jwt,
+        }),
+      });
+      const result = await response.json();
+
+      if (response.status !== 200) {
+        throw Error(result.message);
+      }
+      const recievedDocuments = result.documents;
+      setDocuments([...documents, ...recievedDocuments]);
+    };
 
     getTemplates();
+    getDocumentss();
   }, []);
 
   const [displayDocs, setDisplayDocs] = useState("table");
@@ -171,7 +148,7 @@ function Documents() {
                 </div>
               </div>
               {displayDocs === "table" ? (
-                <div className="flex justify-between flex-wrap gap-y-5">
+                <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
                   {documents.map((document) => {
                     return (
                       <DocumentCard
