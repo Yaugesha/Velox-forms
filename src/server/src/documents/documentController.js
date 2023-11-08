@@ -1,5 +1,4 @@
 const { Document } = require("../../models/models");
-const fs = require("fs");
 
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
@@ -14,25 +13,25 @@ const jwtKey = () => {
 };
 
 class documentController {
-  //   async saveDocument(req, res) {
-  //     const { token, title, data } = req.body;
-  //     const userId = jwt.verify(token, jwtKey()).id;
-  //     const date = new Date();
-  //     const file = await convertToDocx(data);
-  //     await Document.create({
-  //       title: title,
-  //       date: date,
-  //       data: data,
-  //       userId: userId,
-  //       file: file,
-  //     }).then(() => {
-  //       console.log("document saved");
-  //       res.status(200).send({
-  //         file: file,
-  //         messege: "Document saved",
-  //       });
-  //     });
-  //   }
+  async saveDocument(req, res) {
+    const { token, title, data, file } = req.body;
+    const userId = jwt.verify(token, jwtKey()).id;
+    const date = new Date();
+
+    await Document.create({
+      title: title,
+      date: date,
+      data: data,
+      userId: userId,
+      file: file,
+    }).then(() => {
+      console.log("document saved");
+      res.status(200).send({
+        file: file,
+        messege: "Document saved",
+      });
+    });
+  }
 
   async getAllDocuments(req, res) {
     const token = req.body.jwt;

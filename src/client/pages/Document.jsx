@@ -1,9 +1,9 @@
-import InputFields from "../components/document-fields/InputFields";
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import DocumentHeader from "../components/header/DocumentHeader";
 import DocumentContext from "../contexts/DocumentContext";
 import SaveDocuent from "../components/popups/SaveDocuent";
-import { useSearchParams } from "react-router-dom";
+import InputFields from "../components/document-fields/InputFields";
 
 function Document() {
   const [searchParams, setSearchParams] = useSearchParams();

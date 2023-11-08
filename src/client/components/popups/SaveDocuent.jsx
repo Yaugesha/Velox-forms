@@ -13,6 +13,8 @@ function SaveDocuent({ setIsOpen }) {
   }
 
   const callBackendAPI = async () => {
+    const fieldStyle = "bg-black text-white inline-block px-0.5";
+    const data = document.querySelector(".editor").outerHTML;
     const response = await fetch("/api/v1/documents/save", {
       method: "POST",
       headers: {
@@ -20,7 +22,8 @@ function SaveDocuent({ setIsOpen }) {
       },
       body: JSON.stringify({
         token: localStorage.getItem("jwt"),
-        data: document.querySelector(".editor").outerHTML,
+        data: data.outerHTML,
+        file: data.replaceAll(fieldStyle, ""),
         title: title,
       }),
     });
