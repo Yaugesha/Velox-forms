@@ -5,17 +5,18 @@ function SortButton({ type, kind, changeKind, active, setActive, callback }) {
         kind === "table" ? changeKind("list") : changeKind("table");
         break;
       case "name":
+        setActive(type);
         kind === "ascending"
           ? changeKind("descending")
           : changeKind("ascending");
         break;
       case "date":
+        setActive(type);
         kind === "ascending"
           ? changeKind("descending")
           : changeKind("ascending");
         break;
     }
-    setActive(type);
   }
   return (
     <img

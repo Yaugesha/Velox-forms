@@ -2,11 +2,13 @@ import { useState } from "react";
 import Input from "../account sections/Input";
 import DropdownButton from "../buttons/DropdownButton";
 import Popup from "./Popup";
+import { useNavigate } from "react-router-dom";
 
 function SaveTemplate({ setIsOpen }) {
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
   const [category, setCategory] = useState(categories[0]);
   const [title, setTitle] = useState("");
+  const navigate = useNavigate();
 
   const callBackendAPI = async () => {
     const response = await fetch("/api/v1/templates/save", {
@@ -26,6 +28,7 @@ function SaveTemplate({ setIsOpen }) {
     if (response.status !== 200) {
       throw Error(result.message);
     }
+    window.location.reload();
   };
 
   function handleClose(e) {
@@ -54,7 +57,10 @@ function SaveTemplate({ setIsOpen }) {
       </div>
       <div className="w-[285px] flex justify-center items-center gap-4 mt-8"></div>
       <button
-        onClick={callBackendAPI}
+        onClick={() => {
+          callBackendAPI();
+          navigate(-1);
+        }}
         className="bg-black w-[204px] h-8 mt-4 text-white text-base"
       >
         Confirm and save

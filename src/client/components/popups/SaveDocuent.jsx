@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Input from "../account sections/Input";
 import Popup from "./Popup";
+import { useNavigate } from "react-router-dom";
 
 function SaveDocuent({ setIsOpen }) {
   const [title, setTitle] = useState("");
+  const navigate = useNavigate();
 
   function handleClose(e) {
     if (e.target.classList.contains("w-full")) {
@@ -22,7 +24,7 @@ function SaveDocuent({ setIsOpen }) {
       },
       body: JSON.stringify({
         token: localStorage.getItem("jwt"),
-        data: data.outerHTML,
+        data: data,
         file: data.replaceAll(fieldStyle, ""),
         title: title,
       }),
@@ -37,6 +39,7 @@ function SaveDocuent({ setIsOpen }) {
     if (response.status !== 200) {
       throw Error(result.message);
     }
+    window.location.reload();
   };
 
   return (
@@ -76,7 +79,10 @@ function SaveDocuent({ setIsOpen }) {
         <label htmlFor="export-chbox">Export this document</label>
       </div>
       <button
-        onClick={callBackendAPI}
+        onClick={() => {
+          callBackendAPI();
+          navigate(-1);
+        }}
         className="bg-black w-[204px] h-8 mt-4 text-white text-base"
       >
         Confirm and save

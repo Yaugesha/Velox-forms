@@ -17,13 +17,14 @@ function AccountSettings() {
           Update
         </div>
       </div>
-      <form className="w-[590px] flex justify-between flex-wrap " action="">
+      <div className="w-[590px] flex justify-between flex-wrap " action="">
         <div className="grid grid-rows-4 grid-cols-2 gap-[18px] mb-[18px]">
           <Input placeholder={"Full name"} width={"286px"} id={"fullName"} />
           <Input placeholder={"Email Address"} width={"286px"} id={"email"} />
           <Input
             placeholder={"Adress"}
             width={"590px"}
+            colSpan={"col-span-2"}
             id={"adress"}
             span={true}
           />
@@ -46,6 +47,7 @@ function AccountSettings() {
           <Input
             placeholder={"Office adress"}
             width={"590px"}
+            colSpan={"col-span-2"}
             id={"officeAdress"}
             span={true}
           />
@@ -73,7 +75,7 @@ function AccountSettings() {
         <button className="w-[590px] h-[45px] bg-black text-sm text-white flex items-center justify-center">
           UPDATE INFORMATION
         </button>
-      </form>
+      </div>
     </div>
   );
 }

@@ -163,7 +163,7 @@ function Documents() {
                 </div>
               ) : (
                 <div className="w-[980px] flex flex-col justify-between flex-wrap gap-y-5">
-                  {documents.current.map((document) => {
+                  {documents.map((document) => {
                     return (
                       <DocumentList
                         title={document.title}

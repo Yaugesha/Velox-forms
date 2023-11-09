@@ -1,6 +1,6 @@
-function Input({ placeholder, width, id, handleInput }) {
+function Input({ placeholder, width, id, handleInput, colSpan }) {
   return (
-    <div className={`w-[${width}] flex flex-col gap-2`}>
+    <div className={`w-[${width}] flex flex-col gap-2 ${colSpan}`}>
       <div className={`${id}_label`}>
         <label className="text-xs tracking[5%]" htmlFor={`${id}`}>
           {placeholder}
