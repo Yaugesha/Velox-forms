@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation, Outlet } from "react-router-dom";
 import TemplateCard from "../components/documents/TemplateCard";
 import DocumentCard from "../components/documents/DocumentCard";
 import DocumentList from "../components/documents/DocumentList";
-import { Link, useLocation, Outlet } from "react-router-dom";
 import SortButton from "../components/documents/SortButton";
 import Header from "../components/header/Header";
 
@@ -15,14 +15,7 @@ function Documents() {
     },
   ]);
 
-  const [documents, setDocuments] = useState([
-    {
-      title: "Document name1",
-      type: "doc",
-      date: "13 September 2023y",
-      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-    },
-  ]);
+  const [documents, setDocuments] = useState([]);
 
   useEffect(function () {
     const jwt = localStorage.getItem("jwt");
@@ -147,7 +140,9 @@ function Documents() {
                   </div>
                 </div>
               </div>
-              {displayDocs === "table" ? (
+              {documents === null ? (
+                <p className="text-l">You have no documents</p>
+              ) : displayDocs === "table" ? (
                 <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
                   {documents.map((document) => {
                     return (
@@ -156,6 +151,7 @@ function Documents() {
                         type={document.type}
                         date={document.date}
                         picture={document.picture}
+                        link={document.link}
                         key={document.title}
                       />
                     );
@@ -170,6 +166,7 @@ function Documents() {
                         type={document.type}
                         date={document.date}
                         picture={document.picture}
+                        link={document.link}
                         key={document.title}
                       />
                     );

@@ -12,8 +12,6 @@ export default Node.create({
 
   content: "text*",
 
-  atom: true,
-
   addAttributes() {
     return { index: { default: 0 } };
   },

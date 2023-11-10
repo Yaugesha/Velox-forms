@@ -22,7 +22,7 @@ const Document = sequelize.define(
     title: { type: DataTypes.STRING },
     date: { type: DataTypes.DATE },
     data: { type: DataTypes.TEXT },
-    file: { type: DataTypes.BLOB },
+    file: { type: DataTypes.TEXT },
   },
   {
     timestamps: false,

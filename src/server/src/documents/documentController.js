@@ -53,7 +53,7 @@ class documentController {
           type: "doc",
           date: document.date.toLocaleDateString("en-us", dateOptions),
           picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-          link: `document?documentId=${document.id}`,
+          link: `documentFile?documentId=${document.id}`,
         };
       });
       res.status(200).send({
@@ -63,12 +63,12 @@ class documentController {
     }
   }
 
-  async getDocumentLayout(req, res) {
-    const id = req.body.templateId;
-    const template = await Template.findByPk(id);
-    if (template)
-      res.status(200).send({ layout: template.data, messege: "Layout found" });
-    else res.status(400).send("Layout not found");
+  async getDocumentFile(req, res) {
+    const id = req.body.documentId;
+    const document = await Document.findByPk(id);
+    if (document)
+      res.status(200).send({ layout: document.file, messege: "File found" });
+    else res.status(400).send("File not found");
   }
 }
 

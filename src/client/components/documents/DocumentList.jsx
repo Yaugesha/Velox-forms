@@ -17,7 +17,7 @@ function DocumentList({ picture, title, date, type, link }) {
       <span className="w-[70%] mx-3.5 inline-flex items-center font-medium">
         {title}
       </span>
-      <span className="mr-4 flex items-center leading-5 font-medium">
+      <span className="mr-8 flex items-center leading-5 font-medium">
         {date}
       </span>
       <img

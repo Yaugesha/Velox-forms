@@ -13,13 +13,6 @@ function Document() {
   const [layout, setLayout] = useState("");
   const [documentMode, setDocumentMode] = useState("document filling");
 
-  function addField(newField) {
-    setFields([...fields, newField]);
-  }
-  function removeField(fieldToRemove) {
-    setFields(fields.filter((field) => field !== fieldToRemove));
-  }
-
   useEffect(function () {
     const getLayout = async () => {
       const response = await fetch("/api/v1/templates/layout", {
@@ -49,7 +42,6 @@ function Document() {
         documentLayout.outerHTML = layout;
         findFileds();
       }
-      findFileds();
       function findFileds() {
         const fields = Array.from(
           document.querySelectorAll(".react-component")
@@ -74,21 +66,17 @@ function Document() {
   useEffect(
     function () {
       if (documentMode === "document filling") {
-        const documentLayout = document.createElement("div");
         const container = document.querySelector(".container");
         if (container.lastChild === null) return;
-        container.firstChild.outerHTML = "";
-        container.prepend(documentLayout);
-        documentLayout.outerHTML = layout;
+        container.firstChild.outerHTML = layout;
       } else {
-        setLayout(document.querySelector(".editor").outerHTML);
+        setLayout(document.querySelector(".document").outerHTML);
         const fields = document.querySelectorAll(".react-component");
         fields.forEach((field) => {
           field.classList.remove("bg-black");
           field.classList.remove("text-white");
           field.classList.remove("px-0.5");
         });
-        document.querySelector(".editor").style = "";
       }
     },
     [documentMode]
@@ -109,8 +97,6 @@ function Document() {
 
   const documentProps = {
     fields,
-    addField,
-    removeField,
     setFields,
   };
 

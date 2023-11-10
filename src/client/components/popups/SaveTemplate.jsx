@@ -11,6 +11,8 @@ function SaveTemplate({ setIsOpen }) {
   const navigate = useNavigate();
 
   const callBackendAPI = async () => {
+    const fily = document.querySelector(".tiptap").innerHTML;
+    const data = `<div class="document mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">${fily}</div>`;
     const response = await fetch("/api/v1/templates/save", {
       method: "POST",
       headers: {
@@ -18,7 +20,7 @@ function SaveTemplate({ setIsOpen }) {
       },
       body: JSON.stringify({
         token: localStorage.getItem("jwt"),
-        data: document.querySelector(".editor").outerHTML, //tiptap
+        data: data,
         title: title,
         category: category,
       }),
@@ -28,7 +30,7 @@ function SaveTemplate({ setIsOpen }) {
     if (response.status !== 200) {
       throw Error(result.message);
     }
-    window.location.reload();
+    //window.location.reload();
   };
 
   function handleClose(e) {

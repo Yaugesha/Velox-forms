@@ -16,7 +16,7 @@ function SaveDocuent({ setIsOpen }) {
 
   const callBackendAPI = async () => {
     const fieldStyle = "bg-black text-white inline-block px-0.5";
-    const data = document.querySelector(".editor").outerHTML;
+    const data = document.querySelector(".document").outerHTML;
     const response = await fetch("/api/v1/documents/save", {
       method: "POST",
       headers: {
@@ -31,53 +31,19 @@ function SaveDocuent({ setIsOpen }) {
     });
     const result = await response.json();
 
-    const blob = new Blob([result.file]);
-    const fileDocx = new File([blob], title + ".docx");
-    const formData = new FormData();
-    formData.append(title, fileDocx);
-
     if (response.status !== 200) {
       throw Error(result.message);
     }
-    window.location.reload();
+    //window.location.reload();
   };
 
   return (
-    <Popup width={540} height={400} handleClose={handleClose}>
+    <Popup width={540} height={260} handleClose={handleClose}>
       <Input
         placeholder={"Document name"}
         width={"285px"}
         handleInput={setTitle}
       />
-      <fieldset className="w-[285px] flex flex-col justify-start border-2 pl-2 border-black my-4">
-        <legend>Type of document</legend>
-        <div>
-          <input
-            className="w-4 accent-black"
-            name="type"
-            id="type-doc"
-            type="radio"
-          />
-          <label htmlFor="ype-doc">.doc</label>
-        </div>
-        <div>
-          <input
-            className="w-4 accent-black"
-            name="type"
-            id="type-pdf"
-            type="radio"
-          />
-          <label htmlFor="ype-doc">.pdf</label>
-        </div>
-      </fieldset>
-      <div className="w-[285px] flex justify-center items-center gap-4 mt-8">
-        <input
-          className="w-6 h-6 accent-black"
-          type="checkbox"
-          id="export-chbox"
-        />
-        <label htmlFor="export-chbox">Export this document</label>
-      </div>
       <button
         onClick={() => {
           callBackendAPI();

@@ -11,12 +11,13 @@ import Account from "./components/account sections/Account";
 import AccountUpdateData from "./components/account sections/AccountUpdateData";
 import SignOut from "./components/popups/SignOut";
 import Document from "./pages/Document";
+import DocumentFile from "./pages/DocumentFile";
+import Template from "./pages/Template";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { observer } from "mobx-react";
 import authStore from "./stores/authStore";
-import Template from "./pages/Template";
 
 const App = observer(() => {
   useEffect(function () {
@@ -57,6 +58,7 @@ const App = observer(() => {
             <Route path="templates" element={<TemplatesGaliery />} />
             <Route path="template" element={<Template />} />
             <Route path="document" element={<Document />} />
+            <Route path="documentFile" element={<DocumentFile />} />
           </Route>
           <Route path="profile" element={<Profile />}>
             <Route path="account" element={<Account />}>
