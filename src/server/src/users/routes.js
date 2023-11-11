@@ -35,5 +35,7 @@ router.post(
   validate,
   controller.changePassword
 );
+router.post("/personal-data", authMiddleware, controller.getUserData);
+router.post("/save-personal-data", authMiddleware, controller.saveUserData);
 
 module.exports = router;

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 
 function DocumentCard({ picture, title, date, type, link }) {
-  console.log(link);
   return (
     <Link to={link}>
       <div className="w-[225px] h-[340px] border-[1px] border-[#dadce0]">

@@ -15,7 +15,7 @@ function SaveDocuent({ setIsOpen }) {
   }
 
   const callBackendAPI = async () => {
-    const fieldStyle = "bg-black text-white inline-block px-0.5";
+    const fieldStyle = "bg-black text-white px-0.5";
     const data = document.querySelector(".document").outerHTML;
     const response = await fetch("/api/v1/documents/save", {
       method: "POST",

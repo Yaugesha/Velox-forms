@@ -57,6 +57,40 @@ const TemplateCategory = sequelize.define(
   }
 );
 
+const UserPersonalData = sequelize.define(
+  "user personal data",
+  {
+    fullName: { type: DataTypes.STRING },
+    email: { type: DataTypes.STRING },
+    country: { type: DataTypes.STRING },
+    countrySubdivision: { type: DataTypes.STRING },
+    city: { type: DataTypes.STRING },
+    adress: { type: DataTypes.STRING },
+    zipCode: { type: DataTypes.STRING },
+    phoneNumber: { type: DataTypes.STRING },
+    dateOfBirth: { type: DataTypes.STRING },
+  },
+  {
+    timestamps: false,
+    createdAt: false,
+  }
+);
+
+const UserWorkData = sequelize.define(
+  "user work data",
+  {
+    officeAdress: { type: DataTypes.STRING },
+    placeOfWork: { type: DataTypes.STRING },
+    workPhoneNumber: { type: DataTypes.STRING },
+    workZipCode: { type: DataTypes.STRING },
+    workEmail: { type: DataTypes.STRING },
+  },
+  {
+    timestamps: false,
+    createdAt: false,
+  }
+);
+
 User.hasMany(Document);
 Document.belongsTo(User);
 
@@ -69,9 +103,17 @@ Template.belongsTo(TemplateCategory);
 User.hasMany(TemplateCategory);
 TemplateCategory.belongsTo(User);
 
+User.hasOne(UserPersonalData);
+UserPersonalData.belongsTo(User);
+
+User.hasOne(UserWorkData);
+UserWorkData.belongsTo(User);
+
 module.exports = {
   User,
   Document,
   Template,
   TemplateCategory,
+  UserPersonalData,
+  UserWorkData,
 };

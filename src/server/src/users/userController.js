@@ -1,7 +1,7 @@
 const { pool } = require("../../db");
 const queries = require("./queries");
 const { validationResult } = require("express-validator");
-const { User } = require("../../models/models");
+const { User, UserPersonalData, UserWorkData } = require("../../models/models");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { where } = require("sequelize");
@@ -114,6 +114,66 @@ class userController {
         jwt: token,
         messege: "User password changed succesfully",
       });
+    });
+  }
+
+  async getUserData(req, res) {
+    const id = req.user.id;
+    // const role = req.user.role;
+    const userPersonalData = await UserPersonalData.findOne({
+      where: { userId: id },
+    });
+    const userWorkData = await UserWorkData.findOne({
+      where: { userId: id },
+    });
+    res.status(200).send({
+      jwt: req.body.jwt,
+      userData: {
+        personal: userPersonalData,
+        work: userWorkData,
+      },
+      messege: "User password changed succesfully",
+    });
+  }
+
+  async saveUserData(req, res) {
+    const id = req.user.id;
+    const { personalData, workData } = req.body.userData;
+    UserPersonalData.findOrCreate({
+      where: { userId: id },
+      defaults: personalData,
+    })
+      .then(([userPersonalData, created]) => {
+        if (created) {
+          console.log("User data created");
+        } else {
+          return userPersonalData.update(personalData).then(() => {
+            console.log("User data upadated");
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error while creating", error);
+      });
+    UserWorkData.findOrCreate({
+      where: { userId: id },
+      defaults: workData,
+    })
+      .then(([userWorkData, created]) => {
+        if (created) {
+          console.log("User data created");
+        } else {
+          return userWorkData.update(workData).then(() => {
+            console.log("User data upadated");
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error while creating", error);
+      });
+    res.status(200).send({
+      jwt: req.body.jwt,
+      messege: "User data changed succesfully",
     });
   }
 }
