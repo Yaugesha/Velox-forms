@@ -19,6 +19,7 @@ function InputFields({ isTemplate }) {
   }
 
   function generateClassName(inputString) {
+    if (inputString === null) return;
     const cleanedString = inputString
       .replace(/\W+/g, "-")
       .replace(/[^a-zA-Z0-9]/g, "")
@@ -83,10 +84,13 @@ function InputFields({ isTemplate }) {
               <Input
                 placeholder={isTemplate ? field : inputs.current[index]}
                 width={"285px"}
-                id={isTemplate ? field : inputs.current[index]}
+                id={
+                  isTemplate
+                    ? generateClassName(field)
+                    : generateClassName(inputs.current[index])
+                }
                 key={index}
                 handleInput={handleInput}
-                defaultValue={inputs.current[index]}
                 typeClass={`field-input index-${index}`}
                 buttonHandler={handleAddField}
                 isTemplate={isTemplate}

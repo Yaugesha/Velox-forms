@@ -9,6 +9,8 @@ function Document() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [fields, setFields] = useState([]);
+  const [personalUserData, setPersonalUserData] = useState({});
+  const [workUserData, setWorkUserData] = useState({});
   const [isPopupOpen, setPopup] = useState(false);
   const [layout, setLayout] = useState("");
   const [documentMode, setDocumentMode] = useState("document filling");
@@ -31,7 +33,27 @@ function Document() {
       }
       setLayout(result.layout);
     };
+    const getUserData = async () => {
+      const jwt = localStorage.getItem("jwt");
+      const response = await fetch("/api/v1/users/personal-data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          jwt: jwt,
+        }),
+      });
+      const result = await response.json();
+
+      if (response.status !== 200) {
+        throw Error(result.message);
+      }
+      setPersonalUserData(result.userData.personal);
+      setWorkUserData(result.userData.work);
+    };
     getLayout();
+    getUserData();
   }, []);
 
   useEffect(
@@ -40,7 +62,6 @@ function Document() {
         const documentLayout = document.createElement("div");
         document.querySelector(".container").prepend(documentLayout);
         documentLayout.outerHTML = layout;
-        findFileds();
       }
       function findFileds() {
         const fields = Array.from(
@@ -59,8 +80,29 @@ function Document() {
         ]);
       }
       if (documentMode === "document filling") insertLayout();
+      findFileds();
     },
     [layout]
+  );
+
+  useEffect(
+    function () {
+      function findUserDataFields(userData, fieldName, field) {
+        Object.keys(userData).forEach((key) => {
+          if (fieldName === key.toLowerCase()) {
+            field.innerText = userData[key];
+            document.querySelector(`#${fieldName}`).value = userData[key];
+          }
+        });
+      }
+      const fields = Array.from(document.querySelectorAll(".react-component"));
+      fields.forEach((field) => {
+        const fieldName = field.classList[6];
+        findUserDataFields(personalUserData, fieldName, field);
+        findUserDataFields(workUserData, fieldName, field);
+      });
+    },
+    [personalUserData, workUserData]
   );
 
   useEffect(

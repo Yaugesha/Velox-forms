@@ -12,7 +12,7 @@ function Input({
     <div className={`w-[${width}] flex flex-col gap-2 col-span-2 ${id}`}>
       <div className={`${id}_label`}>
         <label className="text-xs tracking[5%]" htmlFor={`${id}`}>
-          {isTemplate ? placeholder : defaultValue}
+          {placeholder}
         </label>
         {isTemplate && (
           <button

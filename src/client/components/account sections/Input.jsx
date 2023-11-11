@@ -8,8 +8,8 @@ function Input({ placeholder, defaultValue, width, id, handleInput, colSpan }) {
       </div>
       <input
         onChange={(e) => {
-          handleInput(e);
-          //handleInput(e.target.value);
+          if (id) handleInput(e);
+          else handleInput(e.target.value);
         }}
         className={`w-[100%] h-[45px] border-2 border-black pl-4`}
         placeholder={placeholder}
