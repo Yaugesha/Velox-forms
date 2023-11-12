@@ -1,21 +1,18 @@
-import { useContext, useRef } from "react";
 import Input from "./Input";
-import DocumentContext from "../../contexts/DocumentContext";
+import { useTemplate } from "../../contexts/TemplateContext";
 
-function InputFields({ isTemplate }) {
-  const context = useContext(DocumentContext);
-  const inputs = useRef(context.fields);
+function FillingTemplFields() {
+  const { editor, fields, setFields, removeField } = useTemplate();
 
-  if (context.fields.length === 0) return;
-  if (inputs.current.length === 0) inputs.current = context.fields;
+  if (fields.length === 0) return;
   function updateFieldsArray(input) {
     const inputIndex = input.classList[6].split("-")[1];
-    const newFields = context.fields.map((field, index) => {
+    const newFields = fields.map((field, index) => {
       if (index == inputIndex) {
         return input.value;
       } else return field;
     });
-    context.setFields(newFields);
+    setFields(newFields);
   }
 
   function generateClassName(inputString) {
@@ -30,18 +27,16 @@ function InputFields({ isTemplate }) {
 
   function changeInputSelecors(field, input) {
     if (field == undefined || input.value == "") {
-      if (isTemplate) deleteFieldWithInput(field, input);
+      deleteFieldWithInput(field, input);
     } else {
       updateField(field, input);
     }
   }
 
   function updateField(field, input) {
-    if (isTemplate) {
-      field.classList.remove(input.id);
-      field.classList.add(generateClassName(input.value));
-      field.innerText = input.value;
-    } else field.innerText = input.value;
+    field.classList.remove(input.id);
+    field.classList.add(generateClassName(input.value));
+    field.innerText = input.value;
   }
 
   function deleteFieldWithInput(field, input) {
@@ -50,7 +45,7 @@ function InputFields({ isTemplate }) {
       .querySelector(`p`)
       .removeChild(field.parentNode);
     input.remove();
-    context.removeField(input.id);
+    removeField(input.id);
     const label = document.querySelector(`.${input.id}_label`);
     label ? (label.outerHTML = "") : "";
   }
@@ -67,33 +62,25 @@ function InputFields({ isTemplate }) {
   }
 
   function handleAddField(field) {
-    context.editor
-      .chain()
-      .focus()
-      .insertContent(`<field>${field}</field>&nbsp;`)
-      .run();
+    editor.chain().focus().insertContent(`<field>${field}</field>&nbsp;`).run();
   }
 
   return (
     <div className={`w-[285px]`}>
-      <h1 className="mb-3">Document fields</h1>
+      <h1 className="mb-3">Template fields</h1>
       <div>
         <div className="flex flex-col gap-3">
-          {context.fields.map((field, index) => {
+          {fields.map((field, index) => {
             return (
               <Input
-                placeholder={isTemplate ? field : inputs.current[index]}
+                placeholder={field}
                 width={"285px"}
-                id={
-                  isTemplate
-                    ? generateClassName(field)
-                    : generateClassName(inputs.current[index])
-                }
+                id={generateClassName(field)}
                 key={index}
                 handleInput={handleInput}
                 typeClass={`field-input index-${index}`}
                 buttonHandler={handleAddField}
-                isTemplate={isTemplate}
+                isTemplate={true}
               />
             );
           })}
@@ -103,4 +90,4 @@ function InputFields({ isTemplate }) {
   );
 }
 
-export default InputFields;
+export default FillingTemplFields;

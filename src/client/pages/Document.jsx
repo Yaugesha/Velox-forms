@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import DocumentHeader from "../components/header/DocumentHeader";
-import DocumentContext from "../contexts/DocumentContext";
 import SaveDocuent from "../components/popups/SaveDocuent";
-import InputFields from "../components/document-fields/InputFields";
+import InputFields from "../components/document-fields/FillingTemplFields";
+import FillingDocFields from "../components/document-fields/FillingDocFields";
 
 function Document() {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const [fields, setFields] = useState([]);
   const [personalUserData, setPersonalUserData] = useState({});
   const [workUserData, setWorkUserData] = useState({});
@@ -137,13 +136,8 @@ function Document() {
     },
   ];
 
-  const documentProps = {
-    fields,
-    setFields,
-  };
-
   return (
-    <DocumentContext.Provider value={documentProps}>
+    <>
       <DocumentHeader
         width="1280px"
         page="Document"
@@ -160,10 +154,10 @@ function Document() {
         </div>
       </DocumentHeader>
       <div className="container w-[1280px] flex gap-64 bg-white">
-        <InputFields />
+        <FillingDocFields fields={fields} />
       </div>
       {isPopupOpen ? <SaveDocuent setIsOpen={setPopup} /> : ""}
-    </DocumentContext.Provider>
+    </>
   );
 }
 

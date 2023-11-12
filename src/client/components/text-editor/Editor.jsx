@@ -1,14 +1,13 @@
 import { EditorContent, BubbleMenu } from "@tiptap/react";
 import EditorMenu from "./EditorMenu";
-import { useContext } from "react";
-import DocumentContext from "../../contexts/DocumentContext";
+import { useTemplate } from "../../contexts/TemplateContext";
 
 function Editor({ displayMenu }) {
-  const context = useContext(DocumentContext);
+  const { editor } = useTemplate();
 
   function handleClickOnPage(event) {
     if (event.target.className.includes("editor mt-[15]"))
-      context.editor.commands.focus("end");
+      editor.commands.focus("end");
   }
 
   return (
@@ -19,11 +18,11 @@ function Editor({ displayMenu }) {
           onClick={handleClickOnPage}
           className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black"
         >
-          <EditorContent editor={context.editor} />
+          <EditorContent editor={editor} />
         </div>
       </div>
 
-      <BubbleMenu editor={context.editor}>This is the bubble menu</BubbleMenu>
+      <BubbleMenu editor={editor}>This is the bubble menu</BubbleMenu>
     </div>
   );
 }
