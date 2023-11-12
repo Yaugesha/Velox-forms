@@ -3,8 +3,10 @@ import Input from "../account sections/Input";
 import DropdownButton from "../buttons/DropdownButton";
 import Popup from "./Popup";
 import { useNavigate } from "react-router-dom";
+import { useTemplate } from "../../contexts/TemplateContext";
 
 function SaveTemplate({ setIsOpen }) {
+  const { fields } = useTemplate();
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
   const [category, setCategory] = useState(categories[0]);
   const [title, setTitle] = useState("");
@@ -23,6 +25,7 @@ function SaveTemplate({ setIsOpen }) {
         data: data,
         title: title,
         category: category,
+        fields: fields,
       }),
     });
     const result = await response.json();

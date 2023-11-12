@@ -1,6 +1,6 @@
 import Input from "./Input";
 
-function FillingDocFields({ fields }) {
+function FillingDocFields({ fields, userData }) {
   if (fields.length === 0) return;
 
   function generateClassName(inputString) {
@@ -27,12 +27,26 @@ function FillingDocFields({ fields }) {
     });
   }
 
+  function insertUserData(field) {
+    const documentFields = Array.from(
+      document.querySelectorAll(".react-component")
+    );
+    documentFields.forEach((documentFiled) => {
+      const fieldName = documentFiled.classList[6];
+      if (fieldName === field.replaceAll(" ", "")) {
+        documentFiled.innerText = userData[field];
+        document.querySelector(`#${fieldName}`).value = userData[field];
+      }
+    });
+  }
+
   return (
     <div className={`w-[285px]`}>
       <h1 className="mb-3">Document fields</h1>
       <div>
         <div className="flex flex-col gap-3">
           {fields.map((field, index) => {
+            insertUserData(field);
             return (
               <Input
                 placeholder={field}
@@ -41,6 +55,7 @@ function FillingDocFields({ fields }) {
                 key={index}
                 handleInput={handleInput}
                 typeClass={`field-input index-${index}`}
+                defaultValue={userData[field]}
               />
             );
           })}

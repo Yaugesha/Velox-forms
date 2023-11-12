@@ -7,9 +7,7 @@ import FillingDocFields from "../components/document-fields/FillingDocFields";
 function Document() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [fields, setFields] = useState([]);
-  const [personalUserData, setPersonalUserData] = useState({});
-  const [workUserData, setWorkUserData] = useState({});
-  const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
+  const [userData, setUserData] = useState([]);
   const [isPopupOpen, setPopup] = useState(false);
   const [layout, setLayout] = useState("");
   const [documentMode, setDocumentMode] = useState("document filling");
@@ -22,6 +20,7 @@ function Document() {
           "Content-Type": "application/json;charset=utf-8",
         },
         body: JSON.stringify({
+          jwt: localStorage.getItem("jwt"),
           templateId: searchParams.get("templateId"),
         }),
       });
@@ -31,29 +30,10 @@ function Document() {
         throw Error(result.message);
       }
       setLayout(result.layout);
-    };
-    const getUserData = async () => {
-      const jwt = localStorage.getItem("jwt");
-      const response = await fetch("/api/v1/users/personal-data", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          jwt: jwt,
-        }),
-      });
-      const result = await response.json();
-
-      if (response.status !== 200) {
-        throw Error(result.message);
-      }
-      setPersonalUserData(result.userData.personal);
-      setWorkUserData(result.userData.work);
-      setIsUserDataLoaded(true);
+      setFields(Object.keys(result.fieldsValues));
+      setUserData(result.fieldsValues);
     };
     getLayout();
-    getUserData();
   }, []);
 
   useEffect(
@@ -63,46 +43,9 @@ function Document() {
         document.querySelector(".container").prepend(documentLayout);
         documentLayout.outerHTML = layout;
       }
-      function findFileds() {
-        const fields = Array.from(
-          document.querySelectorAll(".react-component")
-        );
-        if (fields.length === 0) return;
-        const sortedFields = fields.sort((a, b) => {
-          a.classList[5] - b.classList[5];
-        });
-        setFields([
-          ...new Set(
-            sortedFields.map((field) => {
-              return field.textContent;
-            })
-          ),
-        ]);
-      }
-      if (documentMode === "document filling") insertLayout();
-      findFileds();
+      insertLayout();
     },
     [layout]
-  );
-
-  useEffect(
-    function () {
-      function findUserDataFields(userData, fieldName, field) {
-        Object.keys(userData).forEach((key) => {
-          if (fieldName === key.toLowerCase()) {
-            field.innerText = userData[key];
-            document.querySelector(`#${fieldName}`).value = userData[key];
-          }
-        });
-      }
-      const fields = Array.from(document.querySelectorAll(".react-component"));
-      fields.forEach((field) => {
-        const fieldName = field.classList[6];
-        findUserDataFields(personalUserData, fieldName, field);
-        findUserDataFields(workUserData, fieldName, field);
-      });
-    },
-    [isUserDataLoaded]
   );
 
   function toggleFieldsInDoc(state) {
@@ -153,7 +96,7 @@ function Document() {
         </div>
       </DocumentHeader>
       <div className="container w-[1280px] flex gap-64 bg-white">
-        <FillingDocFields fields={fields} />
+        <FillingDocFields fields={fields} userData={userData} />
       </div>
       {isPopupOpen ? <SaveDocuent setIsOpen={setPopup} /> : ""}
     </>

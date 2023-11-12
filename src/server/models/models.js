@@ -44,6 +44,18 @@ const Template = sequelize.define(
   }
 );
 
+const TemplateFields = sequelize.define(
+  "template fields",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    name: { type: DataTypes.STRING },
+  },
+  {
+    timestamps: false,
+    createdAt: false,
+  }
+);
+
 const TemplateCategory = sequelize.define(
   "template category",
   {
@@ -100,6 +112,9 @@ Template.belongsTo(User);
 TemplateCategory.hasMany(Template);
 Template.belongsTo(TemplateCategory);
 
+Template.hasMany(TemplateFields);
+TemplateFields.belongsTo(Template);
+
 User.hasMany(TemplateCategory);
 TemplateCategory.belongsTo(User);
 
@@ -114,6 +129,7 @@ module.exports = {
   Document,
   Template,
   TemplateCategory,
+  TemplateFields,
   UserPersonalData,
   UserWorkData,
 };
