@@ -31,7 +31,7 @@ function TemplatesGaliery() {
   return (
     <div>
       <div className="fixed w-[980px] h-24 bg-white"></div>
-      <DocumentHeader width="980px" page="Templates galiery" position="fixed" />
+      <DocumentHeader width="980px" page="Templates gallery" position="fixed" />
       <main className="pt-24">
         <div className="w-[980px] flex flex-col justify-between gap-8">
           {templates.map((template) => {
@@ -47,6 +47,7 @@ function TemplatesGaliery() {
                         title={template.title}
                         description={template.description}
                         picture={template.picture}
+                        link={`../${template.link}`}
                         key={template.title}
                       />
                     );

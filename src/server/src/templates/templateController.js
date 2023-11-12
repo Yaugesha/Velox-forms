@@ -122,9 +122,10 @@ class templateController {
     const fieldsValues = {};
     fieldsNames.forEach((field) => {
       const fieldName = camelize(field);
+      console.log(fieldName);
       if (userPersonalData[fieldName])
         fieldsValues[field] = userPersonalData[fieldName];
-      if (userWorkData[fieldName])
+      else if (userWorkData[fieldName])
         fieldsValues[field] = userWorkData[fieldName];
       else fieldsValues[field] = field;
     });
