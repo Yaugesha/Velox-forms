@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import DocumentHeader from "../components/header/DocumentHeader";
 import SaveDocuent from "../components/popups/SaveDocuent";
-import InputFields from "../components/document-fields/FillingTemplFields";
 import FillingDocFields from "../components/document-fields/FillingDocFields";
 
 function Document() {
@@ -10,6 +9,7 @@ function Document() {
   const [fields, setFields] = useState([]);
   const [personalUserData, setPersonalUserData] = useState({});
   const [workUserData, setWorkUserData] = useState({});
+  const [isUserDataLoaded, setIsUserDataLoaded] = useState(false);
   const [isPopupOpen, setPopup] = useState(false);
   const [layout, setLayout] = useState("");
   const [documentMode, setDocumentMode] = useState("document filling");
@@ -50,6 +50,7 @@ function Document() {
       }
       setPersonalUserData(result.userData.personal);
       setWorkUserData(result.userData.work);
+      setIsUserDataLoaded(true);
     };
     getLayout();
     getUserData();
@@ -101,27 +102,25 @@ function Document() {
         findUserDataFields(workUserData, fieldName, field);
       });
     },
-    [personalUserData, workUserData]
+    [isUserDataLoaded]
   );
 
-  useEffect(
-    function () {
-      if (documentMode === "document filling") {
-        const container = document.querySelector(".container");
-        if (container.lastChild === null) return;
-        container.firstChild.outerHTML = layout;
-      } else {
-        setLayout(document.querySelector(".document").outerHTML);
-        const fields = document.querySelectorAll(".react-component");
-        fields.forEach((field) => {
-          field.classList.remove("bg-black");
-          field.classList.remove("text-white");
-          field.classList.remove("px-0.5");
-        });
-      }
-    },
-    [documentMode]
-  );
+  function toggleFieldsInDoc(state) {
+    setDocumentMode(state);
+    if (documentMode !== state) {
+      const fields = document.querySelectorAll(".react-component");
+      const fieldStyle = "bg-black text-white px-0.5";
+      const textStyle = "bg-white text-black px-0";
+      fields.forEach((field) => {
+        const fieldClassName = field.className;
+        if (state === "document view") {
+          field.className = fieldClassName.replaceAll(fieldStyle, textStyle);
+        } else {
+          field.className = fieldClassName.replaceAll(textStyle, fieldStyle);
+        }
+      });
+    }
+  }
 
   const buttons = [
     {
@@ -142,7 +141,7 @@ function Document() {
         width="1280px"
         page="Document"
         navButtons={buttons}
-        handleCLick={setDocumentMode}
+        handleCLick={toggleFieldsInDoc}
       >
         <div
           className="self-center px-1 border-2 border-black cursor-pointer"
