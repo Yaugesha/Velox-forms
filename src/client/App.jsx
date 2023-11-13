@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { observer } from "mobx-react";
 import authStore from "./stores/authStore";
-import Aplications from "./components/account sections/Aplications";
+import Applications from "./components/account sections/Applications";
 
 const App = observer(() => {
   useEffect(function () {
@@ -64,7 +64,7 @@ const App = observer(() => {
           <Route path="profile" element={<Profile />}>
             <Route path="account" element={<Account />}>
               <Route path="settings" element={<AccountSettings />} />
-              <Route path="aplications" element={<Aplications />} />
+              <Route path="applications" element={<Applications />} />
               <Route path="security&password" element={<AccountUpdateData />} />
               <Route path="signOut" element={<SignOut />} />
             </Route>
