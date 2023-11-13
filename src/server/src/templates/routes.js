@@ -7,6 +7,6 @@ const router = Router();
 router.post("/save", controller.saveTemplate);
 router.post("/recent", controller.getRecentTemplates);
 router.post("/all", controller.getAllTemplates);
-router.post("/layout", authMiddleware, controller.getTemplayte);
+router.post("/layout", authMiddleware, controller.getTemplate);
 
 module.exports = router;

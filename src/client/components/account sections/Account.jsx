@@ -19,9 +19,9 @@ function Account() {
           />
           <AccountNavigationTab
             path={tab}
-            title={"Account Settings"}
-            subtitle={"Data for forms"}
-            link={""}
+            title={"Document aplications"}
+            subtitle={"Your aplications for creating documents"}
+            link={"aplications"}
           />
           <AccountNavigationTab
             path={tab}

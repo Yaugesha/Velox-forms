@@ -1,40 +1,81 @@
+import { useState } from "react";
+import BubbleMenu from "../popups/BubbleMenu";
 import { Link } from "react-router-dom";
 
 function DocumentCard({ picture, title, date, type, link }) {
+  const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
+  const [bubbleMenuX, setBubbleMenuX] = useState("");
+  const [bubbleMenuY, setBubbleMenuY] = useState("");
+
+  function openBubbleMenu(e) {
+    setBubbleMenuOpen(true);
+    setBubbleMenuY(e.target.offsetTop + 30);
+    setBubbleMenuX(e.target.offsetLeft - 120);
+  }
+
+  const bubbleMenuItems = [
+    {
+      icon: "/src/client/assets/icons/general/icon-rename.svg",
+      name: "Rename",
+      action: "",
+    },
+    {
+      icon: "/src/client/assets/icons/general/icon-delete.svg",
+      name: "Delete",
+      action: "",
+    },
+  ];
+
   return (
-    <Link to={link}>
-      <div className="w-[225px] h-[340px] border-[1px] border-[#dadce0]">
+    <div className="w-[225px] h-[340px] border-[1px] border-[#dadce0]">
+      <Link to={link}>
         <div className="flex justify-center items-center w-[225px] h-[260px] border-b-[1px]">
           <img src={picture} alt="document" />
         </div>
-        <div className="pt-4 pb-5 pl-4">
+      </Link>
+      <div className="pt-4 pb-5 pl-4">
+        <Link to={link}>
           <span>
             {title}.{type}
           </span>
-          <div className="w-[204px] flex items-center ">
-            {type === "doc" ? (
-              <img
-                className="h-6 w-6"
-                src={"/src/client/assets/icons/documents/icon-doc.svg"}
-                alt="doc"
-              />
-            ) : (
-              <img
-                className="h-6 w-6"
-                src={"/src/client/assets/icons/documents/icon-pdf.svg"}
-                alt="pdf"
-              />
-            )}
-            <p className="text-[12px] ml-1 mr-7">{date}.</p>
-            <img
-              className="h-6 w-6 cursor-pointer"
-              src="/src/client/assets/icons/general/icon-more.svg"
-              alt="more"
-            />
-          </div>
+        </Link>
+        <div className="w-[204px] flex items-center">
+          <Link to={link}>
+            <div className="flex items-center">
+              {type === "doc" ? (
+                <img
+                  className="h-6 w-6"
+                  src={"/src/client/assets/icons/documents/icon-doc.svg"}
+                  alt="doc"
+                />
+              ) : (
+                <img
+                  className="h-6 w-6"
+                  src={"/src/client/assets/icons/documents/icon-pdf.svg"}
+                  alt="pdf"
+                />
+              )}
+              <p className="text-[12px] ml-1 mr-7">{date}.</p>
+            </div>
+          </Link>
+          <img
+            onClick={openBubbleMenu}
+            className="h-6 w-6 cursor-pointer"
+            src="/src/client/assets/icons/general/icon-more.svg"
+            alt="more"
+          />
         </div>
       </div>
-    </Link>
+      {isBubbleMenuOpen && (
+        <BubbleMenu
+          setIsOpen={setBubbleMenuOpen}
+          top={bubbleMenuY}
+          left={bubbleMenuX}
+          items={bubbleMenuItems}
+          width={"264"}
+        />
+      )}
+    </div>
   );
 }
 export default DocumentCard;

@@ -101,7 +101,7 @@ class templateController {
       });
   }
 
-  async getTemplayte(req, res) {
+  async getTemplate(req, res) {
     const templateId = req.body.templateId;
     const userId = req.user.id;
     const template = await Template.findByPk(templateId);
@@ -137,6 +137,8 @@ class templateController {
       });
     else res.status(400).send("Layout not found");
   }
+
+  // async getTemplateCategories(req, res) {}
 }
 
 function camelize(str) {

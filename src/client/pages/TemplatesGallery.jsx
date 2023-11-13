@@ -1,9 +1,32 @@
 import { useEffect, useState } from "react";
 import Template from "../components/documents/TemplateCard";
 import DocumentHeader from "../components/header/DocumentHeader";
+import BubbleMenu from "../components/popups/BubbleMenu";
 
 function TemplatesGaliery() {
   const [templates, setTemplates] = useState([]);
+  const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
+  const [bubbleMenuX, setBubbleMenuX] = useState("");
+  const [bubbleMenuY, setBubbleMenuY] = useState("");
+
+  function openBubbleMenu(e) {
+    setBubbleMenuOpen(true);
+    setBubbleMenuY(e.target.offsetTop + 30);
+    setBubbleMenuX(e.target.offsetLeft - 120);
+  }
+
+  const bubbleMenuItems = [
+    {
+      icon: "/src/client/assets/icons/general/icon-rename.svg",
+      name: "Rename",
+      action: "",
+    },
+    {
+      icon: "/src/client/assets/icons/general/icon-delete.svg",
+      name: "Delete",
+      action: "",
+    },
+  ];
 
   useEffect(function () {
     const jwt = localStorage.getItem("jwt");
@@ -37,9 +60,17 @@ function TemplatesGaliery() {
           {templates.map((template) => {
             return (
               <div key={template.category}>
-                <h4 className="flex mb-5 ml-2 leading-6 text-base">
-                  {template.category}
-                </h4>
+                <div className="flex justify-between items-center mb-5 ml-2 ">
+                  <h4 className="flex leading-6 text-base">
+                    {template.category}
+                  </h4>
+                  <img
+                    className="cursor-pointer"
+                    src="/src/client/assets/icons/general/icon-more.svg"
+                    alt="show more"
+                    onClick={openBubbleMenu}
+                  />
+                </div>
                 <div className="flex flex-wrap gap-5">
                   {template.templates.map((template) => {
                     return (
@@ -56,6 +87,15 @@ function TemplatesGaliery() {
               </div>
             );
           })}
+          {isBubbleMenuOpen && (
+            <BubbleMenu
+              setIsOpen={setBubbleMenuOpen}
+              top={bubbleMenuY}
+              left={bubbleMenuX}
+              items={bubbleMenuItems}
+              width={140}
+            />
+          )}
         </div>
       </main>
     </div>

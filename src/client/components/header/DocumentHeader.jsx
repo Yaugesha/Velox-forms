@@ -26,7 +26,7 @@ function DocumentHeader({
 
   return (
     <header
-      className={`${position} w-[${width}] flex justify-between mb-4 border-b-2 bg-white border-solid border-black`}
+      className={`${position} w-[${width}] flex justify-between mb-4 border-b-2 bg-white border-solid border-black z-10`}
     >
       <div className="flex items-center text-base leading-6 ">
         <div

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Main from "./pages/Main";
 import Documents from "./pages/Documents";
-import TemplatesGaliery from "./pages/TemplatesGaliery";
+import TemplatesGallery from "./pages/TemplatesGallery";
 import Profile from "./pages/Profile";
 import AccountSettings from "./components/account sections/AccountSettings";
 import SignUp from "./components/popups/SignUp";
@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { observer } from "mobx-react";
 import authStore from "./stores/authStore";
+import Aplications from "./components/account sections/Aplications";
 
 const App = observer(() => {
   useEffect(function () {
@@ -55,7 +56,7 @@ const App = observer(() => {
             <Route path="signIn" element={<SignIn />} />
           </Route>
           <Route path="documents" element={<Documents />}>
-            <Route path="templates" element={<TemplatesGaliery />} />
+            <Route path="templates" element={<TemplatesGallery />} />
             <Route path="template" element={<Template />} />
             <Route path="document" element={<Document />} />
             <Route path="documentFile" element={<DocumentFile />} />
@@ -63,6 +64,7 @@ const App = observer(() => {
           <Route path="profile" element={<Profile />}>
             <Route path="account" element={<Account />}>
               <Route path="settings" element={<AccountSettings />} />
+              <Route path="aplications" element={<Aplications />} />
               <Route path="security&password" element={<AccountUpdateData />} />
               <Route path="signOut" element={<SignOut />} />
             </Route>

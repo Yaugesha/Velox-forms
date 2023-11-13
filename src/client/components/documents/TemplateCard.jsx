@@ -1,16 +1,73 @@
+import { useState } from "react";
+import BubbleMenu from "../popups/BubbleMenu";
 import { Link } from "react-router-dom";
 
 function TemplateCard({ picture, title, description, link }) {
+  const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
+  const [bubbleMenuX, setBubbleMenuX] = useState("");
+  const [bubbleMenuY, setBubbleMenuY] = useState("");
+
+  function openBubbleMenu(e) {
+    setBubbleMenuOpen(true);
+    setBubbleMenuY(e.target.offsetTop + 30);
+    setBubbleMenuX(e.target.offsetLeft - 120);
+  }
+
+  const bubbleMenuItems = [
+    {
+      icon: "/src/client/assets/icons/general/icon-rename.svg",
+      name: "Rename",
+      action: "",
+    },
+    {
+      icon: "/src/client/assets/icons/general/icon-delete.svg",
+      name: "Delete",
+      action: "",
+    },
+    {
+      icon: "/src/client/assets/icons/general/icon-rename-description.svg",
+      name: "Change description",
+      action: "",
+    },
+    // {
+    //   icon: "/src/client/assets/icons/general/icon-open-in-new-tab.svg",
+    //   name: "Open in new tab",
+    //   action: "",
+    // },
+    ,
+  ];
+
   return (
-    <Link to={link}>
-      <div>
+    <div>
+      <Link to={link}>
         <div className="flex justify-center items-center mb-2.5 w-[180px] h-[233px] border-[1px] border-[#dadce0] pointer">
           <img src={picture} alt="template photo" />
         </div>
-        <div className="font-medium">{title}</div>
-        <div className="text-[#5f6368]">{description}</div>
+      </Link>
+      <div className="flex justify-between">
+        <Link to={link}>
+          <div className="flex flex-col">
+            <div className="font-medium">{title}</div>
+            <div className="text-[#5f6368]">{description}</div>
+          </div>
+        </Link>
+        <img
+          onClick={openBubbleMenu}
+          className="-mx-2 cursor-pointer"
+          src="/src/client/assets/icons/general/icon-more.svg"
+          alt="more"
+        />
       </div>
-    </Link>
+      {isBubbleMenuOpen && (
+        <BubbleMenu
+          setIsOpen={setBubbleMenuOpen}
+          top={bubbleMenuY}
+          left={bubbleMenuX}
+          items={bubbleMenuItems}
+          width={"264"}
+        />
+      )}
+    </div>
   );
 }
 
