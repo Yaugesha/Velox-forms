@@ -103,6 +103,45 @@ const UserWorkData = sequelize.define(
   }
 );
 
+const Application = sequelize.define(
+  "applicatons",
+  {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    date: { type: DataTypes.DATE },
+  },
+  {
+    timestamps: false,
+    createdAt: false,
+  }
+);
+
+const ApplicationData = sequelize.define(
+  "applicaton data",
+  {
+    category: { type: DataTypes.STRING },
+    name: { type: DataTypes.STRING },
+    referenceFile: { type: DataTypes.STRING },
+    comment: { type: DataTypes.TEXT },
+  },
+  {
+    timestamps: false,
+    createdAt: false,
+  }
+);
+
+const ApplicationStatus = sequelize.define(
+  "applicaton data",
+  {
+    timeOfChange: { type: DataTypes.DATE },
+    userId: { type: DataTypes.INTEGER },
+    name: { type: DataTypes.STRING },
+  },
+  {
+    timestamps: false,
+    createdAt: false,
+  }
+);
+
 User.hasMany(Document);
 Document.belongsTo(User);
 
@@ -124,6 +163,15 @@ UserPersonalData.belongsTo(User);
 User.hasOne(UserWorkData);
 UserWorkData.belongsTo(User);
 
+User.hasMany(Application);
+Application.belongsTo(User);
+
+Application.hasOne(ApplicationData);
+ApplicationData.belongsTo(Application);
+
+Application.hasMany(ApplicationStatus);
+ApplicationStatus.belongsTo(Application);
+
 module.exports = {
   User,
   Document,
@@ -132,4 +180,7 @@ module.exports = {
   TemplateFields,
   UserPersonalData,
   UserWorkData,
+  Application,
+  ApplicationData,
+  ApplicationStatus,
 };

@@ -39,19 +39,19 @@ function Applications() {
       <Input placeholder={"Template name"} width={"285px"} />
       <div className="w-[590px]">
         <p className="mb-2">Choose file which will be used as reference</p>
-        <div class="flex items-center justify-center w-full">
+        <div className="flex items-center justify-center w-full">
           <label
-            for="dropzone-file"
-            class="flex flex-col items-center justify-center w-full h-44 border-2 border-black border-dashed cursor-pointer "
+            htmlFor="dropzone-file"
+            className="flex flex-col items-center justify-center w-full h-44 border-2 border-black border-dashed cursor-pointer "
           >
-            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-              <p class="mb-2">
-                <span class="font-semibold">Click to upload</span> or drag and
-                drop
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <p className="mb-2">
+                <span className="font-semibold">Click to upload</span> or drag
+                and drop
               </p>
               <p className="text-xs">DOCX, PDF or TXT</p>
             </div>
-            <input id="dropzone-file" type="file" class="hidden" />
+            <input id="dropzone-file" type="file" className="hidden" />
           </label>
         </div>
       </div>

@@ -45,7 +45,6 @@ const SignUp = observer(() => {
       if (!response.ok) {
         throw result;
       }
-      console.log(result);
       setCorrectData({
         status: true,
         messege: result.messege,

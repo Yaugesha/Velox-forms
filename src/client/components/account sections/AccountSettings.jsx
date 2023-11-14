@@ -55,8 +55,9 @@ function AccountSettings() {
       if (response.status !== 200) {
         throw Error(result.message);
       }
-      setPersonalUserData(result.userData.personal);
-      setWorkUserData(result.userData.work);
+      if (result.userData.personal)
+        setPersonalUserData(result.userData.personal);
+      if (result.userData.work) setWorkUserData(result.userData.work);
     };
 
     getUserData();

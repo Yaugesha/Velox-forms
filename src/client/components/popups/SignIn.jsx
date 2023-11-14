@@ -9,11 +9,7 @@ const SignIn = observer(() => {
   const navigate = useNavigate();
 
   function handleClose(e) {
-    if (
-      e.target.classList.contains("w-full") ||
-      (e.target.classList.contains("submit-btn") && isCorrectData.status)
-    ) {
-      console.log("close");
+    if (e.target.classList.contains("w-full")) {
       document.body.style.overflow = "auto";
       navigate("/");
     }
@@ -32,7 +28,7 @@ const SignIn = observer(() => {
     } else return false;
   }
 
-  async function callBackendAPI() {
+  const callBackendAPI = async () => {
     try {
       const response = await fetch("/api/v1/users/login", {
         method: "POST",
@@ -47,20 +43,22 @@ const SignIn = observer(() => {
       const result = await response.json();
       if (!response.ok) {
         throw result;
-      } else {
-        setCorrectData({ status: true });
-        localStorage.setItem("jwt", result.jwt);
-        const role = jwtDecode(result.jwt).role;
-        authStore.login();
-        authStore.setRole(role);
       }
+      setCorrectData({
+        status: true,
+        messege: result.messege,
+      });
+      localStorage.setItem("jwt", result.jwt);
+      const role = jwtDecode(result.jwt).role;
+      authStore.login();
+      authStore.setRole(role);
     } catch {
       setCorrectData({
         status: false,
         messege: "Incorrect user data recieved",
       });
     }
-  }
+  };
 
   return (
     <Popup width={980} height={508} handleClose={handleClose}>
@@ -86,8 +84,12 @@ const SignIn = observer(() => {
           className="w-[357px] h-[48px] border border-black pl-4"
           type="password"
         />
-        {!isCorrectData.status && (
-          <p className="w-[357px] text-red-700 font-bold -mb-4">
+        {!isCorrectData.status ? (
+          <p className="w-[357px] text-red-700 font-bold -my-4 ">
+            {isCorrectData.messege}
+          </p>
+        ) : (
+          <p className="w-[357px] text-green-700 font-bold -mt-4">
             {isCorrectData.messege}
           </p>
         )}
@@ -95,7 +97,6 @@ const SignIn = observer(() => {
           disabled={checkSubmitData()}
           onClick={(e) => {
             callBackendAPI();
-            if (isCorrectData.status) handleClose(e);
           }}
           className="bg-black w-[120px] h-8 text-white text-base submit-btn disabled:opacity-50"
         >

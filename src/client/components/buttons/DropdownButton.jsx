@@ -34,7 +34,7 @@ function DropdownButton({ type, handleClick, valuesArr, initialValue, width }) {
       style={{ width: width + "px" }}
     >
       <button
-        //onClick={handleInputValue}
+        onClick={handleInputValue}
         id={type}
         className={`w-[100%] flex items-center justify-between pr-[8px] mt-1`}
       >
@@ -53,7 +53,7 @@ function DropdownButton({ type, handleClick, valuesArr, initialValue, width }) {
           return (
             <button
               onClick={() => handleChoose(value)}
-              className={`block  text-start h-8 text-black hover:bg-black hover:text-white`}
+              className={`block text-start h-8 pl-2 text-black hover:bg-black hover:text-white`}
               key={value}
             >
               {value}

@@ -36,7 +36,7 @@ class userController {
         const token = jwt.sign({ id: user.id, role: user.role }, jwtKey);
         res.status(200).send({
           jwt: token,
-          mesege: "Authorized successfully",
+          messege: "You've been authorized successfully",
         });
       } else res.status(400).send("Incorrect user data");
     });
@@ -137,7 +137,7 @@ class userController {
         personal: userPersonalData,
         work: userWorkData,
       },
-      messege: "User password changed succesfully",
+      messege: "User found",
     });
   }
 

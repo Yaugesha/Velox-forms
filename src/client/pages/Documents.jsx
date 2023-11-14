@@ -108,41 +108,47 @@ function Documents() {
                 })}
               </div>
             </section>
-            <section className="w-[980px] flex flex-col items-center ">
-              <div className="mb-6">
-                <div className="flex items-center">
-                  <span>Recent documents</span>
-                  <input
-                    placeholder="Search: file name"
-                    className="w-[357px] h-8 border border-black pl-4 ml-[96px] mr-[214px]"
-                    type="text"
-                  />
-                  <div className="flex justify-between items-center w-[129px]">
-                    <SortButton
-                      type={"show"}
-                      kind={displayDocs}
-                      changeKind={setDisplayDocs}
+            {documents.length === 0 ? (
+              <p className="alig text-xl">
+                You haven't created any documents yet. Select a template and
+                fill it out to create your first document using Velox Forms. Or,
+                if you don't find one that suits you, you can apply for a new
+                template to be created on your profile.
+              </p>
+            ) : (
+              <section className="w-[980px] flex flex-col items-center ">
+                <div className="mb-6">
+                  <div className="flex items-center">
+                    <span>Recent documents</span>
+                    <input
+                      placeholder="Search: file name"
+                      className="w-[357px] h-8 border border-black pl-4 ml-[96px] mr-[214px]"
+                      type="text"
                     />
-                    <SortButton
-                      type={"name"}
-                      kind={nameSort}
-                      changeKind={setNameSort}
-                      setActive={setActive}
-                      active={active}
-                    />
-                    <SortButton
-                      type={"date"}
-                      kind={dateSort}
-                      changeKind={setDateSort}
-                      setActive={setActive}
-                      active={active}
-                    />
+                    <div className="flex justify-between items-center w-[129px]">
+                      <SortButton
+                        type={"show"}
+                        kind={displayDocs}
+                        changeKind={setDisplayDocs}
+                      />
+                      <SortButton
+                        type={"name"}
+                        kind={nameSort}
+                        changeKind={setNameSort}
+                        setActive={setActive}
+                        active={active}
+                      />
+                      <SortButton
+                        type={"date"}
+                        kind={dateSort}
+                        changeKind={setDateSort}
+                        setActive={setActive}
+                        active={active}
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
-              {documents === null ? (
-                <p className="text-l">You have no documents</p>
-              ) : displayDocs === "table" ? (
+                displayDocs === "table" ? (
                 <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
                   {documents.map((document) => {
                     return (
@@ -157,7 +163,7 @@ function Documents() {
                     );
                   })}
                 </div>
-              ) : (
+                ) : (
                 <div className="w-[980px] flex flex-col justify-between flex-wrap gap-y-5">
                   {documents.map((document) => {
                     return (
@@ -172,8 +178,9 @@ function Documents() {
                     );
                   })}
                 </div>
-              )}
-            </section>
+                )
+              </section>
+            )}
           </main>
         </>
       )}
