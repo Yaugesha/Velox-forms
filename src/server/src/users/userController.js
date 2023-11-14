@@ -31,14 +31,15 @@ class userController {
 
   async loginUser(req, res) {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email } });
-    if (user.password === password && user) {
-      const token = jwt.sign({ id: user.id, role: user.role }, jwtKey);
-      res.status(200).send({
-        jwt: token,
-        mesege: "Authorized succesfully",
-      });
-    } else res.status(400).send("Incorrect user data");
+    User.findOne({ where: { email } }).then((user) => {
+      if (user && user.password === password) {
+        const token = jwt.sign({ id: user.id, role: user.role }, jwtKey);
+        res.status(200).send({
+          jwt: token,
+          mesege: "Authorized successfully",
+        });
+      } else res.status(400).send("Incorrect user data");
+    });
   }
 
   async registUser(req, res) {
@@ -56,11 +57,15 @@ class userController {
         const token = jwt.sign({ id: id, role: "user" }, jwtKey);
         res.status(200).send({
           jwt: token,
-          messege: "User registred succesfully",
+          messege: "User registred successfully",
         });
         console.log("User created");
-      } else
-        return res.status(400).send("User with this email has already exists");
+      } else {
+        console.log("User exists");
+        return res
+          .status(400)
+          .send({ messege: "User with this email has already exists" });
+      }
     });
   }
 

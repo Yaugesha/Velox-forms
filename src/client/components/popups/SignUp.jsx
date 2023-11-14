@@ -9,10 +9,7 @@ const SignUp = observer(() => {
   const navigate = useNavigate();
 
   function handleClose(e) {
-    if (
-      e.target.classList.contains("w-full") ||
-      e.target.classList.contains("submit-btn")
-    ) {
+    if (e.target.classList.contains("w-full")) {
       document.body.style.overflow = "auto";
       navigate("/");
     }
@@ -21,27 +18,55 @@ const SignUp = observer(() => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isCorrectData, setCorrectData] = useState({
+    status: false,
+    messege: "",
+  });
+
+  function checkSubmitData() {
+    if (!password || !email) {
+      return true;
+    } else return false;
+  }
 
   const callBackendAPI = async () => {
-    const response = await fetch("/api/v1/users/regist", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    const result = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(result.message);
+    try {
+      const response = await fetch("/api/v1/users/regist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw result;
+      }
+      console.log(result);
+      setCorrectData({
+        status: true,
+        messege: result.messege,
+      });
+      localStorage.setItem("jwt", result.jwt);
+      const role = jwtDecode(result.jwt).role;
+      authStore.login();
+      authStore.setRole(role);
+    } catch (errors) {
+      if (errors.errors) {
+        setCorrectData({
+          status: false,
+          messege: errors.errors[0].msg,
+        });
+      } else if (errors) {
+        setCorrectData({
+          status: false,
+          messege: errors.messege,
+        });
+      }
     }
-    localStorage.setItem("jwt", result.jwt);
-    const role = jwtDecode(result.jwt).role;
-    authStore.login();
-    authStore.setRole(role);
   };
 
   return (
@@ -75,15 +100,29 @@ const SignUp = observer(() => {
           placeholder="Password"
           className="w-[357px] h-[48px] border border-black pl-4"
           type="password"
-        />
+        />{" "}
+        {!isCorrectData.status ? (
+          <p className="w-[357px] text-red-700 font-bold -mt-4 -mb-8">
+            {isCorrectData.messege}
+          </p>
+        ) : (
+          <p className="w-[357px] text-green-700 font-bold -mt-4 -mb-8">
+            {isCorrectData.messege}
+          </p>
+        )}
         <button
-          onClick={(e) => {
+          onClick={() => {
             if (password === confirmPassword) {
               callBackendAPI();
-              handleClose(e);
-            }
+              console.log(isCorrectData.status);
+            } else
+              setCorrectData({
+                status: false,
+                messege: "Passwords doesn't match",
+              });
           }}
-          className="bg-black w-[200px] h-8 mt-4 text-white text-base submit-btn"
+          disabled={checkSubmitData()}
+          className="bg-black w-[200px] h-8 mt-4 text-white text-base submit-btn disabled:opacity-50"
         >
           Create Account
         </button>

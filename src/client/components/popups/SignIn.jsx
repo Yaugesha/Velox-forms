@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { observer } from "mobx-react";
 import { jwtDecode } from "jwt-decode";
 import authStore from "../../stores/authStore";
@@ -11,7 +11,7 @@ const SignIn = observer(() => {
   function handleClose(e) {
     if (
       e.target.classList.contains("w-full") ||
-      e.target.classList.contains("submit-btn")
+      (e.target.classList.contains("submit-btn") && isCorrectData.status)
     ) {
       console.log("close");
       document.body.style.overflow = "auto";
@@ -21,28 +21,46 @@ const SignIn = observer(() => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isCorrectData, setCorrectData] = useState({
+    status: false,
+    messege: "",
+  });
 
-  const callBackendAPI = async () => {
-    const response = await fetch("/api/v1/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    const result = await response.json();
+  function checkSubmitData() {
+    if (!password || !email) {
+      return true;
+    } else return false;
+  }
 
-    if (response.status !== 200) {
-      throw Error(result.message);
+  async function callBackendAPI() {
+    try {
+      const response = await fetch("/api/v1/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) {
+        throw result;
+      } else {
+        setCorrectData({ status: true });
+        localStorage.setItem("jwt", result.jwt);
+        const role = jwtDecode(result.jwt).role;
+        authStore.login();
+        authStore.setRole(role);
+      }
+    } catch {
+      setCorrectData({
+        status: false,
+        messege: "Incorrect user data recieved",
+      });
     }
-    localStorage.setItem("jwt", result.jwt);
-    const role = jwtDecode(result.jwt).role;
-    authStore.login();
-    authStore.setRole(role);
-  };
+  }
 
   return (
     <Popup width={980} height={508} handleClose={handleClose}>
@@ -68,13 +86,18 @@ const SignIn = observer(() => {
           className="w-[357px] h-[48px] border border-black pl-4"
           type="password"
         />
+        {!isCorrectData.status && (
+          <p className="w-[357px] text-red-700 font-bold -mb-4">
+            {isCorrectData.messege}
+          </p>
+        )}
         <button
-          type="submit"
+          disabled={checkSubmitData()}
           onClick={(e) => {
             callBackendAPI();
-            handleClose(e);
+            if (isCorrectData.status) handleClose(e);
           }}
-          className="bg-black w-[120px] h-8 text-white text-base submit-btn"
+          className="bg-black w-[120px] h-8 text-white text-base submit-btn disabled:opacity-50"
         >
           Sign in
         </button>

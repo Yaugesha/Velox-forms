@@ -11,10 +11,10 @@ router.post("/user", authMiddleware, controller.getUserById);
 router.post(
   "/regist",
   [
-    check("email", "email must be valid").notEmpty().isEmail(),
+    check("email", "Email must be valid").notEmpty().isEmail(),
     check(
       "password",
-      "password must contains more then 6 symbols (include at least 1 capital 1 number 1 symbol)"
+      "Password must contains more then 6 symbols (include: 1 capital, 1 number and 1 symbol)"
     ).isStrongPassword({
       minLength: 6,
       minLowercase: 1,
