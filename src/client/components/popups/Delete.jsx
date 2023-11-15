@@ -1,50 +1,25 @@
+import { useEffect } from "react";
+import { useDocuments } from "../../contexts/DocumentsContext";
+import ResultMessage from "./ResultMessage";
 import Popup from "./Popup";
-import { useEffect, useState } from "react";
 
 function Delete({ data, setBubbleMenu, setOpen }) {
+  const { deleteTemplate, request, setRequest } = useDocuments();
+
   useEffect(function () {
     const bubbleMenu = document.querySelector(".container-bubble-menu");
     if (bubbleMenu) bubbleMenu.classList.add("hidden");
   }, []);
-  const [result, setResult] = useState({
-    status: false,
-    message: "",
-  });
-
-  // async function deleteTemplate(templateId) {
-  //   try {
-  //     const token = localStorage.getItem("jwt");
-  //     const response = await fetch("/api/v1/templates/delete", {
-  //       method: "DELETE",
-  //       headers: {
-  //         "Content-Type": "application/json;charset=utf-8",
-  //       },
-  //       body: JSON.stringify({
-  //         jwt: token,
-  //         templateId: templateId,
-  //       }),
-  //     });
-  //     const result = await response.json();
-
-  //     if (!response.ok) {
-  //       throw result;
-  //     }
-  //     setResult({
-  //       status: true,
-  //       message: result.message,
-  //     });
-  //   } catch (error) {
-  //     setResult({
-  //       status: true,
-  //       message: result.message,
-  //     });
-  //   }
-  // }
 
   function handleClose(e) {
     if (e.target.classList.contains("w-full")) {
       document.body.style.overflow = "auto";
       const bubbleMenu = document.querySelector(".container-bubble-menu");
+      setRequest({
+        isRecieved: false,
+        status: null,
+        message: "",
+      });
       setOpen(false);
       setBubbleMenu(false);
       if (bubbleMenu) {
@@ -62,24 +37,11 @@ function Delete({ data, setBubbleMenu, setOpen }) {
           Are you sure you want delete {data.title}?
         </p>
         <p>This file will be deleted immediatly. You can't undo this action.</p>
-        {!result.status ? (
-          <p
-            className={`w-[357px] ${
-              !result.status && "hidden"
-            } text-red-700 font-bold -my-4 `}
-          >
-            {result.message}
-          </p>
-        ) : (
-          <p
-            className={`w-[357px] ${
-              !result.status && "hidden"
-            } text-green-700 font-bold -my-4 `}
-          >
-            {result.message}
-          </p>
-        )}
-
+        <ResultMessage
+          isVisible={request.isRecieved}
+          isCorrect={request.status}
+          message={request.message}
+        />
         <div className=" w-full flex justify-end gap-8 mr-16 mt-6">
           <button className="bg-black text-white px-2 py-0.5">Cancel</button>
           <button

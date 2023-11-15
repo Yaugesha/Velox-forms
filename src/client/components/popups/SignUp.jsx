@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import Popup from "./Popup";
+import ResultMessage from "./ResultMessage";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isCorrectData, setCorrectData] = useState({
+    isRecieved: false,
     status: false,
     message: "",
   });
@@ -64,27 +66,25 @@ function SignUp() {
             placeholder="Password"
             className="w-[357px] h-[48px] border border-black pl-4"
             type="password"
-          />{" "}
-          {!isCorrectData.status ? (
-            <p className="w-[357px] text-red-700 font-bold -mt-4 -mb-8">
-              {isCorrectData.message}
-            </p>
-          ) : (
-            <p className="w-[357px] text-green-700 font-bold -mt-4 -mb-8">
-              {isCorrectData.message}
-            </p>
-          )}
+          />
+          <ResultMessage
+            isVisible={isCorrectData.isRecieved}
+            isCorrect={isCorrectData.status}
+            message={isCorrectData.message}
+          />
           <button
             onClick={async () => {
               if (password === confirmPassword) {
                 const { status, message } = await register(email, password);
                 setCorrectData({
+                  isRecieved: true,
                   status: status,
                   message: message,
                 });
-                console.log(isCorrectData.status);
+                console.log(isCorrectData.isRecieved, isCorrectData.message);
               } else
                 setCorrectData({
+                  isRecieved: true,
                   status: false,
                   message: "Passwords doesn't match",
                 });

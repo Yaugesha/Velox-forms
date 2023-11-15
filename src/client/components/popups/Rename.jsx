@@ -1,52 +1,27 @@
+import { useEffect, useState } from "react";
+import { useDocuments } from "../../contexts/DocumentsContext";
 import Popup from "./Popup";
 import Input from "../account sections/Input";
-import { useEffect, useState } from "react";
+import ResultMessage from "./ResultMessage";
 
 function Rename({ data, setBubbleMenu, setOpen }) {
+  const { renameTemplate, request, setRequest } = useDocuments();
+
   const [title, setTitle] = useState(data.title);
+
   useEffect(function () {
     const bubbleMenu = document.querySelector(".container-bubble-menu");
     if (bubbleMenu) bubbleMenu.classList.add("hidden");
   }, []);
-  const [result, setResult] = useState({
-    status: false,
-    message: "",
-  });
-
-  // async function renameTemplate(templateId, newName) {
-  //   try {
-  //     const token = localStorage.getItem("jwt");
-  //     const response = await fetch("/api/v1/templates/rename", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json;charset=utf-8",
-  //       },
-  //       body: JSON.stringify({
-  //         jwt: token,
-  //         templateId: templateId,
-  //       }),
-  //     });
-  //     const result = await response.json();
-
-  //     if (!response.ok) {
-  //       throw result;
-  //     }
-  //     setResult({
-  //       status: true,
-  //       message: result.message,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     setResult({
-  //       status: false,
-  //       message: error.message,
-  //     });
-  //   }
-  // }
 
   function handleClose(e) {
     if (e.target.classList.contains("w-full")) {
       document.body.style.overflow = "auto";
+      setRequest({
+        isRecieved: false,
+        status: null,
+        message: "",
+      });
       const bubbleMenu = document.querySelector(".container-bubble-menu");
       setOpen(false);
       setBubbleMenu(false);
@@ -68,23 +43,11 @@ function Rename({ data, setBubbleMenu, setOpen }) {
           defaultValue={data.title}
           handleInput={setTitle}
         />
-        {!result.status ? (
-          <p
-            className={`w-[357px] ${
-              !result.status && "hidden"
-            } text-red-700 font-bold -my-4 `}
-          >
-            {result.message}
-          </p>
-        ) : (
-          <p
-            className={`w-[357px] ${
-              !result.status && "hidden"
-            } text-green-700 font-bold -my-4 `}
-          >
-            {result.message}
-          </p>
-        )}
+        <ResultMessage
+          isVisible={request.isRecieved}
+          isCorrect={request.status}
+          message={request.message}
+        />
 
         <div className=" w-full flex justify-end gap-8 mr-16">
           <button className="bg-black text-white px-2 py-0.5">Cancel</button>

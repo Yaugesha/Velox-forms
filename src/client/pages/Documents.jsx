@@ -1,11 +1,18 @@
+import { useEffect } from "react";
 import { useLocation, Outlet } from "react-router-dom";
+import { useDocuments } from "../contexts/DocumentsContext";
 import Header from "../components/header/Header";
 import TemplatesSection from "../components/documents/TemplatesSection";
 import DocumentsSection from "../components/documents/DocumentsSection";
-import { useDocuments } from "../contexts/DocumentsContext";
 
 function Documents() {
-  //const { documents } = useDocuments();
+  const { getRecentTemplates, getDocuments, getTemplates } = useDocuments();
+
+  useEffect(function () {
+    getRecentTemplates();
+    getDocuments();
+    getTemplates();
+  }, []);
 
   const location = useLocation();
   return (

@@ -129,7 +129,7 @@ export function AuthProvider({ children }) {
       }
       setCorrectData({
         status: true,
-        messege: result.messege,
+        message: result.message,
       });
       localStorage.setItem("jwt", result.jwt);
       const { id, role } = jwtDecode(result.jwt);
@@ -138,12 +138,12 @@ export function AuthProvider({ children }) {
       if (errors.errors) {
         return {
           status: false,
-          messege: errors.errors[0].msg,
+          message: errors.errors[0].msg,
         };
       } else if (errors) {
         return {
           status: false,
-          messege: errors.messege,
+          message: errors.messege,
         };
       }
     }

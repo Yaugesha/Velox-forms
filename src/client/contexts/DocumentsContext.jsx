@@ -19,7 +19,8 @@ export function DocunentsProvider({ children }) {
       link: "template",
     },
   ]);
-  const [result, setResult] = useState({
+  const [request, setRequest] = useState({
+    isRecieved: false,
     status: null,
     message: "",
   });
@@ -27,6 +28,11 @@ export function DocunentsProvider({ children }) {
   async function renameTemplate(templateId, newName) {
     try {
       const token = localStorage.getItem("jwt");
+      setRequest({
+        isRecieved: false,
+        status: null,
+        message: "",
+      });
       const response = await fetch("/api/v1/templates/rename", {
         method: "POST",
         headers: {
@@ -43,13 +49,10 @@ export function DocunentsProvider({ children }) {
       if (!response.ok) {
         throw result;
       }
-      setResult({
-        status: true,
-        message: result.message,
-      });
+      setRequest({ isRecieved: true, status: true, message: result.message });
     } catch (error) {
       console.log(error);
-      setResult({
+      setRequest({
         status: false,
         message: error.message,
       });
@@ -59,6 +62,11 @@ export function DocunentsProvider({ children }) {
   async function deleteTemplate(templateId) {
     try {
       const token = localStorage.getItem("jwt");
+      setRequest({
+        isRecieved: false,
+        status: null,
+        message: "",
+      });
       const response = await fetch("/api/v1/templates/delete", {
         method: "DELETE",
         headers: {
@@ -74,10 +82,7 @@ export function DocunentsProvider({ children }) {
       if (!response.ok) {
         throw result;
       }
-      setResult({
-        status: true,
-        message: result.message,
-      });
+      setRequest({ isRecieved: true, status: true, message: result.message });
     } catch (error) {
       setResult({
         status: true,
@@ -157,16 +162,12 @@ export function DocunentsProvider({ children }) {
     }
   }
 
-  useEffect(function () {
-    getRecentTemplates();
-    getDocuments();
-    getTemplates();
-  }, []);
-
   const value = {
     templates,
     documents,
     templateCategories,
+    request,
+    setRequest,
     renameTemplate,
     deleteTemplate,
     getRecentTemplates,

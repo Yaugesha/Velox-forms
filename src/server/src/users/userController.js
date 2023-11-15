@@ -38,7 +38,7 @@ class userController {
           jwt: token,
           message: "You've been authorized successfully",
         });
-      } else res.status(400).send("Incorrect user data");
+      } else res.status(400).send({ message: "Incorrect user data" });
     });
   }
 

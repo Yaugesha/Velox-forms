@@ -38,21 +38,26 @@ function SaveDocuent({ setIsOpen }) {
   };
 
   return (
-    <Popup width={540} height={260} handleClose={handleClose}>
-      <Input
-        placeholder={"Document name"}
-        width={"285px"}
-        handleInput={setTitle}
-      />
-      <button
-        onClick={() => {
-          callBackendAPI();
-          navigate(-1);
-        }}
-        className="bg-black w-[204px] h-8 mt-4 text-white text-base"
+    <Popup handleClose={handleClose}>
+      <div
+        className="relative px-7 py-10 bg-white flex items-center flex-col gap-4"
+        style={{ width: "540px", height: "260px" }}
       >
-        Confirm and save
-      </button>
+        <Input
+          placeholder={"Document name"}
+          width={"285px"}
+          handleInput={setTitle}
+        />
+        <button
+          onClick={() => {
+            callBackendAPI();
+            navigate(-1);
+          }}
+          className="bg-black w-[204px] h-8 mt-4 text-white text-base"
+        >
+          Confirm and save
+        </button>
+      </div>
     </Popup>
   );
 }
