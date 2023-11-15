@@ -15,32 +15,38 @@ import DocumentFile from "./pages/DocumentFile";
 import Template from "./pages/Template";
 import { AuthProvider } from "./contexts/AuthContext";
 import Applications from "./components/account sections/Applications";
+import { DocunentsProvider } from "./contexts/DocumentsContext";
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Main />}>
-            <Route path="signUp" element={<SignUp />} />
-            <Route path="signIn" element={<SignIn />} />
-          </Route>
-          <Route path="documents" element={<Documents />}>
-            <Route path="templates" element={<TemplatesGallery />} />
-            <Route path="template" element={<Template />} />
-            <Route path="document" element={<Document />} />
-            <Route path="documentFile" element={<DocumentFile />} />
-          </Route>
-          <Route path="profile" element={<Profile />}>
-            <Route path="account" element={<Account />}>
-              <Route path="settings" element={<AccountSettings />} />
-              <Route path="applications" element={<Applications />} />
-              <Route path="security&password" element={<AccountUpdateData />} />
-              <Route path="signOut" element={<SignOut />} />
+      <DocunentsProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Main />}>
+              <Route path="signUp" element={<SignUp />} />
+              <Route path="signIn" element={<SignIn />} />
             </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            <Route path="documents" element={<Documents />}>
+              <Route path="templates" element={<TemplatesGallery />} />
+              <Route path="template" element={<Template />} />
+              <Route path="document" element={<Document />} />
+              <Route path="documentFile" element={<DocumentFile />} />
+            </Route>
+            <Route path="profile" element={<Profile />}>
+              <Route path="account" element={<Account />}>
+                <Route path="settings" element={<AccountSettings />} />
+                <Route path="applications" element={<Applications />} />
+                <Route
+                  path="security&password"
+                  element={<AccountUpdateData />}
+                />
+                <Route path="signOut" element={<SignOut />} />
+              </Route>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </DocunentsProvider>
     </AuthProvider>
   );
 }

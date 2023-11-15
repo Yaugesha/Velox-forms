@@ -11,36 +11,35 @@ function Delete({ data, setBubbleMenu, setOpen }) {
     message: "",
   });
 
-  async function deleteTemplate(templateId, newName) {
-    try {
-      const token = localStorage.getItem("jwt");
-      const response = await fetch("/api/v1/templates/delete", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          jwt: token,
-          templateId: templateId,
-          title: newName,
-        }),
-      });
-      const result = await response.json();
+  // async function deleteTemplate(templateId) {
+  //   try {
+  //     const token = localStorage.getItem("jwt");
+  //     const response = await fetch("/api/v1/templates/delete", {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json;charset=utf-8",
+  //       },
+  //       body: JSON.stringify({
+  //         jwt: token,
+  //         templateId: templateId,
+  //       }),
+  //     });
+  //     const result = await response.json();
 
-      if (!response.ok) {
-        throw result;
-      }
-      setResult({
-        status: true,
-        message: result.message,
-      });
-    } catch (error) {
-      setResult({
-        status: true,
-        message: result.message,
-      });
-    }
-  }
+  //     if (!response.ok) {
+  //       throw result;
+  //     }
+  //     setResult({
+  //       status: true,
+  //       message: result.message,
+  //     });
+  //   } catch (error) {
+  //     setResult({
+  //       status: true,
+  //       message: result.message,
+  //     });
+  //   }
+  // }
 
   function handleClose(e) {
     if (e.target.classList.contains("w-full")) {

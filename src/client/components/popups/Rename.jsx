@@ -13,36 +13,36 @@ function Rename({ data, setBubbleMenu, setOpen }) {
     message: "",
   });
 
-  async function renameTemplate(templateId, newName) {
-    try {
-      const token = localStorage.getItem("jwt");
-      const response = await fetch("/api/v1/templates/rename", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          jwt: token,
-          templateId: templateId,
-        }),
-      });
-      const result = await response.json();
+  // async function renameTemplate(templateId, newName) {
+  //   try {
+  //     const token = localStorage.getItem("jwt");
+  //     const response = await fetch("/api/v1/templates/rename", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json;charset=utf-8",
+  //       },
+  //       body: JSON.stringify({
+  //         jwt: token,
+  //         templateId: templateId,
+  //       }),
+  //     });
+  //     const result = await response.json();
 
-      if (!response.ok) {
-        throw result;
-      }
-      setResult({
-        status: true,
-        message: result.message,
-      });
-    } catch (error) {
-      console.log(error);
-      setResult({
-        status: false,
-        message: error.message,
-      });
-    }
-  }
+  //     if (!response.ok) {
+  //       throw result;
+  //     }
+  //     setResult({
+  //       status: true,
+  //       message: result.message,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     setResult({
+  //       status: false,
+  //       message: error.message,
+  //     });
+  //   }
+  // }
 
   function handleClose(e) {
     if (e.target.classList.contains("w-full")) {
