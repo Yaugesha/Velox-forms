@@ -5,7 +5,13 @@ import Input from "../account sections/Input";
 import ResultMessage from "./ResultMessage";
 
 function Rename({ data, setBubbleMenu, setOpen }) {
-  const { renameTemplate, request, setRequest } = useDocuments();
+  const {
+    renameTemplate,
+    renameDocument,
+    renameTemplateCategory,
+    request,
+    setRequest,
+  } = useDocuments();
 
   const [title, setTitle] = useState(data.title);
 
@@ -54,7 +60,11 @@ function Rename({ data, setBubbleMenu, setOpen }) {
           <button
             className="bg-black text-white px-3 py-0.5"
             onClick={() => {
-              renameTemplate(data.id, title);
+              if (!data.link) renameTemplateCategory(data.id, title);
+              else if (data.link.includes("template"))
+                renameTemplate(data.id, title);
+              else if (data.link.includes("document"))
+                renameDocument(data.id, title);
             }}
           >
             OK

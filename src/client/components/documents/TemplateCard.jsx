@@ -37,49 +37,6 @@ function TemplateCard({ template }) {
     ,
   ];
 
-  async function renameTemplate(templateId, newName) {
-    try {
-      const response = await fetch("/api/v1/templates/rename", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          id: templateId,
-          title: newName,
-        }),
-      });
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw result;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async function deleteTemplate(templateId) {
-    try {
-      const response = await fetch("/api/v1/templates/delete", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          id: templateId,
-        }),
-      });
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw result;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   return (
     <div>
       <Link to={template.link}>

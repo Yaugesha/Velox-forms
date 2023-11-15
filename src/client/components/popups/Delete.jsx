@@ -4,7 +4,13 @@ import ResultMessage from "./ResultMessage";
 import Popup from "./Popup";
 
 function Delete({ data, setBubbleMenu, setOpen }) {
-  const { deleteTemplate, request, setRequest } = useDocuments();
+  const {
+    deleteTemplate,
+    deleteDocument,
+    deleteTemplateCategory,
+    request,
+    setRequest,
+  } = useDocuments();
 
   useEffect(function () {
     const bubbleMenu = document.querySelector(".container-bubble-menu");
@@ -47,7 +53,9 @@ function Delete({ data, setBubbleMenu, setOpen }) {
           <button
             className="bg-black text-white px-3 py-0.5"
             onClick={() => {
-              deleteTemplate(data.id, data.title);
+              if (!data.link) deleteTemplateCategory(data.id);
+              else if (data.link.includes("template")) deleteTemplate(data.id);
+              else if (data.link.includes("document")) deleteDocument(data.id);
             }}
           >
             DELETE

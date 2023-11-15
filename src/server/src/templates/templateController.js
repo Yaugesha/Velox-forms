@@ -59,7 +59,8 @@ class templateController {
     else {
       const result = categories.map((category) => {
         return {
-          category: category.name,
+          id: category.id,
+          title: category.name,
           templates: category.templates.map((template) => {
             return {
               title: template.title,
@@ -165,6 +166,41 @@ class templateController {
       .then((result) => {
         res.status(200).send({
           message: "Template deleted",
+        });
+      })
+      .catch((error) => {
+        res.status(400).send({ message: error });
+      });
+  }
+
+  async renameTemplateCategory(req, res) {
+    const { categoryId, name } = req.body;
+    const userId = req.user.id;
+    TemplateCategory.update(
+      { name: name },
+      { where: { id: categoryId, userId: userId } }
+    )
+      .then((result) => {
+        if (result[0] === 1) {
+          res.status(200).send({
+            message: "Category name changed",
+          });
+        } else res.status(400).send({ message: "Category not found" });
+      })
+      .catch((error) => {
+        res.status(400).send({ message: error });
+      });
+  }
+
+  async deleteTemplateCategory(req, res) {
+    const { categoryId } = req.body;
+    const userId = req.user.id;
+    await TemplateCategory.destroy({
+      where: { id: categoryId, userId: userId },
+    })
+      .then((result) => {
+        res.status(200).send({
+          message: "Category deleted",
         });
       })
       .catch((error) => {

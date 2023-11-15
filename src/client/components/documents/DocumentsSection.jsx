@@ -51,14 +51,7 @@ function DocumnetsSection() {
             <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
               {documents.map((document) => {
                 return (
-                  <DocumentCard
-                    title={document.title}
-                    type={document.type}
-                    date={document.date}
-                    picture={document.picture}
-                    link={document.link}
-                    key={document.title}
-                  />
+                  <DocumentCard document={document} key={document.title} />
                 );
               })}
             </div>
@@ -66,14 +59,7 @@ function DocumnetsSection() {
             <div className="w-[980px] flex flex-col justify-between flex-wrap gap-y-5">
               {documents.map((document) => {
                 return (
-                  <DocumentList
-                    title={document.title}
-                    type={document.type}
-                    date={document.date}
-                    picture={document.picture}
-                    link={document.link}
-                    key={document.title}
-                  />
+                  <DocumentList document={document} key={document.title} />
                 );
               })}
             </div>

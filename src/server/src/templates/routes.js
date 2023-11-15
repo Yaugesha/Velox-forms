@@ -10,5 +10,15 @@ router.post("/all", controller.getAllTemplates);
 router.post("/layout", authMiddleware, controller.getTemplate);
 router.post("/rename", authMiddleware, controller.renameTemplate);
 router.delete("/delete", authMiddleware, controller.deleteTemplate);
+router.post(
+  "/category/rename",
+  authMiddleware,
+  controller.renameTemplateCategory
+);
+router.delete(
+  "/category/delete",
+  authMiddleware,
+  controller.deleteTemplateCategory
+);
 
 module.exports = router;

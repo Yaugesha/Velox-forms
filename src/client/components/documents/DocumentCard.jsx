@@ -2,7 +2,7 @@ import { useState } from "react";
 import BubbleMenu from "../popups/BubbleMenu";
 import { Link } from "react-router-dom";
 
-function DocumentCard({ picture, title, date, type, link }) {
+function DocumentCard({ document }) {
   const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
   const [bubbleMenuX, setBubbleMenuX] = useState("");
   const [bubbleMenuY, setBubbleMenuY] = useState("");
@@ -28,21 +28,21 @@ function DocumentCard({ picture, title, date, type, link }) {
 
   return (
     <div className="w-[225px] h-[340px] border-[1px] border-[#dadce0]">
-      <Link to={link}>
+      <Link to={document.link}>
         <div className="flex justify-center items-center w-[225px] h-[260px] border-b-[1px]">
-          <img src={picture} alt="document" />
+          <img src={document.picture} alt="document" />
         </div>
       </Link>
       <div className="pt-4 pb-5 pl-4">
-        <Link to={link}>
+        <Link to={document.link}>
           <span>
-            {title}.{type}
+            {document.title}.{document.type}
           </span>
         </Link>
         <div className="w-[204px] flex items-center">
-          <Link to={link}>
+          <Link to={document.link}>
             <div className="flex items-center">
-              {type === "doc" ? (
+              {document.type === "doc" ? (
                 <img
                   className="h-6 w-6"
                   src={"/src/client/assets/icons/documents/icon-doc.svg"}
@@ -55,7 +55,7 @@ function DocumentCard({ picture, title, date, type, link }) {
                   alt="pdf"
                 />
               )}
-              <p className="text-[12px] ml-1 mr-7">{date}.</p>
+              <p className="text-[12px] ml-1 mr-7">{document.date}.</p>
             </div>
           </Link>
           <img
@@ -69,6 +69,7 @@ function DocumentCard({ picture, title, date, type, link }) {
       {isBubbleMenuOpen && (
         <BubbleMenu
           setIsOpen={setBubbleMenuOpen}
+          data={document}
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}
