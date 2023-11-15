@@ -8,5 +8,7 @@ router.post("/save", controller.saveTemplate);
 router.post("/recent", controller.getRecentTemplates);
 router.post("/all", controller.getAllTemplates);
 router.post("/layout", authMiddleware, controller.getTemplate);
+router.post("/rename", authMiddleware, controller.renameTemplate);
+router.delete("/delete", authMiddleware, controller.deleteTemplate);
 
 module.exports = router;

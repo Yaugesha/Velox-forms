@@ -12,7 +12,6 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "authorize": {
-      console.log(state);
       return {
         ...state,
         id: action.payload.userId,
@@ -21,7 +20,6 @@ function reducer(state, action) {
       };
     }
     case "logOut": {
-      console.log(state);
       return {
         ...state,
         id: "",
@@ -71,15 +69,12 @@ export function AuthProvider({ children }) {
   }
 
   function checkIsUserAuthorized() {
-    console.log("check");
     const jwt = localStorage.getItem("jwt");
     if (isTokenFresh(jwt)) {
       const { id, role } = jwtDecode(jwt);
       dispatch({ type: "authorize", payload: { userId: id, role: role } });
-      console.log(role);
       return true;
     } else {
-      console.log("logout");
       dispatch({ type: "logOut", payload: {} });
       return false;
     }
@@ -165,7 +160,6 @@ export function AuthProvider({ children }) {
 
   useEffect(
     function () {
-      console.log(role);
       checkIsUserAuthorized();
     },
     [role]

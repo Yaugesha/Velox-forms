@@ -139,6 +139,39 @@ class templateController {
     else res.status(400).send("Layout not found");
   }
 
+  async renameTemplate(req, res) {
+    const { templateId, title } = req.body;
+    const userId = req.user.id;
+    Template.update(
+      { title: title },
+      { where: { id: templateId, userId: userId } }
+    )
+      .then((result) => {
+        if (result[0] === 1) {
+          res.status(200).send({
+            message: "Template name changed",
+          });
+        } else res.status(400).send({ message: "Template not found" });
+      })
+      .catch((error) => {
+        res.status(400).send({ message: error });
+      });
+  }
+
+  async deleteTemplate(req, res) {
+    const { templateId } = req.body;
+    const userId = req.user.id;
+    await Template.destroy({ where: { id: templateId, userId: userId } })
+      .then((result) => {
+        res.status(200).send({
+          message: "Template deleted",
+        });
+      })
+      .catch((error) => {
+        res.status(400).send({ message: error });
+      });
+  }
+
   // async getTemplateCategories(req, res) {}
 }
 
