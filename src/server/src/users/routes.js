@@ -26,7 +26,8 @@ router.post(
   controller.registUser
 );
 router.post("/login", controller.loginUser);
-router.post("/check-auth", authMiddleware, controller.refreshToken);
+router.get("/check-authtoken", authMiddleware, controller.checkToken);
+router.post("/refresh-token", authMiddleware, controller.refreshToken);
 router.post("/change-email", authMiddleware, controller.changeEmail);
 router.post(
   "/change-password",

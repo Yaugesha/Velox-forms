@@ -1,24 +1,50 @@
-function BubbleMenu({ top, left, setIsOpen, items, width }) {
-  function handleClose() {
-    setIsOpen(false);
-    console.log("close");
+import { useState } from "react";
+import Rename from "../popups/Rename";
+import Delete from "./Delete";
+
+function BubbleMenu({ data, top, left, setIsOpen, items, width }) {
+  const [modal, setModal] = useState(<div></div>);
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const modals = {
+    Rename: (
+      <Rename data={data} setBubbleMenu={setIsOpen} setOpen={setModalOpen} />
+    ),
+    Delete: (
+      <Delete data={data} setBubbleMenu={setIsOpen} setOpen={setModalOpen} />
+    ),
+  };
+
+  function handleClose(e) {
+    if (
+      (e.target.className !== "" &&
+        !e.target.className.includes("bubble-menu-item") &&
+        !e.target.className.includes("bubble-menu")) ||
+      e.target.className.includes("container-bubble-menu")
+    )
+      setIsOpen(false);
   }
+
   return (
     <>
       <div
         onClick={handleClose}
         style={{ height: document.body.scrollHeight + "px" }}
-        className={`absolute top-0 left-0 w-full h-full`}
+        className={`container-bubble-menu absolute top-0 left-0 w-full h-full`}
       >
         <div
           style={{ top: top + "px", left: left + "px" }}
-          className={`relative w-[${width}px] py-2 px-2 shadow-md bg-white`}
+          className={`bubble-menu relative w-[${width}px] py-2 px-2 shadow-md bg-white`}
         >
           {items.map((item) => {
             return (
               <div
-                className="flex items-center gap-6 mt-2 cursor-pointer"
+                className="bubble-menu-item flex items-center gap-6 mt-2 cursor-pointer"
                 key={item.name}
+                onClick={() => {
+                  setModal(modals[item.name]);
+                  setModalOpen(true);
+                }}
               >
                 <img src={item.icon} alt={item.name} />
                 <p>{item.name}</p>
@@ -27,6 +53,7 @@ function BubbleMenu({ top, left, setIsOpen, items, width }) {
           })}
         </div>
       </div>
+      {isModalOpen && modal}
     </>
   );
 }

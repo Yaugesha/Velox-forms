@@ -36,7 +36,7 @@ class userController {
         const token = jwt.sign({ id: user.id, role: user.role }, jwtKey);
         res.status(200).send({
           jwt: token,
-          messege: "You've been authorized successfully",
+          message: "You've been authorized successfully",
         });
       } else res.status(400).send("Incorrect user data");
     });
@@ -57,17 +57,19 @@ class userController {
         const token = jwt.sign({ id: id, role: "user" }, jwtKey);
         res.status(200).send({
           jwt: token,
-          messege: "User registred successfully",
+          message: "User registred successfully",
         });
         console.log("User created");
       } else {
         console.log("User exists");
         return res
           .status(400)
-          .send({ messege: "User with this email has already exists" });
+          .send({ message: "User with this email has already exists" });
       }
     });
   }
+
+  async checkToken(req, res) {}
 
   async refreshToken(req, res) {
     const userId = req.user.id;
@@ -76,7 +78,7 @@ class userController {
     const token = jwt.sign({ id: userId, role: role }, jwtKey);
     res.status(200).send({
       jwt: token,
-      mesege: "Token refreshed",
+      message: "Token refreshed",
     });
   }
 
@@ -94,7 +96,7 @@ class userController {
             console.log("Email changed");
             res.status(200).send({
               jwt: token,
-              messege: "User email changed succesfully",
+              message: "User email changed succesfully",
             });
           } else
             return res
@@ -117,7 +119,7 @@ class userController {
       console.log("Email changed");
       res.status(200).send({
         jwt: token,
-        messege: "User password changed succesfully",
+        message: "User password changed succesfully",
       });
     });
   }
@@ -137,7 +139,7 @@ class userController {
         personal: userPersonalData,
         work: userWorkData,
       },
-      messege: "User found",
+      message: "User found",
     });
   }
 
@@ -178,7 +180,7 @@ class userController {
       });
     res.status(200).send({
       jwt: req.body.jwt,
-      messege: "User data changed succesfully",
+      message: "User data changed succesfully",
     });
   }
 }

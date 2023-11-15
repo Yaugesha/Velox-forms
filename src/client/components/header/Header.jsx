@@ -1,47 +1,45 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import authStore from "../../stores/authStore";
+import { useAuth } from "../../contexts/AuthContext";
 import HeaderTab from "./HeaderTab";
-import { observer } from "mobx-react";
 
-const Header = observer(({ page }) => {
-  function addActive() {
-    document.querySelectorAll(".text-sm.cursor-pointer").forEach((el) => {
-      if (el.textContent === page) {
-        el.classList.add("bg-black");
-        el.classList.add("text-white");
-        el.classList.add("leading-7");
+function Header() {
+  const { role, checkIsUserAuthorized } = useAuth();
+
+  const [tabs, setTabs] = useState([]);
+
+  useEffect(
+    function () {
+      // checkIsUserAuthorized();
+      switch (role) {
+        case "user":
+          setTabs([
+            { name: "About", link: "/" },
+            { name: "Documentation", link: "/" },
+            { name: "Documents", link: "/documents" },
+            { name: "Profile", link: "/profile/account/settings" },
+          ]);
+          break;
+        case "admin":
+          setTabs([
+            { name: "Templates", link: "" },
+            { name: "Users", link: "" },
+            { name: "Profile", link: "" },
+          ]);
+          break;
+        default:
+          setTabs([
+            { name: "About", link: "" },
+            { name: "Documentation", link: "" },
+            { name: "Sign In", link: "signIn" },
+            { name: "Sign Up", link: "signUp" },
+          ]);
+          break;
       }
-    });
-  }
+    },
+    [role]
+  );
 
-  let tabs = [];
-  switch (authStore.role) {
-    case "user":
-      tabs = [
-        { name: "About", link: "" },
-        { name: "Documentation", link: "" },
-        { name: "Documents", link: "/documents" },
-        { name: "Profile", link: "/profile/account/settings" },
-      ];
-      break;
-    case "admin":
-      tabs = [
-        { name: "Templates", link: "" },
-        { name: "Users", link: "" },
-        { name: "Profile", link: "" },
-      ];
-      break;
-    default:
-      tabs = [
-        { name: "About", link: "" },
-        { name: "Documentation", link: "" },
-        { name: "Sign In", link: "signIn" },
-        { name: "Sign Up", link: "signUp" },
-      ];
-      break;
-  }
-  useEffect(() => addActive(), []);
   return (
     <header className="w-[980px] h-12 flex flex-row justify-between items-center border-b-2 border-solid border-black">
       <Link to="../../">
@@ -60,6 +58,6 @@ const Header = observer(({ page }) => {
       </nav>
     </header>
   );
-});
+}
 
 export default Header;

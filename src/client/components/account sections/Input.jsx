@@ -1,4 +1,12 @@
-function Input({ placeholder, defaultValue, width, id, handleInput, colSpan }) {
+function Input({
+  placeholder,
+  defaultValue,
+  withLabel = true,
+  width,
+  id,
+  handleInput,
+  colSpan,
+}) {
   return (
     <div className={`w-[${width}] flex flex-col gap-2 ${colSpan}`}>
       <div className={`${id}_label`}>
@@ -15,7 +23,7 @@ function Input({ placeholder, defaultValue, width, id, handleInput, colSpan }) {
         placeholder={placeholder}
         defaultValue={defaultValue}
         id={`${id}`}
-        type={`${placeholder.split(" ").at(-1)}`}
+        type={placeholder && `${placeholder.split(" ").at(-1)}`}
       />
     </div>
   );

@@ -88,6 +88,7 @@ class templateController {
         res.status(200).send({
           templates: result.rows.map((template) => {
             return {
+              id: template.id,
               title: template.title,
               picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
               link: `document?templateId=${template.id}`,

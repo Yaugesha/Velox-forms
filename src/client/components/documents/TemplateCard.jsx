@@ -1,8 +1,8 @@
 import { useState } from "react";
-import BubbleMenu from "../popups/BubbleMenu";
 import { Link } from "react-router-dom";
+import BubbleMenu from "../popups/BubbleMenu";
 
-function TemplateCard({ picture, title, description, link }) {
+function TemplateCard({ template }) {
   const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
   const [bubbleMenuX, setBubbleMenuX] = useState("");
   const [bubbleMenuY, setBubbleMenuY] = useState("");
@@ -37,18 +37,61 @@ function TemplateCard({ picture, title, description, link }) {
     ,
   ];
 
+  async function renameTemplate(templateId, newName) {
+    try {
+      const response = await fetch("/api/v1/templates/rename", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          id: templateId,
+          title: newName,
+        }),
+      });
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw result;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function deleteTemplate(templateId) {
+    try {
+      const response = await fetch("/api/v1/templates/delete", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({
+          id: templateId,
+        }),
+      });
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw result;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div>
-      <Link to={link}>
+      <Link to={template.link}>
         <div className="flex justify-center items-center mb-2.5 w-[180px] h-[233px] border-[1px] border-[#dadce0] pointer">
-          <img src={picture} alt="template photo" />
+          <img src={template.picture} alt="template photo" />
         </div>
       </Link>
       <div className="flex justify-between">
-        <Link to={link}>
+        <Link to={template.link}>
           <div className="flex flex-col">
-            <div className="font-medium">{title}</div>
-            <div className="text-[#5f6368]">{description}</div>
+            <div className="font-medium">{template.title}</div>
+            <div className="text-[#5f6368]">{template.description}</div>
           </div>
         </Link>
         <img
@@ -61,6 +104,7 @@ function TemplateCard({ picture, title, description, link }) {
       {isBubbleMenuOpen && (
         <BubbleMenu
           setIsOpen={setBubbleMenuOpen}
+          data={template}
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}

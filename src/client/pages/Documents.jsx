@@ -98,12 +98,7 @@ function Documents() {
               <div className="w-[980px] flex gap-5 mb-7">
                 {templates.map((template) => {
                   return (
-                    <TemplateCard
-                      title={template.title}
-                      picture={template.picture}
-                      link={template.link}
-                      key={template.title}
-                    />
+                    <TemplateCard template={template} key={template.title} />
                   );
                 })}
               </div>
@@ -148,37 +143,37 @@ function Documents() {
                     </div>
                   </div>
                 </div>
-                displayDocs === "table" ? (
-                <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
-                  {documents.map((document) => {
-                    return (
-                      <DocumentCard
-                        title={document.title}
-                        type={document.type}
-                        date={document.date}
-                        picture={document.picture}
-                        link={document.link}
-                        key={document.title}
-                      />
-                    );
-                  })}
-                </div>
+                {displayDocs === "table" ? (
+                  <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
+                    {documents.map((document) => {
+                      return (
+                        <DocumentCard
+                          title={document.title}
+                          type={document.type}
+                          date={document.date}
+                          picture={document.picture}
+                          link={document.link}
+                          key={document.title}
+                        />
+                      );
+                    })}
+                  </div>
                 ) : (
-                <div className="w-[980px] flex flex-col justify-between flex-wrap gap-y-5">
-                  {documents.map((document) => {
-                    return (
-                      <DocumentList
-                        title={document.title}
-                        type={document.type}
-                        date={document.date}
-                        picture={document.picture}
-                        link={document.link}
-                        key={document.title}
-                      />
-                    );
-                  })}
-                </div>
-                )
+                  <div className="w-[980px] flex flex-col justify-between flex-wrap gap-y-5">
+                    {documents.map((document) => {
+                      return (
+                        <DocumentList
+                          title={document.title}
+                          type={document.type}
+                          date={document.date}
+                          picture={document.picture}
+                          link={document.link}
+                          key={document.title}
+                        />
+                      );
+                    })}
+                  </div>
+                )}
               </section>
             )}
           </main>
