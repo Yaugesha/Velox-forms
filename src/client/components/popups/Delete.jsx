@@ -18,7 +18,10 @@ function Delete({ data, setBubbleMenu, setOpen }) {
   }, []);
 
   function handleClose(e) {
-    if (e.target.classList.contains("w-full")) {
+    if (
+      e.target.classList.contains("popup-container") ||
+      e.target.classList.contains("exit-btn")
+    ) {
       document.body.style.overflow = "auto";
       const bubbleMenu = document.querySelector(".container-bubble-menu");
       setRequest({
@@ -49,7 +52,12 @@ function Delete({ data, setBubbleMenu, setOpen }) {
           message={request.message}
         />
         <div className=" w-full flex justify-end gap-8 mr-16 mt-6">
-          <button className="bg-black text-white px-2 py-0.5">Cancel</button>
+          <button
+            className="exit-btn bg-black text-white px-2 py-0.5"
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
           <button
             className="bg-black text-white px-3 py-0.5"
             onClick={() => {
