@@ -18,6 +18,16 @@ export function DocunentsProvider({ children }) {
     status: null,
     message: "",
   });
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const searchDocuments =
+    searchQuery.length > 0
+      ? documents.filter((document) => {
+          return document.title
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase());
+        })
+      : documents;
 
   async function renameTemplate(templateId, newName) {
     try {
@@ -43,7 +53,11 @@ export function DocunentsProvider({ children }) {
       if (!response.ok) {
         throw result;
       }
-      setRequest({ isRecieved: true, status: true, message: result.message });
+      setRequest({
+        isRecieved: true,
+        status: true,
+        message: result.message,
+      });
     } catch (error) {
       console.log(error);
       setRequest({
@@ -290,9 +304,10 @@ export function DocunentsProvider({ children }) {
 
   const value = {
     templates,
-    documents,
+    documents: searchDocuments,
     templateCategories,
     request,
+    setSearchQuery,
     setRequest,
     renameTemplate,
     deleteTemplate,

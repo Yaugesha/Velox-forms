@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDocuments } from "../../contexts/DocumentsContext";
 import DocumentCard from "./DocumentCard";
 import DocumentList from "./DocumentList";
 import SortButton from "./SortButton";
 
 function DocumnetsSection() {
-  const { documents, getDocuments } = useDocuments();
+  const { documents, setSearchQuery } = useDocuments();
 
   const [displayDocs, setDisplayDocs] = useState("table");
   const [nameSort, setNameSort] = useState("ascending");
@@ -18,6 +18,9 @@ function DocumnetsSection() {
         <div className="flex items-center">
           <span>Recent documents</span>
           <input
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
             placeholder="Search: file name"
             className="w-[357px] h-8 border border-black pl-4 ml-[96px] mr-[214px]"
             type="text"

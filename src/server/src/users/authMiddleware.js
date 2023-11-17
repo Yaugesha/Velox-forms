@@ -11,6 +11,7 @@ const jwtKey = () => {
 };
 
 module.exports = (req, res, next) => {
+  console.log(req.body);
   const authHeader = req.body.jwt;
 
   if (!authHeader) {

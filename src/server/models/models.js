@@ -104,7 +104,7 @@ const UserWorkData = sequelize.define(
 );
 
 const Application = sequelize.define(
-  "applicatons",
+  "application",
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     date: { type: DataTypes.DATE },
@@ -116,11 +116,11 @@ const Application = sequelize.define(
 );
 
 const ApplicationData = sequelize.define(
-  "applicaton data",
+  "application data",
   {
     category: { type: DataTypes.STRING },
     name: { type: DataTypes.STRING },
-    referenceFile: { type: DataTypes.STRING },
+    fileRoute: { type: DataTypes.STRING },
     comment: { type: DataTypes.TEXT },
   },
   {
@@ -130,11 +130,12 @@ const ApplicationData = sequelize.define(
 );
 
 const ApplicationStatus = sequelize.define(
-  "applicaton data",
+  "application status",
   {
-    timeOfChange: { type: DataTypes.DATE },
     userId: { type: DataTypes.INTEGER },
     name: { type: DataTypes.STRING },
+    comment: { type: DataTypes.TEXT },
+    timeOfChange: { type: DataTypes.DATE },
   },
   {
     timestamps: false,

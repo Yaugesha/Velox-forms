@@ -4,6 +4,7 @@ const { sequelize } = require("./db");
 const userRoutes = require("./src/users/routes");
 const templateRoutes = require("./src/templates/routes");
 const documentRoutes = require("./src/documents/routes");
+const applicationRoutes = require("./src/applications/routes");
 const models = require("./models/models");
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/templates", templateRoutes);
 app.use("/api/v1/documents", documentRoutes);
+app.use("/api/v1/applications", applicationRoutes);
 
 const start = async () => {
   await sequelize.authenticate();
