@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDocuments } from "../../contexts/DocumentsContext";
 import Popup from "./Popup";
-import Input from "../account sections/Input";
+import Input from "../profile-sections/Input";
 import ResultMessage from "./ResultMessage";
 
 function Rename({ data, setBubbleMenu, setOpen }) {

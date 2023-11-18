@@ -17,7 +17,7 @@ function Header() {
             { name: "About", link: "/" },
             { name: "Documentation", link: "/" },
             { name: "Documents", link: "/documents" },
-            { name: "Profile", link: "/profile/account/settings" },
+            { name: "Profile", link: "/profile" },
           ]);
           break;
         case "admin":

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function AccountNavigationTab({ path, title, subtitle, link }) {
+function ProfileNavigationTab({ path, title, subtitle, link }) {
   return (
     <Link to={link}>
       <div
@@ -15,4 +15,4 @@ function AccountNavigationTab({ path, title, subtitle, link }) {
   );
 }
 
-export default AccountNavigationTab;
+export default ProfileNavigationTab;

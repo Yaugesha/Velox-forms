@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Input from "./Input";
 
-function AccountUpdateData() {
+function ProfileUpdateData() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
@@ -109,4 +109,4 @@ function AccountUpdateData() {
   );
 }
 
-export default AccountUpdateData;
+export default ProfileUpdateData;

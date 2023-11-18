@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Input from "../account sections/Input";
+import Input from "../profile-sections/Input";
 import Popup from "./Popup";
 import { useNavigate } from "react-router-dom";
 

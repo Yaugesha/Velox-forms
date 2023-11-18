@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Input from "./Input";
 
-function AccountSettings() {
+function ProfileSettings() {
   const [personalUserData, setPersonalUserData] = useState({
     fullName: "",
     email: "",
@@ -232,4 +232,4 @@ function AccountSettings() {
   );
 }
 
-export default AccountSettings;
+export default ProfileSettings;

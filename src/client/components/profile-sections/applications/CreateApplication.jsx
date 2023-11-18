@@ -1,8 +1,8 @@
 import { useState } from "react";
-import DropdownButton from "../buttons/DropdownButton";
-import Input from "./Input";
+import DropdownButton from "../../buttons/DropdownButton";
+import Input from "../Input";
 
-function Applications() {
+function CreateApplication() {
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
   const [category, setCategory] = useState(categories[0]);
   const [title, setTitle] = useState(categories[0]);
@@ -117,4 +117,4 @@ function Applications() {
   );
 }
 
-export default Applications;
+export default CreateApplication;
