@@ -51,7 +51,6 @@ class templateController {
     console.log(token);
     const userId = jwt.verify(token, jwtKey()).id;
     const categories = await TemplateCategory.findAll({
-      where: { userId: userId },
       include: [Template],
     });
     if (categories === undefined)
@@ -82,7 +81,7 @@ class templateController {
     console.log(token);
     const userId = jwt.verify(token, jwtKey()).id;
     await Template.findAndCountAll({
-      where: { userId: userId },
+      //where: { userId: userId },
       limit: 4,
     })
       .then((result) => {

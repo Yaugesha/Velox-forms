@@ -17,6 +17,7 @@ import CreateApplication from "./components/profile-sections/applications/Create
 import { DocunentsProvider } from "./contexts/DocumentsContext";
 import ApplicationsHistory from "./components/profile-sections/applications/ApplicationsHistory";
 import Applications from "./components/profile-sections/applications/Applications";
+import Users from "./pages/Users";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
               <Route path="documentFile" element={<DocumentFile />} />
             </Route>
             <Route path="profile" element={<Profile />}>
+              <Route index element={<Navigate to="settings" />} />
               <Route path="settings" element={<ProfileSettings />} />
               <Route path="security&password" element={<ProfileUpdateData />} />
               <Route path="signOut" element={<SignOut />} />
@@ -44,6 +46,7 @@ function App() {
                 <Route path="history" element={<ApplicationsHistory />} />
               </Route>
             </Route>
+            <Route path="users" element={<Users />} />
           </Routes>
         </BrowserRouter>
       </DocunentsProvider>

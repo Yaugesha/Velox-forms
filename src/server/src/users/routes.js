@@ -6,7 +6,7 @@ const { validate, passwordValidationRules } = require("./passwordValidator.js");
 
 const router = Router();
 
-router.get("/", controller.getUsers);
+router.get("/all", controller.getUsers);
 router.post("/user", authMiddleware, controller.getUserById);
 router.post(
   "/regist",

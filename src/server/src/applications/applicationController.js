@@ -1,10 +1,8 @@
-const { where } = require("sequelize");
 const {
   Application,
   ApplicationData,
   ApplicationStatus,
 } = require("../../models/models");
-const { application } = require("express");
 
 class applicationConroller {
   async addStatus(userId, applicationId, date) {

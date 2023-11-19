@@ -22,9 +22,10 @@ function Header() {
           break;
         case "admin":
           setTabs([
-            { name: "Templates", link: "" },
-            { name: "Users", link: "" },
-            { name: "Profile", link: "" },
+            { name: "Documents", link: "/documents" },
+            { name: "Users", link: "/users" },
+            { name: "Applications", link: "/applications" },
+            { name: "Profile", link: "/profile" },
           ]);
           break;
         default:
