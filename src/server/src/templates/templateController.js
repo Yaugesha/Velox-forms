@@ -19,7 +19,8 @@ const jwtKey = () => {
 
 class templateController {
   async saveTemplate(req, res) {
-    const { token, title, data, category, fields } = req.body;
+    const { title, data, category, fields } = req.body;
+    const token = req.get("Bearer");
     const userId = jwt.verify(token, jwtKey()).id;
     const date = new Date();
     const [result, created] = await TemplateCategory.findOrCreate({
@@ -47,9 +48,6 @@ class templateController {
   }
 
   async getAllTemplates(req, res) {
-    const token = req.body.jwt;
-    console.log(token);
-    const userId = jwt.verify(token, jwtKey()).id;
     const categories = await TemplateCategory.findAll({
       include: [Template],
     });
@@ -62,6 +60,7 @@ class templateController {
           title: category.name,
           templates: category.templates.map((template) => {
             return {
+              id: template.id,
               title: template.title,
               picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
               link: `document?templateId=${template.id}`,
@@ -77,11 +76,7 @@ class templateController {
   }
 
   async getRecentTemplates(req, res) {
-    const token = req.body.jwt;
-    console.log(token);
-    const userId = jwt.verify(token, jwtKey()).id;
     await Template.findAndCountAll({
-      //where: { userId: userId },
       limit: 4,
     })
       .then((result) => {
@@ -141,11 +136,8 @@ class templateController {
 
   async renameTemplate(req, res) {
     const { templateId, title } = req.body;
-    const userId = req.user.id;
-    Template.update(
-      { title: title },
-      { where: { id: templateId, userId: userId } }
-    )
+    console.log(templateId, title);
+    Template.update({ title: title }, { where: { id: templateId } })
       .then((result) => {
         if (result[0] === 1) {
           res.status(200).send({
@@ -160,8 +152,7 @@ class templateController {
 
   async deleteTemplate(req, res) {
     const { templateId } = req.body;
-    const userId = req.user.id;
-    await Template.destroy({ where: { id: templateId, userId: userId } })
+    await Template.destroy({ where: { id: templateId } })
       .then((result) => {
         res.status(200).send({
           message: "Template deleted",

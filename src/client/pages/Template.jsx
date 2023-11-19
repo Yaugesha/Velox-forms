@@ -3,13 +3,13 @@ import Editor from "../components/text-editor/Editor";
 import { useState } from "react";
 import DocumentHeader from "../components/header/DocumentHeader";
 import SaveTemplate from "../components/modals/documents/SaveTemplate";
-import { TemplateProvider } from "../contexts/TemplateContext";
+import { EditorProvider } from "../contexts/EditorContext";
 
 function Template() {
   const [isPopupOpen, setPopup] = useState(false);
 
   return (
-    <TemplateProvider>
+    <EditorProvider>
       <DocumentHeader width="1280px" page="Document">
         <div
           className="self-center px-1 border-2 border-black cursor-pointer"
@@ -25,7 +25,7 @@ function Template() {
         <FillingTemplFields isTemplate={true} />
       </div>
       {isPopupOpen ? <SaveTemplate setIsOpen={setPopup} /> : ""}
-    </TemplateProvider>
+    </EditorProvider>
   );
 }
 

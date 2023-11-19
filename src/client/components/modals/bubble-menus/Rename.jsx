@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDocuments } from "../../../contexts/DocumentsContext";
+import { useTemplate } from "../../../contexts/TemplateContext";
 import Popup from "../Popup";
 import Input from "../../custom-elements/Input";
 import ResultMessage from "../ResultMessage";
 
-function Rename({ data, setBubbleMenu, setOpen }) {
-  const {
-    renameTemplate,
-    renameDocument,
-    renameTemplateCategory,
-    request,
-    setRequest,
-  } = useDocuments();
-
+function Rename({ data, type, setBubbleMenu, setOpen }) {
+  const { renameTemplate, renameTemplateCategory } = useTemplate();
+  const { renameDocument } = useDocuments();
+  const [resultData, setResultData] = useState({
+    isRecieved: false,
+    status: "",
+    message: "",
+  });
   const [title, setTitle] = useState(data.title);
 
   useEffect(function () {
@@ -26,7 +26,7 @@ function Rename({ data, setBubbleMenu, setOpen }) {
       e.target.classList.contains("exit-btn")
     ) {
       document.body.style.overflow = "auto";
-      setRequest({
+      setResultData({
         isRecieved: false,
         status: null,
         message: "",
@@ -53,9 +53,9 @@ function Rename({ data, setBubbleMenu, setOpen }) {
           handleInput={setTitle}
         />
         <ResultMessage
-          isVisible={request.isRecieved}
-          isCorrect={request.status}
-          message={request.message}
+          isVisible={resultData.isRecieved}
+          isCorrect={resultData.status}
+          message={resultData.message}
         />
 
         <div className=" w-full flex justify-end gap-8 mr-16">
@@ -64,12 +64,13 @@ function Rename({ data, setBubbleMenu, setOpen }) {
           </button>
           <button
             className="bg-black text-white px-3 py-0.5"
-            onClick={() => {
-              if (!data.link) renameTemplateCategory(data.id, title);
-              else if (data.link.includes("template"))
-                renameTemplate(data.id, title);
-              else if (data.link.includes("document"))
-                renameDocument(data.id, title);
+            onClick={async () => {
+              if (type === "template category")
+                setResultData(await renameTemplateCategory(data.id, title));
+              else if (type === "template")
+                setResultData(await renameTemplate(data.id, title));
+              else if (type === "document")
+                setResultData(await renameDocument(data.id, title));
             }}
           >
             OK

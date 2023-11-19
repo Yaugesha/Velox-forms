@@ -3,25 +3,26 @@ import Input from "../../custom-elements/Input";
 import DropdownButton from "../../custom-elements/DropdownButton";
 import Popup from "../Popup";
 import { useNavigate } from "react-router-dom";
-import { useTemplate } from "../../../contexts/TemplateContext";
+import { useEditors } from "../../../contexts/EditorContext";
 
 function SaveTemplate({ setIsOpen }) {
-  const { fields } = useTemplate();
+  const { fields } = useEditors();
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
   const [category, setCategory] = useState(categories[0]);
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
 
   const callBackendAPI = async () => {
+    const jwt = localStorage.getItem("jwt");
     const fily = document.querySelector(".tiptap").innerHTML;
     const data = `<div class="document mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">${fily}</div>`;
     const response = await fetch("/api/v1/templates/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
       },
       body: JSON.stringify({
-        token: localStorage.getItem("jwt"),
         data: data,
         title: title,
         category: category,

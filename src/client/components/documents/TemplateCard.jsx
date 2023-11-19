@@ -62,6 +62,7 @@ function TemplateCard({ template }) {
         <BubbleMenu
           setIsOpen={setBubbleMenuOpen}
           data={template}
+          type={"template"}
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}

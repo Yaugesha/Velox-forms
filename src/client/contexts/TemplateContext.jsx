@@ -1,54 +1,68 @@
-import { useEffect, useState, createContext, useContext } from "react";
-import { useEditor } from "@tiptap/react";
-import config from "../components/text-editor/editorConfig";
+import { useContext, useState, createContext, useEffect } from "react";
+import * as API from "../api/templatesAPI";
 
-const TemplateContext = createContext();
+const TemplatesContext = createContext();
 
-function TemplateProvider({ children }) {
-  const editor = useEditor(config(removeField));
-
-  const [fields, setFields] = useState([]);
-  const [scale, setScale] = useState(100);
-
-  useEffect(
-    function () {
-      document.querySelector(".editor").style.transform = `scale(${
-        scale / 100
-      })`;
-      document.querySelector(".editor").style.position = "relative";
-      document.querySelector(".editor").style.top = `${
-        (scale / 100 - 1) * 140 * 4
-      }px`;
+export function TemplatesProvider({ children }) {
+  const [templates, setTemplates] = useState([
+    {
+      title: "Create new template",
+      picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+      link: "template",
     },
-    [scale]
-  );
+  ]);
+  const [templateCategories, setTemplateCategories] = useState([]);
 
-  function addField(newField) {
-    setFields([...fields, newField]);
+  async function renameTemplate(templateId, newName) {
+    const { status, message } = await API.renameTemplate(templateId, newName);
+    return { isRecieved: true, status: status, message: message };
   }
-  function removeField(fieldToRemove) {
-    setFields(fields.filter((field) => field !== fieldToRemove));
+  async function renameTemplateCategory(templateId, newName) {
+    const { status, message } = await API.renameTemplateCategory(
+      templateId,
+      newName
+    );
+    return { isRecieved: true, status: status, message: message };
+  }
+  async function deleteTemplateCategory(templateId, newName) {
+    const { status, message } = await API.deleteTemplateCategory(
+      templateId,
+      newName
+    );
+    return { isRecieved: true, status: status, message: message };
+  }
+  async function deleteTemplate(templateId, newName) {
+    const { status, message } = await API.deleteTemplate(templateId, newName);
+    return { isRecieved: true, status: status, message: message };
+  }
+  async function getRecentTemplates() {
+    const result = await API.getRecentTemplates();
+    setTemplates([templates[0], ...result]);
+  }
+  async function getTemplates() {
+    const result = await API.getTemplates();
+    setTemplateCategories([...result]);
   }
 
-  const templateProps = {
-    editor,
-    fields,
-    addField,
-    removeField,
-    setFields,
-    setScale,
+  const value = {
+    templates,
+    templateCategories,
+    renameTemplate,
+    deleteTemplate,
+    renameTemplateCategory,
+    deleteTemplateCategory,
+    getRecentTemplates,
+    getTemplates,
   };
 
   return (
-    <TemplateContext.Provider value={templateProps}>
+    <TemplatesContext.Provider value={value}>
       {children}
-    </TemplateContext.Provider>
+    </TemplatesContext.Provider>
   );
 }
 
-function useTemplate() {
-  const context = useContext(TemplateContext);
+export function useTemplate() {
+  const context = useContext(TemplatesContext);
   return context;
 }
-
-export { TemplateProvider, useTemplate };

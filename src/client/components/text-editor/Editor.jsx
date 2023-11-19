@@ -1,9 +1,9 @@
 import { EditorContent, BubbleMenu } from "@tiptap/react";
 import EditorMenu from "./EditorMenu";
-import { useTemplate } from "../../contexts/TemplateContext";
+import { useEditors } from "../../contexts/EditorContext";
 
 function Editor({ displayMenu }) {
-  const { editor } = useTemplate();
+  const { editor } = useEditors();
 
   function handleClickOnPage(event) {
     if (event.target.className.includes("editor mt-[15]"))

@@ -14,7 +14,8 @@ const jwtKey = () => {
 
 class documentController {
   async saveDocument(req, res) {
-    const { token, title, data, file } = req.body;
+    const { title, data, file } = req.body;
+    const token = req.get("Bearer");
     const userId = jwt.verify(token, jwtKey()).id;
     const date = new Date();
 
@@ -34,7 +35,7 @@ class documentController {
   }
 
   async getAllDocuments(req, res) {
-    const token = req.body.jwt;
+    const token = req.get("Bearer");
     const userId = jwt.verify(token, jwtKey()).id;
     const dateOptions = {
       month: "long",

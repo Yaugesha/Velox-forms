@@ -1,16 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDocuments } from "../../../contexts/DocumentsContext";
+import { useTemplate } from "../../../contexts/TemplateContext";
 import ResultMessage from "../ResultMessage";
 import Popup from "../Popup";
 
-function Delete({ data, setBubbleMenu, setOpen }) {
-  const {
-    deleteTemplate,
-    deleteDocument,
-    deleteTemplateCategory,
-    request,
-    setRequest,
-  } = useDocuments();
+function Delete({ data, type, setBubbleMenu, setOpen }) {
+  const { deleteTemplate, deleteTemplateCategory } = useTemplate();
+  const { deleteDocument } = useDocuments();
+  const [resultData, setResultData] = useState({
+    isRecieved: false,
+    status: "",
+    message: "",
+  });
 
   useEffect(function () {
     const bubbleMenu = document.querySelector(".container-bubble-menu");
@@ -24,7 +25,7 @@ function Delete({ data, setBubbleMenu, setOpen }) {
     ) {
       document.body.style.overflow = "auto";
       const bubbleMenu = document.querySelector(".container-bubble-menu");
-      setRequest({
+      setResultData({
         isRecieved: false,
         status: null,
         message: "",
@@ -47,9 +48,9 @@ function Delete({ data, setBubbleMenu, setOpen }) {
         </p>
         <p>This file will be deleted immediatly. You can't undo this action.</p>
         <ResultMessage
-          isVisible={request.isRecieved}
-          isCorrect={request.status}
-          message={request.message}
+          isVisible={resultData.isRecieved}
+          isCorrect={resultData.status}
+          message={resultData.message}
         />
         <div className=" w-full flex justify-end gap-8 mr-16 mt-6">
           <button
@@ -60,10 +61,13 @@ function Delete({ data, setBubbleMenu, setOpen }) {
           </button>
           <button
             className="bg-black text-white px-3 py-0.5"
-            onClick={() => {
-              if (!data.link) deleteTemplateCategory(data.id);
-              else if (data.link.includes("template")) deleteTemplate(data.id);
-              else if (data.link.includes("document")) deleteDocument(data.id);
+            onClick={async () => {
+              if (type === "template category")
+                setResultData(await deleteTemplateCategory(data.id));
+              else if (type === "template")
+                setResultData(await deleteTemplate(data.id));
+              else if (type === "document")
+                setResultData(await deleteDocument(data.id));
             }}
           >
             DELETE

@@ -70,6 +70,7 @@ function DocumentCard({ document }) {
         <BubbleMenu
           setIsOpen={setBubbleMenuOpen}
           data={document}
+          type={"document"}
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}

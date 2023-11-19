@@ -14,13 +14,14 @@ function Document() {
 
   useEffect(function () {
     const getLayout = async () => {
+      const jwt = localStorage.getItem("jwt");
       const response = await fetch("/api/v1/templates/layout", {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
+          Bearer: jwt,
         },
         body: JSON.stringify({
-          jwt: localStorage.getItem("jwt"),
           templateId: searchParams.get("templateId"),
         }),
       });

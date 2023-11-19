@@ -17,13 +17,14 @@ function SaveDocuent({ setIsOpen }) {
   const callBackendAPI = async () => {
     const fieldStyle = "bg-black text-white px-0.5";
     const data = document.querySelector(".document").outerHTML;
+    const jwt = localStorage.getItem("jwt");
     const response = await fetch("/api/v1/documents/save", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
       },
       body: JSON.stringify({
-        token: localStorage.getItem("jwt"),
         data: data,
         file: data.replaceAll(fieldStyle, ""),
         title: title,

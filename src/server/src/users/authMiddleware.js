@@ -11,8 +11,7 @@ const jwtKey = () => {
 };
 
 module.exports = (req, res, next) => {
-  console.log(req.body);
-  const authHeader = req.body.jwt;
+  const authHeader = req.get("Bearer");
 
   if (!authHeader) {
     return res.status(400).send("You have no token");

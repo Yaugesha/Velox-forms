@@ -1,9 +1,9 @@
-import { useDocuments } from "../contexts/DocumentsContext";
+import { useTemplate } from "../contexts/TemplateContext";
 import DocumentHeader from "../components/header/DocumentHeader";
 import TemplateCategory from "../components/documents/TemplateCategory";
 
 function TemplatesGaliery() {
-  const { templateCategories } = useDocuments();
+  const { templateCategories } = useTemplate();
 
   return (
     <div>

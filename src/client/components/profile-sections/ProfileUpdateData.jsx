@@ -14,9 +14,9 @@ function ProfileUpdateData() {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
       },
       body: JSON.stringify({
-        jwt: jwt,
         email: email,
         password: password,
       }),
@@ -35,9 +35,9 @@ function ProfileUpdateData() {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
       },
       body: JSON.stringify({
-        jwt: jwt,
         currentPassword: currentPassword,
         newPassword: newPassword,
         newPasswordConfirmation: newPasswordConfirm,

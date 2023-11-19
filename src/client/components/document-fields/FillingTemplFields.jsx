@@ -1,8 +1,8 @@
 import Input from "./Input";
-import { useTemplate } from "../../contexts/TemplateContext";
+import { useEditors } from "../../contexts/EditorContext";
 
 function FillingTemplFields() {
-  const { editor, fields, setFields, removeField } = useTemplate();
+  const { editor, fields, setFields, removeField } = useEditors();
 
   if (fields.length === 0) return;
   function updateFieldsArray(input) {

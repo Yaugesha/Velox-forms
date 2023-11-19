@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { jwtDecode } from "jwt-decode";
+import { refreshToken, login, regist } from "../api/authAPI";
 
 const AuthContext = createContext();
 
@@ -31,30 +32,6 @@ function reducer(state, action) {
 }
 
 export function AuthProvider({ children }) {
-  const refreshToken = async (token) => {
-    try {
-      const response = await fetch("/api/v1/users/refresh-token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          jwt: token,
-        }),
-      });
-      const result = await response.json();
-
-      if (response.status !== 200) {
-        throw result;
-      }
-      localStorage.setItem("jwt", result.jwt);
-      return true;
-    } catch (error) {
-      console.log(error.message);
-      return false;
-    }
-  };
-
   function isTokenFresh(token) {
     if (token === null) return false;
     //const decodedToken = jwtDecode(token);
@@ -81,72 +58,23 @@ export function AuthProvider({ children }) {
   }
 
   async function authorize(email, password) {
-    try {
-      const response = await fetch("/api/v1/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        throw result;
-      }
-      localStorage.setItem("jwt", result.jwt);
-      const { id, role } = jwtDecode(result.jwt);
-      dispatch({ type: "authorize", payload: { userId: id, role: role } });
-      return {
-        status: true,
-        message: result.message,
-      };
-    } catch (error) {
-      return {
-        status: false,
-        message: "Incorrect user data recieved",
-      };
-    }
+    const { authDispatch, status, message } = await login(email, password);
+    if (authDispatch)
+      dispatch({ type: authDispatch.type, payload: authDispatch.payload });
+    return {
+      status: status,
+      message: message,
+    };
   }
 
   async function register(email, password) {
-    try {
-      const response = await fetch("/api/v1/users/regist", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-      const result = await response.json();
-      if (!response.ok) {
-        throw result;
-      }
-      setCorrectData({
-        status: true,
-        message: result.message,
-      });
-      localStorage.setItem("jwt", result.jwt);
-      const { id, role } = jwtDecode(result.jwt);
-      dispatch({ type: "authorize", payload: { userId: id, role: role } });
-    } catch (errors) {
-      if (errors.errors) {
-        return {
-          status: false,
-          message: errors.errors[0].msg,
-        };
-      } else if (errors) {
-        return {
-          status: false,
-          message: errors.messege,
-        };
-      }
-    }
+    const { authDispatch, status, message } = await regist(email, password);
+    if (authDispatch)
+      dispatch({ type: authDispatch.type, payload: authDispatch.payload });
+    return {
+      status: status,
+      message: message,
+    };
   }
 
   function logOut() {

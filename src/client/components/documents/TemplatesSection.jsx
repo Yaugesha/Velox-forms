@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
-import { useDocuments } from "../../contexts/DocumentsContext";
 import TemplateCard from "./TemplateCard";
+import { useTemplate } from "../../contexts/TemplateContext";
 
 function TemplatesSection() {
-  const { templates } = useDocuments();
+  const { templates } = useTemplate();
 
   return (
     <section className="mb-8 w-[980px] flex flex-col items-center">

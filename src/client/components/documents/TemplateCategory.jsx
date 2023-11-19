@@ -40,6 +40,7 @@ function TemplateCategory({ category }) {
           <BubbleMenu
             setIsOpen={setBubbleMenuOpen}
             data={category}
+            type={"template category"}
             top={bubbleMenuY}
             left={bubbleMenuX}
             items={bubbleMenuItems}

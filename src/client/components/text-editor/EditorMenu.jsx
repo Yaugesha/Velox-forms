@@ -6,11 +6,11 @@ import TextDecorationButtons from "./buttons/TextDecorationButtons";
 import TextCaseButtons from "./buttons/TextCaseButtons";
 import AlignButtons from "./buttons/AlignButtons";
 import TableButtons from "./buttons/TableButtons";
-import { useTemplate } from "../../contexts/TemplateContext";
+import { useEditors } from "../../contexts/EditorContext";
 import HistoryButtons from "./buttons/HistoryButtons";
 
 function EditorMenu({ display }) {
-  const { editor, fields, addField, scale, setScale } = useTemplate();
+  const { editor, fields, addField, scale, setScale } = useEditors();
 
   if (!editor) return null;
 

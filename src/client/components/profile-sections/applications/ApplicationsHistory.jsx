@@ -10,10 +10,8 @@ function ApplicationsHistory() {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
+          Bearer: jwt,
         },
-        body: JSON.stringify({
-          jwt: jwt,
-        }),
       });
       const result = await response.json();
       setApplications(result.applications);

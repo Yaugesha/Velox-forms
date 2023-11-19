@@ -45,10 +45,8 @@ function ProfileSettings() {
         method: "POST",
         headers: {
           "Content-Type": "application/json;charset=utf-8",
+          Bearer: jwt,
         },
-        body: JSON.stringify({
-          jwt: jwt,
-        }),
       });
       const result = await response.json();
 
@@ -73,9 +71,9 @@ function ProfileSettings() {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
       },
       body: JSON.stringify({
-        jwt: jwt,
         userData: {
           personalData: personalUserData,
           workData: workUserData,

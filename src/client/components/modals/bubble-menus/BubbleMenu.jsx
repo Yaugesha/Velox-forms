@@ -2,16 +2,26 @@ import { useState } from "react";
 import Rename from "./Rename";
 import Delete from "./Delete";
 
-function BubbleMenu({ data, top, left, setIsOpen, items, width }) {
+function BubbleMenu({ data, type, top, left, setIsOpen, items, width }) {
   const [modal, setModal] = useState(<div></div>);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const modals = {
     Rename: (
-      <Rename data={data} setBubbleMenu={setIsOpen} setOpen={setModalOpen} />
+      <Rename
+        data={data}
+        type={type}
+        setBubbleMenu={setIsOpen}
+        setOpen={setModalOpen}
+      />
     ),
     Delete: (
-      <Delete data={data} setBubbleMenu={setIsOpen} setOpen={setModalOpen} />
+      <Delete
+        data={data}
+        type={type}
+        setBubbleMenu={setIsOpen}
+        setOpen={setModalOpen}
+      />
     ),
   };
 
