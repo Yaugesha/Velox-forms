@@ -17,5 +17,6 @@ const upload = multer({ storage });
 const router = Router();
 router.post("/save", upload.single("file"), controller.saveReferenceFile);
 router.post("/create", authMiddleware, controller.createApplication);
+router.post("/get", authMiddleware, controller.getUserApplications);
 
 module.exports = router;

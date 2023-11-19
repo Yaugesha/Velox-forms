@@ -35,11 +35,11 @@ function App() {
               <Route path="documentFile" element={<DocumentFile />} />
             </Route>
             <Route path="profile" element={<Profile />}>
-              <Route index element={<Navigate to="settings" />} />
               <Route path="settings" element={<ProfileSettings />} />
               <Route path="security&password" element={<ProfileUpdateData />} />
               <Route path="signOut" element={<SignOut />} />
               <Route path="applications" element={<Applications />}>
+                <Route index element={<Navigate to="history" />} />
                 <Route path="create" element={<CreateApplication />} />
                 <Route path="history" element={<ApplicationsHistory />} />
               </Route>
