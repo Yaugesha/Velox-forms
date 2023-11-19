@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DropdownButton from "../../custom-elements/DropdownButton";
 import Input from "../../custom-elements/Input";
+import * as API from "../../../api/applicationsAPI";
 
 function CreateApplication() {
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
@@ -12,45 +13,6 @@ function CreateApplication() {
   const handleFileUpload = (e) => {
     if (e.target.files) {
       setReferenceFile(e.target.files[0]);
-    }
-  };
-
-  const submitAplication = async () => {
-    const jwt = localStorage.getItem("jwt");
-    let fileLink = "";
-    if (referenceFile) {
-      const formData = new FormData();
-      formData.append("file", referenceFile);
-
-      const response = await fetch("/api/v1/applications/save", {
-        method: "POST",
-        body: formData,
-      });
-      const result = await response.json();
-      console.log(result);
-      fileLink = result.fileLink;
-      if (response.status !== 200) {
-        throw Error(result.message);
-      }
-    }
-    console.log(fileLink);
-    const respon = await fetch("/api/v1/applications/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify({
-        jwt: jwt,
-        category: category,
-        title: title,
-        file: fileLink,
-        comment: comment,
-      }),
-    });
-    const result = await respon.json();
-
-    if (respon.status !== 200) {
-      throw Error(result.message);
     }
   };
 
@@ -108,7 +70,9 @@ function CreateApplication() {
         ></textarea>
       </div>
       <button
-        onClick={submitAplication}
+        onClick={async () =>
+          await API.submitAplication(referenceFile, category, title, comment)
+        }
         className="w-[590px] h-10 items-center bg-black text-white"
       >
         Submit application

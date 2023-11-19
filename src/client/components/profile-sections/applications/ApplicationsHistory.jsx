@@ -1,25 +1,10 @@
 import { useEffect, useState } from "react";
+import { useApplications } from "../../../contexts/ApplicationsContext";
 
 function ApplicationsHistory() {
-  const [applications, setApplications] = useState([]);
+  const { applications, findApplications } = useApplications();
 
-  const jwt = localStorage.getItem("jwt");
   useEffect(function () {
-    async function findApplications() {
-      const response = await fetch("/api/v1/applications/get", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-          Bearer: jwt,
-        },
-      });
-      const result = await response.json();
-      setApplications(result.applications);
-
-      if (response.status !== 200) {
-        throw Error(result.message);
-      }
-    }
     findApplications();
   }, []);
 

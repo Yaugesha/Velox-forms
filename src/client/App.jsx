@@ -19,41 +19,44 @@ import ApplicationsHistory from "./components/profile-sections/applications/Appl
 import Applications from "./components/profile-sections/applications/Applications";
 import Users from "./pages/Users";
 import { TemplatesProvider } from "./contexts/TemplateContext";
+import { ApplicationProvider } from "./contexts/ApplicationsContext";
 
 function App() {
   return (
     <AuthProvider>
       <TemplatesProvider>
         <DocunentsProvider>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Main />}>
-                <Route path="signUp" element={<SignUp />} />
-                <Route path="signIn" element={<SignIn />} />
-              </Route>
-              <Route path="documents" element={<Documents />}>
-                <Route path="templates" element={<TemplatesGallery />} />
-                <Route path="template" element={<Template />} />
-                <Route path="document" element={<Document />} />
-                <Route path="documentFile" element={<DocumentFile />} />
-              </Route>
-              <Route path="profile" element={<Profile />}>
-                <Route index element={<Navigate to="settings" />} />
-                <Route path="settings" element={<ProfileSettings />} />
-                <Route
-                  path="security&password"
-                  element={<ProfileUpdateData />}
-                />
-                <Route path="signOut" element={<SignOut />} />
-                <Route path="applications" element={<Applications />}>
-                  <Route index element={<Navigate to="history" />} />
-                  <Route path="create" element={<CreateApplication />} />
-                  <Route path="history" element={<ApplicationsHistory />} />
+          <ApplicationProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Main />}>
+                  <Route path="signUp" element={<SignUp />} />
+                  <Route path="signIn" element={<SignIn />} />
                 </Route>
-              </Route>
-              <Route path="users" element={<Users />} />
-            </Routes>
-          </BrowserRouter>
+                <Route path="documents" element={<Documents />}>
+                  <Route path="templates" element={<TemplatesGallery />} />
+                  <Route path="template" element={<Template />} />
+                  <Route path="document" element={<Document />} />
+                  <Route path="documentFile" element={<DocumentFile />} />
+                </Route>
+                <Route path="profile" element={<Profile />}>
+                  <Route index element={<Navigate to="settings" />} />
+                  <Route path="settings" element={<ProfileSettings />} />
+                  <Route
+                    path="security&password"
+                    element={<ProfileUpdateData />}
+                  />
+                  <Route path="signOut" element={<SignOut />} />
+                  <Route path="applications" element={<Applications />}>
+                    <Route index element={<Navigate to="history" />} />
+                    <Route path="create" element={<CreateApplication />} />
+                    <Route path="history" element={<ApplicationsHistory />} />
+                  </Route>
+                </Route>
+                <Route path="users" element={<Users />} />
+              </Routes>
+            </BrowserRouter>
+          </ApplicationProvider>
         </DocunentsProvider>
       </TemplatesProvider>
     </AuthProvider>
