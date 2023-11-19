@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import BubbleMenu from "../popups/BubbleMenu";
+import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
 
 function TemplateCard({ template }) {
   const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);

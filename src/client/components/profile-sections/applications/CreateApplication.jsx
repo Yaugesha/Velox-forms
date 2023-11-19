@@ -1,6 +1,6 @@
 import { useState } from "react";
-import DropdownButton from "../../buttons/DropdownButton";
-import Input from "../Input";
+import DropdownButton from "../../custom-elements/DropdownButton";
+import Input from "../../custom-elements/Input";
 
 function CreateApplication() {
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];

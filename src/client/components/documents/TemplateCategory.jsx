@@ -1,6 +1,6 @@
 import { useState } from "react";
 import TemplateCard from "./TemplateCard";
-import BubbleMenu from "../popups/BubbleMenu";
+import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
 
 function TemplateCategory({ category }) {
   const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);

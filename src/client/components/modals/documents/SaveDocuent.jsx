@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Input from "../profile-sections/Input";
-import Popup from "./Popup";
+import Input from "../../custom-elements/Input";
+import Popup from "../Popup";
 import { useNavigate } from "react-router-dom";
 
 function SaveDocuent({ setIsOpen }) {

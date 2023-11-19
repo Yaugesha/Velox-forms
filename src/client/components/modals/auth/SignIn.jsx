@@ -1,13 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import Popup from "./Popup";
-import ResultMessage from "./ResultMessage";
+import { useAuth } from "../../../contexts/AuthContext";
+import Popup from "../Popup";
+import ResultMessage from "../ResultMessage";
 
-function SignUp() {
+function SignIn() {
   const navigate = useNavigate();
 
-  const { register } = useAuth();
+  const { authorize } = useAuth();
 
   function handleClose(e) {
     if (e.target.classList.contains("w-full")) {
@@ -18,7 +18,6 @@ function SignUp() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [isCorrectData, setCorrectData] = useState({
     isRecieved: false,
     status: false,
@@ -39,7 +38,7 @@ function SignUp() {
       >
         <span className="flex justify-center items-center h-11 mb-16">
           <hr className="w-[120px] border-black" />
-          <p className="text-3xl mx-5">Sign Up</p>
+          <p className="text-3xl mx-5">Sign In</p>
           <hr className="w-[120px] border-black" />
         </span>
         <div className="flex justify-center items-center flex-col gap-8">
@@ -59,45 +58,46 @@ function SignUp() {
             className="w-[357px] h-[48px] border border-black pl-4"
             type="password"
           />
-          <input
-            onInput={(e) => {
-              setConfirmPassword(e.target.value);
-            }}
-            placeholder="Password"
-            className="w-[357px] h-[48px] border border-black pl-4"
-            type="password"
-          />
           <ResultMessage
             isVisible={isCorrectData.isRecieved}
             isCorrect={isCorrectData.status}
             message={isCorrectData.message}
           />
           <button
-            onClick={async () => {
-              if (password === confirmPassword) {
-                const { status, message } = await register(email, password);
-                setCorrectData({
-                  isRecieved: true,
-                  status: status,
-                  message: message,
-                });
-                console.log(isCorrectData.isRecieved, isCorrectData.message);
-              } else
-                setCorrectData({
-                  isRecieved: true,
-                  status: false,
-                  message: "Passwords doesn't match",
-                });
-            }}
             disabled={checkSubmitData()}
-            className="bg-black w-[200px] h-8 mt-4 text-white text-base submit-btn disabled:opacity-50"
+            onClick={async (e) => {
+              const { status, message } = await authorize(email, password);
+              setCorrectData({
+                isRecieved: true,
+                status: status,
+                message: message,
+              });
+            }}
+            className="bg-black w-[120px] h-8 text-white text-base submit-btn disabled:opacity-50"
           >
-            Create Account
+            Sign in
           </button>
         </div>
+        <p
+          className={`self-center ${
+            isCorrectData.status === "" ? "pt-14" : "pt-6"
+          } text-base`}
+        >
+          New to Velox Forms?&nbsp;
+          <Link to="../signUp">
+            <u
+              className="cursor-pointer"
+              onClick={() =>
+                window.history.pushState({ overflow: true }, null, null)
+              }
+            >
+              Create an account.
+            </u>
+          </Link>
+        </p>
       </div>
     </Popup>
   );
 }
 
-export default SignUp;
+export default SignIn;

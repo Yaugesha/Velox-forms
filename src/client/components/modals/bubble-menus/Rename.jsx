@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useDocuments } from "../../contexts/DocumentsContext";
-import Popup from "./Popup";
-import Input from "../profile-sections/Input";
-import ResultMessage from "./ResultMessage";
+import { useDocuments } from "../../../contexts/DocumentsContext";
+import Popup from "../Popup";
+import Input from "../../custom-elements/Input";
+import ResultMessage from "../ResultMessage";
 
 function Rename({ data, setBubbleMenu, setOpen }) {
   const {

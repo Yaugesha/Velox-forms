@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useDocuments } from "../../contexts/DocumentsContext";
-import ResultMessage from "./ResultMessage";
-import Popup from "./Popup";
+import { useDocuments } from "../../../contexts/DocumentsContext";
+import ResultMessage from "../ResultMessage";
+import Popup from "../Popup";
 
 function Delete({ data, setBubbleMenu, setOpen }) {
   const {

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../contexts/AuthContext";
-import Popup from "./Popup";
+import { useAuth } from "../../../contexts/AuthContext";
+import Popup from "../Popup";
 
 function SignOut() {
   const { logOut } = useAuth();

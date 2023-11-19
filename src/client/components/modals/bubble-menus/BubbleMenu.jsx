@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Rename from "../popups/Rename";
+import Rename from "./Rename";
 import Delete from "./Delete";
 
 function BubbleMenu({ data, top, left, setIsOpen, items, width }) {

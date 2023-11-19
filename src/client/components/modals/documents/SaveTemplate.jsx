@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Input from "../profile-sections/Input";
-import DropdownButton from "../buttons/DropdownButton";
-import Popup from "./Popup";
+import Input from "../../custom-elements/Input";
+import DropdownButton from "../../custom-elements/DropdownButton";
+import Popup from "../Popup";
 import { useNavigate } from "react-router-dom";
-import { useTemplate } from "../../contexts/TemplateContext";
+import { useTemplate } from "../../../contexts/TemplateContext";
 
 function SaveTemplate({ setIsOpen }) {
   const { fields } = useTemplate();

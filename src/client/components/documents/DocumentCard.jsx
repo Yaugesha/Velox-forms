@@ -1,5 +1,5 @@
 import { useState } from "react";
-import BubbleMenu from "../popups/BubbleMenu";
+import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
 import { Link } from "react-router-dom";
 
 function DocumentCard({ document }) {

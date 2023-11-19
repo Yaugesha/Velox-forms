@@ -2,7 +2,7 @@ import FillingTemplFields from "../components/document-fields/FillingTemplFields
 import Editor from "../components/text-editor/Editor";
 import { useState } from "react";
 import DocumentHeader from "../components/header/DocumentHeader";
-import SaveTemplate from "../components/popups/SaveTemplate";
+import SaveTemplate from "../components/modals/documents/SaveTemplate";
 import { TemplateProvider } from "../contexts/TemplateContext";
 
 function Template() {

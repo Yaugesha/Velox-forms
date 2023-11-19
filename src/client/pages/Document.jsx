@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import DocumentHeader from "../components/header/DocumentHeader";
-import SaveDocuent from "../components/popups/SaveDocuent";
+import SaveDocuent from "../components/modals/documents/SaveDocuent";
 import FillingDocFields from "../components/document-fields/FillingDocFields";
 
 function Document() {
