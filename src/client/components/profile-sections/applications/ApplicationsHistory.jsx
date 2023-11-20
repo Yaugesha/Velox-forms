@@ -40,7 +40,7 @@ function ApplicationsHistory() {
           {applications.map((application) => {
             return (
               <tr
-                key={application.data.name}
+                key={application.data.id}
                 className="h-14 border-b-2 cursor-pointer"
               >
                 <td className=" border-none">{application.data.name}</td>

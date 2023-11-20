@@ -2,6 +2,7 @@ import { useState } from "react";
 import DropdownButton from "../../custom-elements/DropdownButton";
 import Input from "../../custom-elements/Input";
 import * as API from "../../../api/applicationsAPI";
+import ApplicationResult from "../../modals/ApplicationResult";
 
 function CreateApplication() {
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
@@ -9,7 +10,7 @@ function CreateApplication() {
   const [title, setTitle] = useState(categories[0]);
   const [referenceFile, setReferenceFile] = useState(null);
   const [comment, setComment] = useState("");
-
+  const [result, setResult] = useState(null);
   const handleFileUpload = (e) => {
     if (e.target.files) {
       setReferenceFile(e.target.files[0]);
@@ -30,6 +31,7 @@ function CreateApplication() {
       </div>
       <Input
         placeholder={"Template name"}
+        withLabel={true}
         width={"285px"}
         handleInput={setTitle}
       />
@@ -71,12 +73,17 @@ function CreateApplication() {
       </div>
       <button
         onClick={async () =>
-          await API.submitAplication(referenceFile, category, title, comment)
+          setResult(
+            await API.submitAplication(referenceFile, category, title, comment)
+          )
         }
         className="w-[590px] h-10 items-center bg-black text-white"
       >
         Submit application
       </button>
+      {result && (
+        <ApplicationResult message={result.message} setMessage={setResult} />
+      )}
     </div>
   );
 }

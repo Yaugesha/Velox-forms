@@ -48,6 +48,10 @@ export const saveApplication = async (category, title, fileLink, comment) => {
   if (respon.status !== 200) {
     throw Error(result.message);
   }
+  return {
+    error: false,
+    message: "Application recieved",
+  };
 };
 
 export const submitAplication = async (
@@ -56,10 +60,16 @@ export const submitAplication = async (
   title,
   comment
 ) => {
+  if (!referenceFile || !category || !title) {
+    return {
+      error: true,
+      message: "You must fill category, title and provide reference file",
+    };
+  }
   let fileLink = "";
   console.log(referenceFile);
   if (referenceFile) {
     fileLink = await uploadFile(referenceFile);
   }
-  saveApplication(category, title, fileLink, comment);
+  return await saveApplication(category, title, fileLink, comment);
 };

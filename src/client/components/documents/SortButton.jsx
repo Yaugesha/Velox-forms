@@ -6,25 +6,28 @@ function SortButton({ type, kind, changeKind, active, setActive, callback }) {
         break;
       case "name":
         setActive(type);
-        kind === "ascending"
-          ? changeKind("descending")
-          : changeKind("ascending");
+        if (type === active)
+          kind === "ascending"
+            ? changeKind("descending")
+            : changeKind("ascending");
         break;
       case "date":
         setActive(type);
-        kind === "ascending"
-          ? changeKind("descending")
-          : changeKind("ascending");
+        if (type === active)
+          kind === "ascending"
+            ? changeKind("descending")
+            : changeKind("ascending");
         break;
     }
   }
+  const isActive = active === type ? "-active" : "";
   return (
     <img
       onClick={handleClick}
-      className={`cursor-pointer ${
-        active === type ? "border-[2px] p-1 border-black" : ""
-      }`}
-      src={`/src/client/assets/icons/sorts/icon-${type + "-" + kind}.svg`}
+      className="cursor-pointer"
+      src={`/src/client/assets/icons/sorts/icon-${
+        type + "-" + kind + isActive
+      }.svg`}
       alt={`${type + "-" + kind}`}
     />
   );
