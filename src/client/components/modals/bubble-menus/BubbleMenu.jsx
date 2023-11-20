@@ -2,28 +2,9 @@ import { useState } from "react";
 import Rename from "./Rename";
 import Delete from "./Delete";
 
-function BubbleMenu({ data, type, top, left, setIsOpen, items, width }) {
+function BubbleMenu({ data, top, left, setIsOpen, items, width }) {
   const [modal, setModal] = useState(<div></div>);
   const [isModalOpen, setModalOpen] = useState(false);
-
-  const modals = {
-    Rename: (
-      <Rename
-        data={data}
-        type={type}
-        setBubbleMenu={setIsOpen}
-        setOpen={setModalOpen}
-      />
-    ),
-    Delete: (
-      <Delete
-        data={data}
-        type={type}
-        setBubbleMenu={setIsOpen}
-        setOpen={setModalOpen}
-      />
-    ),
-  };
 
   function handleClose(e) {
     if (
@@ -52,7 +33,24 @@ function BubbleMenu({ data, type, top, left, setIsOpen, items, width }) {
                 className="bubble-menu-item flex items-center gap-6 mt-2 cursor-pointer"
                 key={item.name}
                 onClick={() => {
-                  setModal(modals[item.name]);
+                  if (item.name === "Rename")
+                    setModal(
+                      <Rename
+                        data={data}
+                        setBubbleMenu={setIsOpen}
+                        setOpen={setModalOpen}
+                        callback={item.action}
+                      />
+                    );
+                  if (item.name === "Delete")
+                    setModal(
+                      <Delete
+                        data={data}
+                        setBubbleMenu={setIsOpen}
+                        setOpen={setModalOpen}
+                        callback={item.action}
+                      />
+                    );
                   setModalOpen(true);
                 }}
               >

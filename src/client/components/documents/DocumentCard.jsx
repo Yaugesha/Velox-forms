@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
+import { useDocuments } from "../../contexts/DocumentsContext";
 import { Link } from "react-router-dom";
 
 function DocumentCard({ document }) {
@@ -12,17 +13,18 @@ function DocumentCard({ document }) {
     setBubbleMenuY(e.target.offsetTop + 30);
     setBubbleMenuX(e.target.offsetLeft - 120);
   }
+  const { deleteDocument, renameDocument } = useDocuments();
 
   const bubbleMenuItems = [
     {
       icon: "/src/client/assets/icons/general/icon-rename.svg",
       name: "Rename",
-      action: "",
+      action: renameDocument,
     },
     {
       icon: "/src/client/assets/icons/general/icon-delete.svg",
       name: "Delete",
-      action: "",
+      action: deleteDocument,
     },
   ];
 
@@ -70,7 +72,6 @@ function DocumentCard({ document }) {
         <BubbleMenu
           setIsOpen={setBubbleMenuOpen}
           data={document}
-          type={"document"}
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import DocumentHeader from "../components/header/DocumentHeader";
-import SaveDocuent from "../components/modals/documents/SaveDocuent";
+import SaveDocument from "../components/modals/documents/SaveDocument";
 import FillingDocFields from "../components/document-fields/FillingDocFields";
 
 function Document() {
@@ -99,7 +99,7 @@ function Document() {
       <div className="container w-[1280px] flex gap-64 bg-white">
         <FillingDocFields fields={fields} userData={userData} />
       </div>
-      {isPopupOpen ? <SaveDocuent setIsOpen={setPopup} /> : ""}
+      {isPopupOpen ? <SaveDocument setIsOpen={setPopup} /> : ""}
     </>
   );
 }

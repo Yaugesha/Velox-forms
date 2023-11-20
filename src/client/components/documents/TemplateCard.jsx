@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useTemplate } from "../../contexts/TemplateContext";
 import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
 
 function TemplateCard({ template }) {
@@ -12,17 +13,18 @@ function TemplateCard({ template }) {
     setBubbleMenuY(e.target.offsetTop + 30);
     setBubbleMenuX(e.target.offsetLeft - 120);
   }
+  const { deleteTemplate, renameTemplate } = useTemplate();
 
   const bubbleMenuItems = [
     {
       icon: "/src/client/assets/icons/general/icon-rename.svg",
       name: "Rename",
-      action: "",
+      action: renameTemplate,
     },
     {
       icon: "/src/client/assets/icons/general/icon-delete.svg",
       name: "Delete",
-      action: "",
+      action: deleteTemplate,
     },
     {
       icon: "/src/client/assets/icons/general/icon-rename-description.svg",
@@ -62,7 +64,6 @@ function TemplateCard({ template }) {
         <BubbleMenu
           setIsOpen={setBubbleMenuOpen}
           data={template}
-          type={"template"}
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}

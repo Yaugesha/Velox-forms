@@ -1,3 +1,33 @@
+export const saveTemplate = async (title, category, fields) => {
+  try {
+    const jwt = localStorage.getItem("jwt");
+    const fily = document.querySelector(".tiptap").innerHTML;
+    const data = `<div class="document mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">${fily}</div>`;
+    const response = await fetch("/api/v1/templates/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
+      },
+      body: JSON.stringify({
+        data: data,
+        title: title,
+        category: category,
+        fields: fields,
+      }),
+    });
+    const result = await response.json();
+
+    if (response.status !== 200) {
+      throw Error(result.message);
+    }
+    return { status: true, message: "Document saved" };
+  } catch (error) {
+    console.log(error);
+    return { status: false, message: error.message };
+  }
+};
+
 export async function renameTemplate(templateId, newName) {
   try {
     const token = localStorage.getItem("jwt");

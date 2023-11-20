@@ -1,12 +1,8 @@
 import { useEffect, useState } from "react";
-import { useDocuments } from "../../../contexts/DocumentsContext";
-import { useTemplate } from "../../../contexts/TemplateContext";
 import ResultMessage from "../ResultMessage";
 import Popup from "../Popup";
 
-function Delete({ data, type, setBubbleMenu, setOpen }) {
-  const { deleteTemplate, deleteTemplateCategory } = useTemplate();
-  const { deleteDocument } = useDocuments();
+function Delete({ data, setBubbleMenu, setOpen, callback }) {
   const [resultData, setResultData] = useState({
     isRecieved: false,
     status: "",
@@ -62,12 +58,7 @@ function Delete({ data, type, setBubbleMenu, setOpen }) {
           <button
             className="bg-black text-white px-3 py-0.5"
             onClick={async () => {
-              if (type === "template category")
-                setResultData(await deleteTemplateCategory(data.id));
-              else if (type === "template")
-                setResultData(await deleteTemplate(data.id));
-              else if (type === "document")
-                setResultData(await deleteDocument(data.id));
+              setResultData(await callback(data.id));
             }}
           >
             DELETE

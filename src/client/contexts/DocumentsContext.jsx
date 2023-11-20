@@ -30,6 +30,11 @@ export function DocunentsProvider({ children }) {
     const { status, message } = await API.deleteDocument(templateId, newName);
     return { isRecieved: true, status: status, message: message };
   }
+  async function saveDocument(title) {
+    const { status, message } = await API.saveDocument(title);
+    //if (status) setDocuments([...documents, ])
+    return { isRecieved: true, status: status, message: message };
+  }
   async function getDocuments() {
     const result = await API.getDocuments();
     setDocuments([...result]);
@@ -38,6 +43,7 @@ export function DocunentsProvider({ children }) {
   const value = {
     documents: searchDocuments,
     setSearchQuery,
+    saveDocument,
     renameDocument,
     deleteDocument,
     getDocuments,

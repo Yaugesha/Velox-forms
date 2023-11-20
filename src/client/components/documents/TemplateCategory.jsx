@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTemplate } from "../../contexts/TemplateContext";
 import TemplateCard from "./TemplateCard";
 import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
 
@@ -12,17 +13,18 @@ function TemplateCategory({ category }) {
     setBubbleMenuY(e.target.offsetTop + 30);
     setBubbleMenuX(e.target.offsetLeft - 120);
   }
+  const { deleteTemplateCategory, renameTemplateCategory } = useTemplate();
 
   const bubbleMenuItems = [
     {
       icon: "/src/client/assets/icons/general/icon-rename.svg",
       name: "Rename",
-      action: "",
+      action: renameTemplateCategory,
     },
     {
       icon: "/src/client/assets/icons/general/icon-delete.svg",
       name: "Delete",
-      action: "",
+      action: deleteTemplateCategory,
     },
   ];
 
@@ -40,7 +42,6 @@ function TemplateCategory({ category }) {
           <BubbleMenu
             setIsOpen={setBubbleMenuOpen}
             data={category}
-            type={"template category"}
             top={bubbleMenuY}
             left={bubbleMenuX}
             items={bubbleMenuItems}

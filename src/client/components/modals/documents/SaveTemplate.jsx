@@ -4,6 +4,8 @@ import DropdownButton from "../../custom-elements/DropdownButton";
 import Popup from "../Popup";
 import { useNavigate } from "react-router-dom";
 import { useEditors } from "../../../contexts/EditorContext";
+import { useTemplate } from "../../../contexts/TemplateContext";
+import ResultMessage from "../ResultMessage";
 
 function SaveTemplate({ setIsOpen }) {
   const { fields } = useEditors();
@@ -11,38 +13,21 @@ function SaveTemplate({ setIsOpen }) {
   const [category, setCategory] = useState(categories[0]);
   const [title, setTitle] = useState("");
   const navigate = useNavigate();
-
-  const callBackendAPI = async () => {
-    const jwt = localStorage.getItem("jwt");
-    const fily = document.querySelector(".tiptap").innerHTML;
-    const data = `<div class="document mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">${fily}</div>`;
-    const response = await fetch("/api/v1/templates/save", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        Bearer: jwt,
-      },
-      body: JSON.stringify({
-        data: data,
-        title: title,
-        category: category,
-        fields: fields,
-      }),
-    });
-    const result = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(result.message);
-    }
-    //window.location.reload();
-  };
+  const [isCorrectData, setCorrectData] = useState({
+    isRecieved: false,
+    status: false,
+    message: "",
+  });
 
   function handleClose(e) {
     if (e.target.classList.contains("w-full")) {
       document.body.style.overflow = "auto";
       setIsOpen(false);
+      navigate(-1);
     }
   }
+
+  const { saveTemplate } = useTemplate();
 
   return (
     <Popup handleClose={handleClose}>
@@ -65,11 +50,15 @@ function SaveTemplate({ setIsOpen }) {
             width={285}
           />
         </div>
+        <ResultMessage
+          isVisible={isCorrectData.isRecieved}
+          isCorrect={isCorrectData.status}
+          message={isCorrectData.message}
+        />
         <div className="w-[285px] flex justify-center items-center gap-4 mt-8"></div>
         <button
-          onClick={() => {
-            callBackendAPI();
-            navigate(-1);
+          onClick={async () => {
+            setCorrectData(await saveTemplate(title, category, fields));
           }}
           className="bg-black w-[204px] h-8 mt-4 text-white text-base"
         >

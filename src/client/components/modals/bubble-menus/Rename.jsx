@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import { useDocuments } from "../../../contexts/DocumentsContext";
-import { useTemplate } from "../../../contexts/TemplateContext";
 import Popup from "../Popup";
 import Input from "../../custom-elements/Input";
 import ResultMessage from "../ResultMessage";
 
-function Rename({ data, type, setBubbleMenu, setOpen }) {
-  const { renameTemplate, renameTemplateCategory } = useTemplate();
-  const { renameDocument } = useDocuments();
+function Rename({ data, setBubbleMenu, setOpen, callback }) {
   const [resultData, setResultData] = useState({
     isRecieved: false,
     status: "",
@@ -65,12 +61,7 @@ function Rename({ data, type, setBubbleMenu, setOpen }) {
           <button
             className="bg-black text-white px-3 py-0.5"
             onClick={async () => {
-              if (type === "template category")
-                setResultData(await renameTemplateCategory(data.id, title));
-              else if (type === "template")
-                setResultData(await renameTemplate(data.id, title));
-              else if (type === "document")
-                setResultData(await renameDocument(data.id, title));
+              setResultData(await callback(data.id, title));
             }}
           >
             OK

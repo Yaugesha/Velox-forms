@@ -25,6 +25,36 @@ export async function renameDocument(documentId, newName) {
   }
 }
 
+export const saveDocument = async (title) => {
+  try {
+    const fieldStyle = "bg-black text-white px-0.5";
+    const data = document.querySelector(".document").outerHTML;
+    const jwt = localStorage.getItem("jwt");
+    const response = await fetch("/api/v1/documents/save", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
+      },
+      body: JSON.stringify({
+        data: data,
+        file: data.replaceAll(fieldStyle, ""),
+        title: title,
+      }),
+    });
+    const result = await response.json();
+
+    if (response.status !== 200) {
+      throw Error(result.message);
+    }
+
+    return { status: true, message: "Document saved" };
+  } catch (error) {
+    console.log(error);
+    return { status: false, message: error.message };
+  }
+};
+
 export async function deleteDocument(documentId) {
   try {
     const jwt = localStorage.getItem("jwt");

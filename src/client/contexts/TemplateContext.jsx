@@ -35,6 +35,10 @@ export function TemplatesProvider({ children }) {
     const { status, message } = await API.deleteTemplate(templateId, newName);
     return { isRecieved: true, status: status, message: message };
   }
+  async function saveTemplate(title, category, fields) {
+    const { status, message } = await API.saveTemplate(title, category, fields);
+    return { isRecieved: true, status: status, message: message };
+  }
   async function getRecentTemplates() {
     const result = await API.getRecentTemplates();
     setTemplates([templates[0], ...result]);
@@ -47,6 +51,7 @@ export function TemplatesProvider({ children }) {
   const value = {
     templates,
     templateCategories,
+    saveTemplate,
     renameTemplate,
     deleteTemplate,
     renameTemplateCategory,
