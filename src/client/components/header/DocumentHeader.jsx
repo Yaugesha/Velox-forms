@@ -31,7 +31,7 @@ function DocumentHeader({
       <div className="flex items-center text-base leading-6 ">
         <div
           onClick={() => navigate(-1)}
-          className="inline-block items-center w-12 cursor-pointer mr-5 ml-3 p-3 font-bold leading-7 text-2xl text-black font-serif"
+          className="inline-block items-center w-12 cursor-pointer mr-5 -ml-3 p-3 font-bold leading-7 text-2xl text-black font-serif"
         >
           &larr;
         </div>

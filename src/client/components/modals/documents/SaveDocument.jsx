@@ -35,11 +35,13 @@ function SaveDocument({ setIsOpen }) {
           width={"285px"}
           handleInput={setTitle}
         />
-        <ResultMessage
-          isVisible={isCorrectData.isRecieved}
-          isCorrect={isCorrectData.status}
-          message={isCorrectData.message}
-        />
+        <div>
+          <ResultMessage
+            isVisible={isCorrectData.isRecieved}
+            isCorrect={isCorrectData.status}
+            message={isCorrectData.message}
+          />
+        </div>
         <button
           onClick={async () => {
             setCorrectData(await saveDocument(title));

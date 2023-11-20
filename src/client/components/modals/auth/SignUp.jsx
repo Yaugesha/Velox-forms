@@ -67,11 +67,13 @@ function SignUp() {
             className="w-[357px] h-[48px] border border-black pl-4"
             type="password"
           />
-          <ResultMessage
-            isVisible={isCorrectData.isRecieved}
-            isCorrect={isCorrectData.status}
-            message={isCorrectData.message}
-          />
+          <div>
+            <ResultMessage
+              isVisible={isCorrectData.isRecieved}
+              isCorrect={isCorrectData.status}
+              message={isCorrectData.message}
+            />
+          </div>
           <button
             onClick={async () => {
               if (password === confirmPassword) {
@@ -90,7 +92,7 @@ function SignUp() {
                 });
             }}
             disabled={checkSubmitData()}
-            className="bg-black w-[200px] h-8 mt-4 text-white text-base submit-btn disabled:opacity-50"
+            className="bg-black w-[200px] h-8 text-white text-base submit-btn disabled:opacity-50"
           >
             Create Account
           </button>

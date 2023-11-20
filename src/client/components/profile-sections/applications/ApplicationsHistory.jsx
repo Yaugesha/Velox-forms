@@ -48,7 +48,7 @@ function ApplicationsHistory() {
                 <td className=" border-none">
                   {application.statuses[application.statuses.length - 1].name}
                 </td>
-                <td className=" border-none">
+                <td className="w-6 border-none">
                   <img
                     className="h-6 w-6 cursor-pointer"
                     src="/src/client/assets/icons/general/icon-more.svg"

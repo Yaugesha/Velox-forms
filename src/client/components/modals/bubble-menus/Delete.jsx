@@ -43,17 +43,19 @@ function Delete({ data, setBubbleMenu, setOpen, callback }) {
           Are you sure you want delete {data.title}?
         </p>
         <p>This file will be deleted immediatly. You can't undo this action.</p>
-        <ResultMessage
-          isVisible={resultData.isRecieved}
-          isCorrect={resultData.status}
-          message={resultData.message}
-        />
+        <div>
+          <ResultMessage
+            isVisible={resultData.isRecieved}
+            isCorrect={resultData.status}
+            message={resultData.message}
+          />
+        </div>
         <div className=" w-full flex justify-end gap-8 mr-16 mt-6">
           <button
-            className="exit-btn bg-black text-white px-2 py-0.5"
+            className="exit-btn bg-black text-white px-4 py-0.5"
             onClick={handleClose}
           >
-            Cancel
+            {resultData.isRecieved ? "Exit" : "Cancel"}
           </button>
           <button
             className="bg-black text-white px-3 py-0.5"

@@ -7,6 +7,7 @@ function Input({
   id,
   handleInput,
   colSpan,
+  isAutocomplite,
 }) {
   return (
     <div className={`w-[${width}] flex flex-col gap-2 ${colSpan}`}>

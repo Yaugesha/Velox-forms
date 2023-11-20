@@ -50,11 +50,13 @@ function SaveTemplate({ setIsOpen }) {
             width={285}
           />
         </div>
-        <ResultMessage
-          isVisible={isCorrectData.isRecieved}
-          isCorrect={isCorrectData.status}
-          message={isCorrectData.message}
-        />
+        <div>
+          <ResultMessage
+            isVisible={isCorrectData.isRecieved}
+            isCorrect={isCorrectData.status}
+            message={isCorrectData.message}
+          />
+        </div>
         <div className="w-[285px] flex justify-center items-center gap-4 mt-8"></div>
         <button
           onClick={async () => {

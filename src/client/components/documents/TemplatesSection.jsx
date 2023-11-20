@@ -9,7 +9,7 @@ function TemplatesSection() {
     <section className="mb-8 w-[980px] flex flex-col items-center">
       <div className="w-[980px] flex justify-between items-center mt-10 mb-5">
         <div>
-          <h3>Create new document</h3>
+          <h3 className="ml-5">Create new document</h3>
         </div>
         <div className="flex justify-between items-center gap-8">
           <Link to="templates">
@@ -21,11 +21,6 @@ function TemplatesSection() {
               />
             </div>
           </Link>
-          <img
-            className="h-6 cursor-pointer"
-            src="/src/client/assets/icons/general/icon-more.svg"
-            alt="show more"
-          />
         </div>
       </div>
       {templates !== undefined && (

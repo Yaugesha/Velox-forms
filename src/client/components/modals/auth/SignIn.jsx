@@ -58,11 +58,13 @@ function SignIn() {
             className="w-[357px] h-[48px] border border-black pl-4"
             type="password"
           />
-          <ResultMessage
-            isVisible={isCorrectData.isRecieved}
-            isCorrect={isCorrectData.status}
-            message={isCorrectData.message}
-          />
+          <div>
+            <ResultMessage
+              isVisible={isCorrectData.isRecieved}
+              isCorrect={isCorrectData.status}
+              message={isCorrectData.message}
+            />
+          </div>
           <button
             disabled={checkSubmitData()}
             onClick={async (e) => {

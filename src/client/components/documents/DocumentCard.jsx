@@ -41,23 +41,10 @@ function DocumentCard({ document }) {
             {document.title}.{document.type}
           </span>
         </Link>
-        <div className="w-[204px] flex items-center">
+        <div className="w-[204px] flex justify-between items-center">
           <Link to={document.link}>
             <div className="flex items-center">
-              {document.type === "doc" ? (
-                <img
-                  className="h-6 w-6"
-                  src={"/src/client/assets/icons/documents/icon-doc.svg"}
-                  alt="doc"
-                />
-              ) : (
-                <img
-                  className="h-6 w-6"
-                  src={"/src/client/assets/icons/documents/icon-pdf.svg"}
-                  alt="pdf"
-                />
-              )}
-              <p className="text-[12px] ml-1 mr-7">{document.date}.</p>
+              <p className="text-[12px]">{document.date}.</p>
             </div>
           </Link>
           <img

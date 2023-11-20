@@ -20,7 +20,7 @@ function CreateApplication() {
   return (
     <div className="w-[590px] flex flex-wrap justify-between gap-y-4">
       <div className="flex flex-col gap-2">
-        <p>Choose template category</p>
+        <p>Enter or choose template category</p>
         <DropdownButton
           type="templates-category"
           handleClick={setCategory}

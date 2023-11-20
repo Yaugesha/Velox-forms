@@ -1,6 +1,5 @@
 import { useState } from "react";
-import Rename from "./Rename";
-import Delete from "./Delete";
+import BubbleMenuItem from "./BubbleMenuItem";
 
 function BubbleMenu({ data, top, left, setIsOpen, items, width }) {
   const [modal, setModal] = useState(<div></div>);
@@ -29,34 +28,14 @@ function BubbleMenu({ data, top, left, setIsOpen, items, width }) {
         >
           {items.map((item) => {
             return (
-              <div
-                className="bubble-menu-item flex items-center gap-6 mt-2 cursor-pointer"
+              <BubbleMenuItem
                 key={item.name}
-                onClick={() => {
-                  if (item.name === "Rename")
-                    setModal(
-                      <Rename
-                        data={data}
-                        setBubbleMenu={setIsOpen}
-                        setOpen={setModalOpen}
-                        callback={item.action}
-                      />
-                    );
-                  if (item.name === "Delete")
-                    setModal(
-                      <Delete
-                        data={data}
-                        setBubbleMenu={setIsOpen}
-                        setOpen={setModalOpen}
-                        callback={item.action}
-                      />
-                    );
-                  setModalOpen(true);
-                }}
-              >
-                <img src={item.icon} alt={item.name} />
-                <p>{item.name}</p>
-              </div>
+                data={data}
+                item={item}
+                setModal={setModal}
+                setModalOpen={setModalOpen}
+                setIsOpen={setIsOpen}
+              />
             );
           })}
         </div>

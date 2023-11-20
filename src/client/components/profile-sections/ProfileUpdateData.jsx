@@ -62,12 +62,15 @@ function ProfileUpdateData() {
           width={"590px"}
           id={"email"}
           handleInput={setEmail}
+          withLabel={true}
         />
         <Input
           placeholder={"Password"}
+          type={"password"}
           width={"590px"}
           id={"password"}
           handleInput={setPassword}
+          withLabel={true}
         />
         <button
           onClick={callBackendAPIChangeEmail}
@@ -83,20 +86,26 @@ function ProfileUpdateData() {
         <Input
           handleInput={setCurrentPassword}
           placeholder={"Current password"}
+          type={"password"}
           width={"590px"}
           id={"currentPassword"}
+          withLabel={true}
         />
         <Input
           handleInput={setNewPassword}
           placeholder={"New password"}
+          type={"password"}
           width={"590px"}
           id={"newPassword1"}
+          withLabel={true}
         />
         <Input
           handleInput={setNewPasswordConfirm}
           placeholder={"New password"}
+          type={"password"}
           width={"590px"}
           id={"newPassword2"}
+          withLabel={true}
         />
         <button
           onClick={callBackendAPIChangePassword}

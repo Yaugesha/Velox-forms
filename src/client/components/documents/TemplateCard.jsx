@@ -26,11 +26,11 @@ function TemplateCard({ template }) {
       name: "Delete",
       action: deleteTemplate,
     },
-    {
-      icon: "/src/client/assets/icons/general/icon-rename-description.svg",
-      name: "Change description",
-      action: "",
-    },
+    // {
+    //   icon: "/src/client/assets/icons/general/icon-rename-description.svg",
+    //   name: "Change description",
+    //   action: "",
+    // },
     // {
     //   icon: "/src/client/assets/icons/general/icon-open-in-new-tab.svg",
     //   name: "Open in new tab",
@@ -50,7 +50,7 @@ function TemplateCard({ template }) {
         <Link to={template.link}>
           <div className="flex flex-col">
             <div className="font-medium">{template.title}</div>
-            <div className="text-[#5f6368]">{template.description}</div>
+            {/* <div className="text-[#5f6368]">{template.description}</div> */}
           </div>
         </Link>
         <img
