@@ -1,12 +1,39 @@
 import { useEffect, useState } from "react";
 import { useApplications } from "../../../contexts/ApplicationsContext";
+import BubbleMenu from "../../modals/bubble-menus/BubbleMenu";
+import Application from "./Application";
 
 function ApplicationsHistory() {
-  const { applications, findApplications } = useApplications();
+  const [application, setApplication] = useState({});
+  const [isApplicationInfoOpen, setApplicationInfoOpen] = useState(false);
+  const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
+  const [bubbleMenuX, setBubbleMenuX] = useState("");
+  const [bubbleMenuY, setBubbleMenuY] = useState("");
+
+  function openBubbleMenu(e) {
+    setBubbleMenuOpen(true);
+    setBubbleMenuY(e.target.getBoundingClientRect().top + 30);
+    setBubbleMenuX(e.target.getBoundingClientRect().left - 240);
+  }
+  const { applications, findApplications, deleteApplication, editApplication } =
+    useApplications();
 
   useEffect(function () {
     findApplications();
   }, []);
+
+  const bubbleMenuItems = [
+    {
+      icon: "/src/client/assets/icons/general/icon-rename.svg",
+      name: "Edit",
+      action: editApplication,
+    },
+    {
+      icon: "/src/client/assets/icons/general/icon-delete.svg",
+      name: "Delete",
+      action: deleteApplication,
+    },
+  ];
 
   // const applications = [
   //   { name: "Labs PVI", date: "November 18, 2023", status: "recieved" },
@@ -41,6 +68,12 @@ function ApplicationsHistory() {
             return (
               <tr
                 key={application.data.id}
+                onClick={(e) => {
+                  if (!e.target.classList.contains("bubble-menu-btn")) {
+                    setApplication(application);
+                    setApplicationInfoOpen(true);
+                  }
+                }}
                 className="h-14 border-b-2 cursor-pointer"
               >
                 <td className=" border-none">{application.data.name}</td>
@@ -48,9 +81,13 @@ function ApplicationsHistory() {
                 <td className=" border-none">
                   {application.statuses[application.statuses.length - 1].name}
                 </td>
-                <td className="w-6 border-none">
+                <td className="bubble-menu-btn w-6 border-none">
                   <img
-                    className="h-6 w-6 cursor-pointer"
+                    onClick={(e) => {
+                      setApplication(application);
+                      openBubbleMenu(e);
+                    }}
+                    className="bubble-menu-btn h-6 w-6 cursor-pointer"
                     src="/src/client/assets/icons/general/icon-more.svg"
                     alt="more"
                   />
@@ -60,6 +97,22 @@ function ApplicationsHistory() {
           })}
         </tbody>
       </table>
+      {isBubbleMenuOpen && (
+        <BubbleMenu
+          setIsOpen={setBubbleMenuOpen}
+          data={application}
+          top={bubbleMenuY}
+          left={bubbleMenuX}
+          items={bubbleMenuItems}
+          width={"264"}
+        />
+      )}
+      {isApplicationInfoOpen && (
+        <Application
+          application={application}
+          setIsOpen={setApplicationInfoOpen}
+        />
+      )}
     </div>
   );
 }
