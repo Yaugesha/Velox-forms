@@ -18,5 +18,7 @@ const router = Router();
 router.post("/save", upload.single("file"), controller.saveReferenceFile);
 router.post("/create", authMiddleware, controller.createApplication);
 router.post("/get", authMiddleware, controller.getUserApplications);
+router.delete("/delete", authMiddleware, controller.deleteApplication);
+router.put("/edit", authMiddleware, controller.editApplication);
 
 module.exports = router;

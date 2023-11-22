@@ -73,3 +73,52 @@ export const submitAplication = async (
   }
   return await saveApplication(category, title, fileLink, comment);
 };
+
+export const deleteApplication = async (applicationId) => {
+  const jwt = localStorage.getItem("jwt");
+  try {
+    const response = await fetch("/api/v1/applications/delete", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
+      },
+      body: JSON.stringify({
+        applicationId: applicationId,
+      }),
+    });
+    const result = await response.json();
+
+    if (response.status !== 200) throw Error(result.message);
+    return { status: true, message: result.message };
+  } catch (error) {
+    return { status: false, message: error.message };
+  }
+};
+
+export const editApplication = async (application) => {
+  const jwt = localStorage.getItem("jwt");
+  console.log(application);
+  try {
+    const response = await fetch("/api/v1/applications/edit", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
+      },
+      body: JSON.stringify({
+        applicationId: application.id,
+        referenceFile: application.referenceFile,
+        category: application.category,
+        name: application.title,
+        comment: application.comment,
+      }),
+    });
+    const result = await response.json();
+
+    if (response.status !== 200) throw Error(result.message);
+    return { status: true, message: result.message };
+  } catch (error) {
+    return { status: false, message: error.message };
+  }
+};

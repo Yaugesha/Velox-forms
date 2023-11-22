@@ -42,7 +42,7 @@ class applicationConroller {
         applicationId: application.dataValues.id,
         userId: userId,
         name: "recieved",
-        comment: "",
+        comment: "Your application saved and soon will processed be by admin",
         timeOfChange: date,
       });
     });
@@ -91,6 +91,42 @@ class applicationConroller {
       }),
       message: "Applications was found",
     });
+  }
+
+  async deleteApplication(req, res) {
+    const { applicationId } = req.body;
+    await Application.destroy({ where: { id: applicationId } })
+      .then((result) => {
+        if (result === 1)
+          res.status(200).send({ message: "Application deleted successfully" });
+        else
+          res
+            .status(204)
+            .send({ message: "This applicaton has already been removed" });
+      })
+      .catch();
+  }
+
+  async editApplication(req, res) {
+    const { applicationId, category, name, comment } = req.body;
+    const application = await ApplicationData.findOne({
+      where: { applicationId },
+    });
+    console.log("got");
+    console.log(category, name, comment);
+    application.category = category ? category : application.category;
+    application.name = name ? name : application.name;
+    application.comment = comment ? comment : application.comment;
+    await application
+      .save()
+      .then((result) => {
+        console.log("updated");
+        console.log(result.dataValues);
+        if (result)
+          res.status(200).send({ message: "Application updated successfully" });
+        else res.status(400).send({ message: "Failed to update application" });
+      })
+      .catch((error) => res.status(400).send({ message: error }));
   }
 }
 

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
+import { useApplications } from "../../../contexts/ApplicationsContext";
 import ResultMessage from "../ResultMessage";
 import Popup from "../Popup";
-import CreateApplication from "../../profile-sections/applications/CreateApplication";
+import ApplicationForm from "../../profile-sections/applications/ApplicationForm";
 
 function Edit({ data, setBubbleMenu, setOpen, callback }) {
+  const { referenceFile, category, title, comment, editApplication } =
+    useApplications();
   const [resultData, setResultData] = useState({
     isRecieved: false,
     status: "",
@@ -34,10 +37,43 @@ function Edit({ data, setBubbleMenu, setOpen, callback }) {
       }
     }
   }
+
   return (
     <Popup handleClose={handleClose}>
       <div className="relative px-7 py-10 bg-white flex flex-col gap-4">
-        <CreateApplication />
+        <div className="w-[590px] flex flex-wrap justify-between gap-y-4">
+          <ApplicationForm
+            application={{
+              referenceFile: data.data.fileRoute,
+              category: data.data.category,
+              title: data.data.name,
+              comment: data.data.comment,
+            }}
+          />
+        </div>
+        <div>
+          <ResultMessage
+            isVisible={resultData.isRecieved}
+            isCorrect={resultData.status}
+            message={resultData.message}
+          />
+        </div>
+        <button
+          onClick={async () =>
+            setResultData(
+              await editApplication({
+                referenceFile: referenceFile,
+                category: category,
+                title: title,
+                comment: comment,
+                id: data.id,
+              })
+            )
+          }
+          className="w-[590px] h-10 items-center bg-black text-white"
+        >
+          Edit application
+        </button>
       </div>
     </Popup>
   );

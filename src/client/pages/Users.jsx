@@ -22,6 +22,7 @@ function Users() {
     <>
       <Header />
       <div className="w-[980px] mt-8">
+        <h1 className="text-2xl font-bold mb-4">Users</h1>
         <table className="w-[980px] border-none">
           <thead>
             <tr>

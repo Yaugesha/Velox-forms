@@ -2,7 +2,6 @@ import Popup from "../../modals/Popup";
 
 function Application({ application, setIsOpen }) {
   function handleClose(e) {
-    console.log(e.target.classList);
     if (
       e.target.classList.contains("w-full") ||
       e.target.classList.contains("close-btn")
@@ -13,7 +12,7 @@ function Application({ application, setIsOpen }) {
   }
   return (
     <Popup handleClose={handleClose}>
-      <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+      <div className="inline-block align-bottom bg-white text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
         <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
           <div className="sm:flex sm:items-start">
             <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -40,7 +39,7 @@ function Application({ application, setIsOpen }) {
                   </h4>
                   <div className="mt-2 text-gray-700">
                     {application.statuses.map((status) => (
-                      <ul key={status.userId}>
+                      <ul key={status.id}>
                         <li>Name: {status.name}</li>
                         <li>Comment: {status.comment}</li>
                         <li>Time of Change: {status.timeOfChange}</li>

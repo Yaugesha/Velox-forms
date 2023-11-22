@@ -167,10 +167,10 @@ UserWorkData.belongsTo(User);
 User.hasMany(Application);
 Application.belongsTo(User);
 
-Application.hasOne(ApplicationData);
+Application.hasOne(ApplicationData, { onDelete: "CASCADE" });
 ApplicationData.belongsTo(Application);
 
-Application.hasMany(ApplicationStatus);
+Application.hasMany(ApplicationStatus, { onDelete: "CASCADE" });
 ApplicationStatus.belongsTo(Application);
 
 module.exports = {

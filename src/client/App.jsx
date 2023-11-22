@@ -16,8 +16,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import CreateApplication from "./components/profile-sections/applications/CreateApplication";
 import { DocunentsProvider } from "./contexts/DocumentsContext";
 import ApplicationsHistory from "./components/profile-sections/applications/ApplicationsHistory";
-import Applications from "./components/profile-sections/applications/Applications";
+import ProfileApplications from "./components/profile-sections/applications/ProfileApplications";
 import Users from "./pages/Users";
+import Applications from "./pages/Applications";
 import { TemplatesProvider } from "./contexts/TemplateContext";
 import { ApplicationProvider } from "./contexts/ApplicationsContext";
 
@@ -47,13 +48,14 @@ function App() {
                     element={<ProfileUpdateData />}
                   />
                   <Route path="signOut" element={<SignOut />} />
-                  <Route path="applications" element={<Applications />}>
+                  <Route path="applications" element={<ProfileApplications />}>
                     <Route index element={<Navigate to="history" />} />
                     <Route path="create" element={<CreateApplication />} />
                     <Route path="history" element={<ApplicationsHistory />} />
                   </Route>
                 </Route>
                 <Route path="users" element={<Users />} />
+                <Route path="applications" element={<Applications />} />
               </Routes>
             </BrowserRouter>
           </ApplicationProvider>
