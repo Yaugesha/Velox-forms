@@ -93,6 +93,42 @@ class applicationConroller {
     });
   }
 
+  async getApplications(req, res) {
+    const dateOptions = {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    };
+    const applications = await Application.findAll({
+      include: [ApplicationData, ApplicationStatus],
+    });
+    res.status(200).send({
+      applications: applications.map((application) => {
+        return {
+          userId: application.userId,
+          id: application.dataValues.id,
+          date: application.dataValues.date.toLocaleDateString(
+            "en-us",
+            dateOptions
+          ),
+          data: application["application datum"],
+          statuses: application["application statuses"].map((status) => {
+            status = status.dataValues;
+            return {
+              name: status.name,
+              comment: status.comment,
+              date: status.timeOfChange.toLocaleDateString(
+                "en-us",
+                dateOptions
+              ),
+            };
+          }),
+        };
+      }),
+      message: "Applications was found",
+    });
+  }
+
   async deleteApplication(req, res) {
     const { applicationId } = req.body;
     await Application.destroy({ where: { id: applicationId } })

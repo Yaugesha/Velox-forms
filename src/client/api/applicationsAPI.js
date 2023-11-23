@@ -1,7 +1,23 @@
 export const findApplications = async () => {
   const jwt = localStorage.getItem("jwt");
   const response = await fetch("/api/v1/applications/get", {
-    method: "POST",
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Bearer: jwt,
+    },
+  });
+  const result = await response.json();
+  if (response.status !== 200) {
+    throw Error(result.message);
+  }
+  return result.applications;
+};
+
+export const findAllApplications = async () => {
+  const jwt = localStorage.getItem("jwt");
+  const response = await fetch("/api/v1/applications/getAll", {
+    method: "GET",
     headers: {
       "Content-Type": "application/json;charset=utf-8",
       Bearer: jwt,

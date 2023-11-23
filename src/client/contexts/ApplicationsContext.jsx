@@ -15,6 +15,10 @@ export function ApplicationProvider({ children }) {
     const userApplications = await API.findApplications();
     setApplications(userApplications);
   };
+  const findAllApplications = async () => {
+    const userApplications = await API.findAllApplications();
+    setApplications(userApplications);
+  };
   const deleteApplication = async (applicationId) => {
     const { message, status } = await API.deleteApplication(applicationId);
     console.log(message);
@@ -38,6 +42,7 @@ export function ApplicationProvider({ children }) {
     setTitle,
     comment,
     setComment,
+    findAllApplications,
     findApplications,
     deleteApplication,
     editApplication,
