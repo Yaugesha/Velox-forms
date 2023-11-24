@@ -1,4 +1,4 @@
-import Popup from "../../modals/Popup";
+import Popup from "../Popup";
 
 function Application({ application, setIsOpen }) {
   function handleClose(e) {

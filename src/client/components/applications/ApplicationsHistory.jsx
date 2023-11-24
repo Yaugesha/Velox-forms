@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useApplications } from "../../../contexts/ApplicationsContext";
-import BubbleMenu from "../../modals/bubble-menus/BubbleMenu";
-import Application from "./Application";
+import { useApplications } from "../../contexts/ApplicationsContext";
+import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
+import Application from "../modals/applications/Application";
 
 function ApplicationsHistory() {
   const [application, setApplication] = useState({});

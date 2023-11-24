@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useApplications } from "../../../contexts/ApplicationsContext";
 import ResultMessage from "../ResultMessage";
 import Popup from "../Popup";
-import ApplicationForm from "../../profile-sections/applications/ApplicationForm";
+import ApplicationForm from "../../applications/ApplicationForm";
 
 function Edit({ data, setBubbleMenu, setOpen, callback }) {
   const { referenceFile, category, title, comment, editApplication } =

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { useApplications } from "../contexts/ApplicationsContext";
 import Header from "../components/header/Header";
-import Application from "../components/profile-sections/applications/Application";
+import Application from "../components//modals/applications/Application";
 
 function Applications() {
   const [application, setApplication] = useState({});

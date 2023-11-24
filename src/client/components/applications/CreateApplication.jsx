@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useApplications } from "../../../contexts/ApplicationsContext";
-import * as API from "../../../api/applicationsAPI";
-import ApplicationResult from "../../modals/ApplicationResult";
+import { useApplications } from "../../contexts/ApplicationsContext";
+import * as API from "../../api/applicationsAPI";
+import ApplicationResult from "../modals/ApplicationResult";
 import ApplicationForm from "./ApplicationForm";
 
 function CreateApplication() {

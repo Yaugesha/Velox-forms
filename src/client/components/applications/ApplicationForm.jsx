@@ -1,6 +1,6 @@
-import { useApplications } from "../../../contexts/ApplicationsContext";
-import DropdownButton from "../../custom-elements/DropdownButton";
-import Input from "../../custom-elements/Input";
+import { useApplications } from "../../contexts/ApplicationsContext";
+import DropdownButton from "../custom-elements/DropdownButton";
+import Input from "../custom-elements/Input";
 function ApplicationForm({ application }) {
   const { setReferenceFile, setCategory, setTitle, setComment } =
     useApplications();
