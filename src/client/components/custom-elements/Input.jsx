@@ -7,7 +7,8 @@ function Input({
   id,
   handleInput,
   colSpan,
-  isAutocomplite,
+  disabled = false,
+  // isAutocomplite,
 }) {
   return (
     <div className={`w-[${width}] flex flex-col gap-2 ${colSpan}`}>
@@ -28,6 +29,7 @@ function Input({
         defaultValue={defaultValue}
         id={id}
         type={type}
+        disabled={disabled}
       />
     </div>
   );

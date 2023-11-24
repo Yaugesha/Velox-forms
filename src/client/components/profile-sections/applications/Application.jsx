@@ -38,13 +38,15 @@ function Application({ application, setIsOpen }) {
                     Application Statuses
                   </h4>
                   <div className="mt-2 text-gray-700">
-                    {application.statuses.map((status) => (
-                      <ul key={status.id}>
-                        <li>Name: {status.name}</li>
-                        <li>Comment: {status.comment}</li>
-                        <li>Time of Change: {status.timeOfChange}</li>
-                      </ul>
-                    ))}
+                    {application.statuses.map((status) => {
+                      return (
+                        <ul key={status.id}>
+                          <li>Name: {status.name}</li>
+                          <li>Comment: {status.comment}</li>
+                          <li>Time of Change: {status.timeOfChange}</li>
+                        </ul>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

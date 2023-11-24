@@ -5,6 +5,7 @@ const ApplicationsContext = createContext();
 
 export function ApplicationProvider({ children }) {
   const [applications, setApplications] = useState([]);
+  const [application, setApplication] = useState({});
   const [currentApplications, setCurrentApplications] = useState({});
   const [category, setCategory] = useState();
   const [title, setTitle] = useState("");
@@ -15,9 +16,13 @@ export function ApplicationProvider({ children }) {
     const userApplications = await API.findApplications();
     setApplications(userApplications);
   };
+  const findApplication = async (applicationId) => {
+    const application = await API.findApplication(applicationId);
+    setApplication(application);
+  };
   const findAllApplications = async () => {
-    const userApplications = await API.findAllApplications();
-    setApplications(userApplications);
+    const applications = await API.findAllApplications();
+    setApplications(applications);
   };
   const deleteApplication = async (applicationId) => {
     const { message, status } = await API.deleteApplication(applicationId);
@@ -32,6 +37,7 @@ export function ApplicationProvider({ children }) {
 
   const value = {
     applications,
+    application,
     referenceFile,
     setReferenceFile,
     category,
@@ -44,6 +50,7 @@ export function ApplicationProvider({ children }) {
     setComment,
     findAllApplications,
     findApplications,
+    findApplication,
     deleteApplication,
     editApplication,
   };

@@ -14,6 +14,23 @@ export const findApplications = async () => {
   return result.applications;
 };
 
+export const findApplication = async (applicationId) => {
+  const jwt = localStorage.getItem("jwt");
+  const response = await fetch("/api/v1/applications/getApplication", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+      Bearer: jwt,
+      ApplicationId: applicationId,
+    },
+  });
+  const result = await response.json();
+  if (response.status !== 200) {
+    throw Error(result.message);
+  }
+  return result.application;
+};
+
 export const findAllApplications = async () => {
   const jwt = localStorage.getItem("jwt");
   const response = await fetch("/api/v1/applications/getAll", {

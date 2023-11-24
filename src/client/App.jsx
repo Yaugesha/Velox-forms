@@ -21,6 +21,7 @@ import Users from "./pages/Users";
 import Applications from "./pages/Applications";
 import { TemplatesProvider } from "./contexts/TemplateContext";
 import { ApplicationProvider } from "./contexts/ApplicationsContext";
+import ApplicationProcessing from "./pages/ApplicationProcessing";
 
 function App() {
   return (
@@ -55,7 +56,12 @@ function App() {
                   </Route>
                 </Route>
                 <Route path="users" element={<Users />} />
-                <Route path="applications" element={<Applications />} />
+                <Route path="applications" element={<Applications />}>
+                  <Route
+                    path="processing"
+                    element={<ApplicationProcessing />}
+                  />
+                </Route>
               </Routes>
             </BrowserRouter>
           </ApplicationProvider>

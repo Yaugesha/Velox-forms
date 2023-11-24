@@ -93,6 +93,39 @@ class applicationConroller {
     });
   }
 
+  async getApplication(req, res) {
+    const dateOptions = {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    };
+    const applicationId = req.get("ApplicationId");
+    const application = await Application.findOne({
+      where: { id: applicationId },
+      include: [ApplicationData, ApplicationStatus],
+    });
+    res.status(200).send({
+      application: {
+        userId: application.userId,
+        id: application.dataValues.id,
+        date: application.dataValues.date.toLocaleDateString(
+          "en-us",
+          dateOptions
+        ),
+        data: application["application datum"],
+        statuses: application["application statuses"].map((status) => {
+          status = status.dataValues;
+          return {
+            name: status.name,
+            comment: status.comment,
+            date: status.timeOfChange.toLocaleDateString("en-us", dateOptions),
+          };
+        }),
+      },
+      message: "Applications was found",
+    });
+  }
+
   async getApplications(req, res) {
     const dateOptions = {
       month: "long",
