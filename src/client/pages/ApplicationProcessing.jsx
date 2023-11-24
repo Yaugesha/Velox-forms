@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { useApplications } from "../contexts/ApplicationsContext";
 import Input from "../components/custom-elements/Input";
 import DocumentHeader from "../components/header/DocumentHeader";
-import { useApplications } from "../contexts/ApplicationsContext";
+import ChangeStatus from "../components/modals/applications/ChangeStatus";
 
 const onButtonClick = () => {
   const pdfUrl = "../../../uploads";
@@ -17,6 +18,8 @@ const onButtonClick = () => {
 function ApplicationProcessing() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { application, findApplication } = useApplications();
+  const [isAccsept, setIsAccept] = useState(false);
+  const [isReject, setIsReject] = useState(false);
 
   useEffect(function () {
     const applicatonId = searchParams.get("applicationId");
@@ -74,10 +77,44 @@ function ApplicationProcessing() {
           <p>Comment: {application.statuses?.at(-1).comment}</p>
         </div>
         <div className="flex justify-end gap-16 mt-6">
-          <button className="bg-black text-white px-4 py-2">Reject</button>
-          <button className="bg-black text-white px-4 py-2">Accept</button>
+          <button
+            disabled={application.statuses?.at(-1).name === "rejected"}
+            className="bg-black text-white px-4 py-2"
+            onClick={() => {
+              setIsReject(true);
+            }}
+          >
+            Reject
+          </button>
+          <button
+            disabled={application.statuses?.at(-1).name === "accept"}
+            className="bg-black text-white px-4 py-2"
+            onClick={() => {
+              setIsAccept(true);
+            }}
+          >
+            Accept
+          </button>
         </div>
       </div>
+      {isAccsept && (
+        <ChangeStatus
+          placeholder={"Comment messege to status"}
+          defaultComment={
+            "Your application has been accepted and will be completed soon"
+          }
+          status={"Accepted"}
+          setIsOpen={setIsAccept}
+        />
+      )}
+      {isReject && (
+        <ChangeStatus
+          placeholder={"Explain why application rejected"}
+          defaultComment={""}
+          status={"Rejected"}
+          setIsOpen={setIsReject}
+        />
+      )}
     </div>
   );
 }

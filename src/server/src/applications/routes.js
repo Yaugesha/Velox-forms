@@ -22,5 +22,6 @@ router.get("/getAll", authMiddleware, controller.getApplications);
 router.get("/getApplication", authMiddleware, controller.getApplication);
 router.delete("/delete", authMiddleware, controller.deleteApplication);
 router.put("/edit", authMiddleware, controller.editApplication);
+router.put("/changeStatus", authMiddleware, controller.changeApplicationStatus);
 
 module.exports = router;

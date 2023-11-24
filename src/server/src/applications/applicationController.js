@@ -181,8 +181,6 @@ class applicationConroller {
     const application = await ApplicationData.findOne({
       where: { applicationId },
     });
-    console.log("got");
-    console.log(category, name, comment);
     application.category = category ? category : application.category;
     application.name = name ? name : application.name;
     application.comment = comment ? comment : application.comment;
@@ -190,9 +188,30 @@ class applicationConroller {
       .save()
       .then((result) => {
         console.log("updated");
-        console.log(result.dataValues);
         if (result)
           res.status(200).send({ message: "Application updated successfully" });
+        else res.status(400).send({ message: "Failed to update application" });
+      })
+      .catch((error) => res.status(400).send({ message: error }));
+  }
+
+  async changeApplicationStatus(req, res) {
+    const { applicationId, comment, name } = req.body;
+    const application = await ApplicationStatus.findOne({
+      where: { applicationId },
+    });
+    application.userId = req.user.id;
+    application.name = name;
+    application.comment = comment;
+    application.timeOfChange = new Date();
+    await application
+      .save()
+      .then((result) => {
+        console.log("updated");
+        if (result)
+          res
+            .status(200)
+            .send({ message: "Application ststus updated successfully" });
         else res.status(400).send({ message: "Failed to update application" });
       })
       .catch((error) => res.status(400).send({ message: error }));

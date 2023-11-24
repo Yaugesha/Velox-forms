@@ -155,3 +155,27 @@ export const editApplication = async (application) => {
     return { status: false, message: error.message };
   }
 };
+
+export const changeStatus = async (applicationId, name, comment) => {
+  const jwt = localStorage.getItem("jwt");
+  try {
+    const response = await fetch("/api/v1/applications/changeStatus", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Bearer: jwt,
+      },
+      body: JSON.stringify({
+        applicationId: applicationId,
+        name: name,
+        comment: comment,
+      }),
+    });
+    const result = await response.json();
+
+    if (response.status !== 200) throw Error(result.message);
+    return { status: true, message: result.message };
+  } catch (error) {
+    return { status: false, message: error.message };
+  }
+};

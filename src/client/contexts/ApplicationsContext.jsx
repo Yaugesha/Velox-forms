@@ -26,12 +26,24 @@ export function ApplicationProvider({ children }) {
   };
   const deleteApplication = async (applicationId) => {
     const { message, status } = await API.deleteApplication(applicationId);
-    console.log(message);
     return { isRecieved: true, status: status, message: message };
   };
   const editApplication = async (application) => {
     const { message, status } = await API.editApplication(application);
-    console.log(message);
+    return { isRecieved: true, status: status, message: message };
+  };
+  const changeStatus = async (applicationId, name, comment) => {
+    if (comment.length === 0)
+      return {
+        isRecieved: true,
+        status: false,
+        message: "You must comment your action",
+      };
+    const { message, status } = await API.changeStatus(
+      applicationId,
+      name,
+      comment
+    );
     return { isRecieved: true, status: status, message: message };
   };
 
@@ -53,6 +65,7 @@ export function ApplicationProvider({ children }) {
     findApplication,
     deleteApplication,
     editApplication,
+    changeStatus,
   };
   return (
     <ApplicationsContext.Provider value={value}>
