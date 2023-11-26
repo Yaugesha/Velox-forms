@@ -75,13 +75,15 @@ function Applications() {
                     <td className=" border-none">
                       {application.data.fileRoute}
                     </td>
-                    <td align="end" className="border-none">
-                      <Link to={`processing?applicationId=${application.id}`}>
-                        <button className="process-btn bg-black text-white px-2">
-                          Process
-                        </button>
-                      </Link>
-                    </td>
+                    {application.statuses.at(-1).name !== "Complited" && (
+                      <td align="end" className="border-none">
+                        <Link to={`processing?applicationId=${application.id}`}>
+                          <button className="process-btn bg-black text-white px-2">
+                            Process
+                          </button>
+                        </Link>
+                      </td>
+                    )}
                   </tr>
                 ))}
               </tbody>

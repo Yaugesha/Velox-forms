@@ -35,8 +35,13 @@ export function TemplatesProvider({ children }) {
     const { status, message } = await API.deleteTemplate(templateId, newName);
     return { isRecieved: true, status: status, message: message };
   }
-  async function saveTemplate(title, category, fields) {
-    const { status, message } = await API.saveTemplate(title, category, fields);
+  async function saveTemplate(title, category, fields, userId) {
+    const { status, message } = await API.saveTemplate(
+      title,
+      category,
+      fields,
+      userId
+    );
     return { isRecieved: true, status: status, message: message };
   }
   async function getRecentTemplates() {

@@ -1,4 +1,4 @@
-export const saveTemplate = async (title, category, fields) => {
+export const saveTemplate = async (title, category, fields, userId) => {
   try {
     const jwt = localStorage.getItem("jwt");
     const fily = document.querySelector(".tiptap").innerHTML;
@@ -14,6 +14,7 @@ export const saveTemplate = async (title, category, fields) => {
         title: title,
         category: category,
         fields: fields,
+        userId: userId,
       }),
     });
     const result = await response.json();

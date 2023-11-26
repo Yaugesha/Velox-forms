@@ -21,7 +21,7 @@ class templateController {
   async saveTemplate(req, res) {
     const { title, data, category, fields } = req.body;
     const token = req.get("Bearer");
-    const userId = jwt.verify(token, jwtKey()).id;
+    const userId = req.body.userId ?? jwt.verify(token, jwtKey()).id;
     const date = new Date();
     const [result, created] = await TemplateCategory.findOrCreate({
       where: { userId: userId, name: category },

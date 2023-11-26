@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useApplications } from "../contexts/ApplicationsContext";
 import Input from "../components/custom-elements/Input";
 import DocumentHeader from "../components/header/DocumentHeader";
@@ -17,6 +17,7 @@ const onButtonClick = () => {
 
 function ApplicationProcessing() {
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
   const { application, findApplication } = useApplications();
   const [isAccsept, setIsAccept] = useState(false);
   const [isReject, setIsReject] = useState(false);
@@ -78,7 +79,7 @@ function ApplicationProcessing() {
         </div>
         <div className="flex justify-end gap-16 mt-6">
           <button
-            disabled={application.statuses?.at(-1).name === "rejected"}
+            disabled={application.statuses?.at(-1).name === "Rejected"}
             className="bg-black text-white px-4 py-2"
             onClick={() => {
               setIsReject(true);
@@ -86,15 +87,28 @@ function ApplicationProcessing() {
           >
             Reject
           </button>
-          <button
-            disabled={application.statuses?.at(-1).name === "accept"}
-            className="bg-black text-white px-4 py-2"
-            onClick={() => {
-              setIsAccept(true);
-            }}
-          >
-            Accept
-          </button>
+          {application.statuses?.at(-1).name === "Accepted" ? (
+            <button
+              className="bg-black text-white px-4 py-2"
+              onClick={() => {
+                navigate(
+                  `../../documents/template?applicationId=${application.id}&userId=${application.userId}&title=${application.data.name}&category=${application.data.category}`
+                );
+              }}
+            >
+              Create template
+            </button>
+          ) : (
+            <button
+              disabled={application.statuses?.at(-1).name === "Accepted"}
+              className="bg-black text-white px-4 py-2"
+              onClick={() => {
+                setIsAccept(true);
+              }}
+            >
+              Accept
+            </button>
+          )}
         </div>
       </div>
       {isAccsept && (
@@ -115,6 +129,7 @@ function ApplicationProcessing() {
           setIsOpen={setIsReject}
         />
       )}
+      {}
     </div>
   );
 }

@@ -1,17 +1,22 @@
 import { useState } from "react";
-import Input from "../../custom-elements/Input";
-import DropdownButton from "../../custom-elements/DropdownButton";
-import Popup from "../Popup";
-import { useNavigate } from "react-router-dom";
+import { useApplications } from "../../../contexts/ApplicationsContext";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEditors } from "../../../contexts/EditorContext";
 import { useTemplate } from "../../../contexts/TemplateContext";
+import DropdownButton from "../../custom-elements/DropdownButton";
+import Input from "../../custom-elements/Input";
+import Popup from "../Popup";
 import ResultMessage from "../ResultMessage";
 
 function SaveTemplate({ setIsOpen }) {
   const { fields } = useEditors();
+  const { changeStatus } = useApplications();
+  const [searchParams, setSearchParams] = useSearchParams();
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
-  const [category, setCategory] = useState(categories[0]);
-  const [title, setTitle] = useState("");
+  const [category, setCategory] = useState(
+    searchParams.get("category") ?? categories[0]
+  );
+  const [title, setTitle] = useState(searchParams.get("title"));
   const navigate = useNavigate();
   const [isCorrectData, setCorrectData] = useState({
     isRecieved: false,
@@ -36,6 +41,7 @@ function SaveTemplate({ setIsOpen }) {
         style={{ width: "540px", height: "400px" }}
       >
         <Input
+          defaultValue={title}
           placeholder={"Template name"}
           handleInput={setTitle}
           width={"285px"}
@@ -46,7 +52,7 @@ function SaveTemplate({ setIsOpen }) {
             type="templates-category"
             handleClick={setCategory}
             valuesArr={categories}
-            initialValue={categories[0]}
+            initialValue={category}
             width={285}
           />
         </div>
@@ -60,7 +66,14 @@ function SaveTemplate({ setIsOpen }) {
         <div className="w-[285px] flex justify-center items-center gap-4 mt-8"></div>
         <button
           onClick={async () => {
-            setCorrectData(await saveTemplate(title, category, fields));
+            const userId = searchParams.get("userId");
+            const applicationId = searchParams.get("applicationId");
+            setCorrectData(await saveTemplate(title, category, fields, userId));
+            changeStatus(
+              applicationId,
+              "Complited",
+              "Your application complited"
+            );
           }}
           className="bg-black w-[204px] h-8 mt-4 text-white text-base"
         >
