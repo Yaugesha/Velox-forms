@@ -104,11 +104,15 @@ class templateController {
     let fieldsNames;
     TemplateFields.findAll({
       where: { templateId: template.id },
-    }).then((fields) => {
-      fieldsNames = fields.map((field) => {
-        return field.name;
+    })
+      .then((fields) => {
+        fieldsNames = fields.map((field) => {
+          return field.name;
+        });
+      })
+      .catch((error) => {
+        res.status(400).send({ message: error.message });
       });
-    });
     const userPersonalData = await UserPersonalData.findOne({
       where: { userId: userId },
     });
@@ -118,10 +122,9 @@ class templateController {
     const fieldsValues = {};
     fieldsNames.forEach((field) => {
       const fieldName = camelize(field);
-      console.log(fieldName);
-      if (userPersonalData[fieldName])
+      if (userPersonalData?.[fieldName])
         fieldsValues[field] = userPersonalData[fieldName];
-      else if (userWorkData[fieldName])
+      else if (userWorkData?.[fieldName])
         fieldsValues[field] = userWorkData[fieldName];
       else fieldsValues[field] = field;
     });

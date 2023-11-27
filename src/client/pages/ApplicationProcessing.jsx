@@ -129,7 +129,6 @@ function ApplicationProcessing() {
           setIsOpen={setIsReject}
         />
       )}
-      {}
     </div>
   );
 }

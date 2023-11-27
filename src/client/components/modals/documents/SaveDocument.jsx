@@ -15,10 +15,14 @@ function SaveDocument({ setIsOpen }) {
   const navigate = useNavigate();
 
   function handleClose(e) {
-    if (e.target.classList.contains("w-full")) {
+    if (
+      e.target.classList.contains("w-full") ||
+      e.target.classList.contains("cancel-btn") ||
+      e.target.classList.contains("save-btn")
+    ) {
       document.body.style.overflow = "auto";
       setIsOpen(false);
-      navigate(-1);
+      if (e.target.classList.contains("save-btn")) navigate("../.");
     }
   }
 
@@ -27,29 +31,40 @@ function SaveDocument({ setIsOpen }) {
   return (
     <Popup handleClose={handleClose}>
       <div
-        className="relative px-7 py-10 bg-white flex items-center flex-col gap-4"
-        style={{ width: "540px", height: "260px" }}
+        className="relative py-10 bg-white flex items-center flex-col gap-4"
+        style={{ width: "440px", height: "260px" }}
       >
+        <p className="text-xl text-bold">Save document</p>
         <Input
           placeholder={"Document name"}
           width={"285px"}
+          withLabel={true}
           handleInput={setTitle}
         />
-        <div>
+        <div className="mt-2">
           <ResultMessage
             isVisible={isCorrectData.isRecieved}
             isCorrect={isCorrectData.status}
             message={isCorrectData.message}
           />
         </div>
-        <button
-          onClick={async () => {
-            setCorrectData(await saveDocument(title));
-          }}
-          className="bg-black w-[204px] h-8 mt-4 text-white text-base"
-        >
-          Confirm and save
-        </button>
+        <div className="w-full flex justify-around">
+          <button
+            className="cancel-btn bg-black text-white px-4 text-base"
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={async (e) => {
+              setCorrectData(await saveDocument(title));
+              handleClose(e);
+            }}
+            className="save-btn w-[90px] bg-black h-8 text-white px-4 text-base"
+          >
+            Save
+          </button>
+        </div>
       </div>
     </Popup>
   );

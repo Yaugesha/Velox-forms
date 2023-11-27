@@ -25,10 +25,14 @@ function SaveTemplate({ setIsOpen }) {
   });
 
   function handleClose(e) {
-    if (e.target.classList.contains("w-full")) {
+    if (
+      e.target.classList.contains("w-full") ||
+      e.target.classList.contains("cancel-btn") ||
+      e.target.classList.contains("save-btn")
+    ) {
       document.body.style.overflow = "auto";
       setIsOpen(false);
-      navigate(-1);
+      if (e.target.classList.contains("save-btn")) navigate("../.");
     }
   }
 
@@ -37,13 +41,15 @@ function SaveTemplate({ setIsOpen }) {
   return (
     <Popup handleClose={handleClose}>
       <div
-        className="relative px-7 py-10 bg-white flex items-center flex-col gap-4"
+        className="relative py-8 bg-white flex items-center flex-col gap-4"
         style={{ width: "540px", height: "400px" }}
       >
+        <p className="text-xl text-bold mb-4">Save template</p>
         <Input
           defaultValue={title}
           placeholder={"Template name"}
           handleInput={setTitle}
+          withLabel={true}
           width={"285px"}
         />
         <div className=" flex flex-col gap-2 mt-4">
@@ -56,29 +62,40 @@ function SaveTemplate({ setIsOpen }) {
             width={285}
           />
         </div>
-        <div>
+        <div className="mt-2">
           <ResultMessage
             isVisible={isCorrectData.isRecieved}
             isCorrect={isCorrectData.status}
             message={isCorrectData.message}
           />
         </div>
-        <div className="w-[285px] flex justify-center items-center gap-4 mt-8"></div>
-        <button
-          onClick={async () => {
-            const userId = searchParams.get("userId");
-            const applicationId = searchParams.get("applicationId");
-            setCorrectData(await saveTemplate(title, category, fields, userId));
-            changeStatus(
-              applicationId,
-              "Complited",
-              "Your application complited"
-            );
-          }}
-          className="bg-black w-[204px] h-8 mt-4 text-white text-base"
-        >
-          Confirm and save
-        </button>
+        <div className="w-full flex justify-evenly mt-4">
+          <button
+            className="cancel-btn h-8 bg-black text-white px-4 text-base"
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
+          <button
+            onClick={async (e) => {
+              const userId = searchParams.get("userId");
+              const applicationId = searchParams.get("applicationId");
+              setCorrectData(
+                await saveTemplate(title, category, fields, userId)
+              );
+              if (userId && applicationId)
+                changeStatus(
+                  applicationId,
+                  "Complited",
+                  "Your application complited"
+                );
+              handleClose(e);
+            }}
+            className="save-btn w-[90px] bg-black h-8 text-white px-4 text-base"
+          >
+            Save
+          </button>
+        </div>
       </div>
     </Popup>
   );
