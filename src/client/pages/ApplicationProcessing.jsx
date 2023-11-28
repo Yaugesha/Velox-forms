@@ -111,6 +111,7 @@ function ApplicationProcessing() {
           )}
         </div>
       </div>
+      <Footer />
       {isAccsept && (
         <ChangeStatus
           placeholder={"Comment messege to status"}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../components/footers/Footer";
 import Header from "../components/header/Header";
 
 function Users() {
@@ -21,53 +22,58 @@ function Users() {
   return (
     <>
       <Header />
-      <div className="w-[980px] mt-8">
-        <h1 className="text-2xl font-bold mb-4">Users</h1>
-        <table className="w-[980px] border-none">
-          <thead>
-            <tr>
-              <th align="start" className="font-bold border-none">
-                Id
-              </th>
-              <th align="start" className="font-bold border-none">
-                Email
-              </th>
-              <th align="start" className="font-bold border-none">
-                Role
-              </th>
-              <th align="start" className="font-bold border-none">
-                Documents
-              </th>
-              <th align="start" className="font-bold border-none">
-                Applications
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => {
-              return (
-                <tr key={user.id} className="h-14 border-b-2">
-                  <td className="border-none">{user.id}</td>
-                  <td className="border-none">{user.email}</td>
-                  <td className="border-none">{user.role}</td>
+      <main className="w-full flex flex-col items-center">
+        <div className="w-[980px] mt-8">
+          <h1 className="text-2xl font-bold mb-4">Users</h1>
+          <table className="w-[980px] border-none">
+            <thead>
+              <tr>
+                <th align="start" className="font-bold border-none">
+                  Id
+                </th>
+                <th align="start" className="font-bold border-none">
+                  Email
+                </th>
+                <th align="start" className="font-bold border-none">
+                  Role
+                </th>
+                <th align="start" className="font-bold border-none">
+                  Documents
+                </th>
+                <th align="start" className="font-bold border-none">
+                  Applications
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map((user) => {
+                return (
+                  <tr key={user.id} className="h-14 border-b-2">
+                    <td className="border-none">{user.id}</td>
+                    <td className="border-none">{user.email}</td>
+                    <td className="border-none">{user.role}</td>
 
-                  <td className="border-none underline">
-                    <Link to="">Documents</Link>
-                  </td>
+                    <td className="border-none underline">
+                      <Link to="">Documents</Link>
+                    </td>
 
-                  <td className="border-none underline">
-                    <Link to="">Applications</Link>
-                  </td>
+                    <td className="border-none underline">
+                      <Link to="">Applications</Link>
+                    </td>
 
-                  <td align="end" className="border-none">
-                    <button className="bg-black text-white px-2">Delete</button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+                    <td align="end" className="border-none">
+                      <button className="bg-black text-white px-2">
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </main>
+      <Footer />
     </>
   );
 }

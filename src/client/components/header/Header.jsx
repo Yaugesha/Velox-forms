@@ -42,7 +42,7 @@ function Header() {
   );
 
   return (
-    <header className="w-[980px] h-12 flex flex-row justify-between items-center border-b-2 border-solid border-black">
+    <header className="w-full h-12 flex flex-row justify-between items-center px-6 border-b-2 border-solid border-black">
       <Link to="../../">
         <img
           className="h-7"

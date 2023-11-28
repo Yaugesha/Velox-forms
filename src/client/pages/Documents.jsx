@@ -3,6 +3,7 @@ import { useLocation, Outlet } from "react-router-dom";
 import { useDocuments } from "../contexts/DocumentsContext";
 import { useTemplate } from "../contexts/TemplateContext";
 import Header from "../components/header/Header";
+import Footer from "../components/footers/Footer";
 import TemplatesSection from "../components/documents/TemplatesSection";
 import DocumentsSection from "../components/documents/DocumentsSection";
 
@@ -24,7 +25,7 @@ function Documents() {
       ) : (
         <>
           <Header isAuthorized={true} page={"Documents"} />
-          <main className="w-[980px]">
+          <main className="w-full flex flex-col items-center">
             <TemplatesSection />
             {/* {documents.length === 0 ? (
               <p className="alig text-xl">
@@ -39,6 +40,7 @@ function Documents() {
           </main>
         </>
       )}
+      <Footer />
     </>
   );
 }

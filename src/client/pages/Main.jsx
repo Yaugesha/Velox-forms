@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/header/Header";
+import Footer from "../components/footers/Footer";
 
 function Main() {
   return (
     <>
       <Header role={undefined} page={"Main"} />
-      <main>
+      <main className="w-full flex flex-col items-center">
         <Outlet />
         <section className="w-[980px] mt-10 mb-[72px] flex flex-col items-center gap-y-[72px]">
           <h2 className="text-2xl">
@@ -122,6 +123,7 @@ function Main() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }
