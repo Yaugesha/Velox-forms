@@ -2,8 +2,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 import Popup from "../Popup";
 
-function SignOut({ setIsOpen }) {
-  const { logOut } = useAuth();
+function DeleteAccount({ setIsOpen }) {
+  //const { logOut } = useAuth();
   const navigate = useNavigate();
 
   function handleClose(e) {
@@ -22,19 +22,22 @@ function SignOut({ setIsOpen }) {
 
   function handleSignOut() {
     localStorage.removeItem("jwt");
-    logOut();
+    //logOut();
   }
 
   return (
     <Popup handleClose={handleClose}>
       <div
         className="relative px-7 py-10 bg-white flex items-center flex-col gap-4"
-        style={{ width: "760px", height: "300px" }}
+        style={{ width: "760px", height: "336px" }}
       >
         <div className="flex flex-col">
-          <span className="text-3xl">Are you sure you want to sign out?</span>
+          <span className="text-3xl">
+            Are you sure you want to delete your account?
+          </span>
           <span className="text-sm mb-[60px]">
-            You will be asked to verify your identity next time you sign in.
+            Once you delete your account, there is no going back. Please be
+            certain.
           </span>
         </div>
         <div className="flex gap-[286px]">
@@ -53,7 +56,7 @@ function SignOut({ setIsOpen }) {
             }}
             className="bg-black w-[162px] h-14 mt-4 flex items-center justify-center text-white exit-btn"
           >
-            Sign Out
+            Delete
           </button>
         </div>
       </div>
@@ -61,4 +64,4 @@ function SignOut({ setIsOpen }) {
   );
 }
 
-export default SignOut;
+export default DeleteAccount;

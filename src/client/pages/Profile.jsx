@@ -26,9 +26,9 @@ function Profile() {
             link={"security&password"}
           />
           <ProfileNavigationTab
-            title={"Sign out"}
-            subtitle={"Exit from your account on this device"}
-            link={"signOut"}
+            title={"Exit & Delete"}
+            subtitle={"Exit or delete your account"}
+            link={"exit"}
           />
         </div>
         <Outlet />

@@ -8,7 +8,6 @@ import ProfileSettings from "./components/profile-sections/ProfileSettings";
 import SignUp from "./components/modals/auth/SignUp";
 import SignIn from "./components/modals/auth/SignIn";
 import ProfileUpdateData from "./components/profile-sections/ProfileUpdateData";
-import SignOut from "./components/modals/auth/SignOut";
 import Document from "./pages/Document";
 import DocumentFile from "./pages/DocumentFile";
 import Template from "./pages/Template";
@@ -22,6 +21,7 @@ import Applications from "./pages/Applications";
 import { TemplatesProvider } from "./contexts/TemplateContext";
 import { ApplicationProvider } from "./contexts/ApplicationsContext";
 import ApplicationProcessing from "./pages/ApplicationProcessing";
+import ProfileExit from "./components/profile-sections/ProfileExit";
 
 function App() {
   return (
@@ -48,7 +48,7 @@ function App() {
                     path="security&password"
                     element={<ProfileUpdateData />}
                   />
-                  <Route path="signOut" element={<SignOut />} />
+                  <Route path="exit" element={<ProfileExit />} />
                   <Route path="applications" element={<ProfileApplications />}>
                     <Route index element={<Navigate to="history" />} />
                     <Route path="create" element={<CreateApplication />} />
