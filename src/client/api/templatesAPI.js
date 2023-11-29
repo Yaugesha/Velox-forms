@@ -22,7 +22,7 @@ export const saveTemplate = async (title, category, fields, userId) => {
     if (response.status !== 200) {
       throw Error(result.message);
     }
-    return { status: true, message: "Document saved" };
+    return { template: result.template, status: true, message: result.message };
   } catch (error) {
     console.log(error);
     return { status: false, message: error.message };

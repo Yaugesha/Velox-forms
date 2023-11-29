@@ -24,11 +24,10 @@ class templateController {
     const userId = req.body.userId ?? jwt.verify(token, jwtKey()).id;
     const date = new Date();
     const [result, created] = await TemplateCategory.findOrCreate({
-      where: { userId: userId, name: category },
+      where: { name: category }, //userId: userId,
       defaults: { name: category, description: "", userId: userId },
     });
     const categoryId = result.id;
-    console.log(result, result.id, categoryId);
     await Template.create({
       title: title,
       date: date,
@@ -43,7 +42,10 @@ class templateController {
           templateId: template.id,
         });
       });
-      res.status(200).send({ messege: "Template saved" });
+      res.status(200).send({
+        template: template,
+        messege: "Template saved",
+      });
     });
   }
 
@@ -60,8 +62,7 @@ class templateController {
           title: category.name,
           templates: category.templates.map((template) => {
             return {
-              id: template.id,
-              title: template.title,
+              ...template.dataValues,
               picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
               link: `document?templateId=${template.id}`,
             };
@@ -83,8 +84,7 @@ class templateController {
         res.status(200).send({
           templates: result.rows.map((template) => {
             return {
-              id: template.id,
-              title: template.title,
+              ...template.dataValues,
               picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
               link: `document?templateId=${template.id}`,
             };
@@ -93,7 +93,7 @@ class templateController {
         });
       })
       .catch((error) => {
-        return res.status(400).send("Templates not found");
+        return res.status(400).send({ message: error });
       });
   }
 
@@ -120,7 +120,7 @@ class templateController {
       where: { userId: userId },
     });
     const fieldsValues = {};
-    fieldsNames.forEach((field) => {
+    fieldsNames?.forEach((field) => {
       const fieldName = camelize(field);
       if (userPersonalData?.[fieldName])
         fieldsValues[field] = userPersonalData[fieldName];
@@ -157,6 +157,7 @@ class templateController {
     const { templateId } = req.body;
     await Template.destroy({ where: { id: templateId } })
       .then((result) => {
+        console.log(result);
         res.status(200).send({
           message: "Template deleted",
         });

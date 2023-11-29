@@ -53,9 +53,7 @@ function DocumnetsSection() {
           {displayDocs === "table" ? (
             <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
               {documents.map((document) => {
-                return (
-                  <DocumentCard document={document} key={document.title} />
-                );
+                return <DocumentCard document={document} key={document.id} />;
               })}
             </div>
           ) : (

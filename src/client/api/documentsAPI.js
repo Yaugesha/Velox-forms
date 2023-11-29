@@ -48,7 +48,11 @@ export const saveDocument = async (title) => {
       throw Error(result.message);
     }
 
-    return { status: true, message: "Document saved" };
+    return {
+      document: result.document,
+      status: true,
+      message: "Document saved",
+    };
   } catch (error) {
     console.log(error);
     return { status: false, message: error.message };

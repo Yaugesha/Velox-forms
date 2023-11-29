@@ -27,7 +27,7 @@ function Applications() {
         <div className="min-h-full flex flex-col">
           <Header />
           <main className="w-full flex flex-auto flex-col items-center">
-            <div className="w-[980px] container mx-auto pt-8">
+            <div className="w-[980px] pt-8">
               <h2 className="text-2xl font-bold mb-4">Applications Requests</h2>
               <div className="mb-4 flex items-center"></div>
               <table className="w-[980px] border-none">

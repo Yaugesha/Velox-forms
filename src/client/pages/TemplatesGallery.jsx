@@ -13,9 +13,7 @@ function TemplatesGaliery() {
         {templateCategories !== undefined && (
           <div className="w-[980px] flex flex-col justify-between gap-8">
             {templateCategories.map((category) => {
-              return (
-                <TemplateCategory category={category} key={category.title} />
-              );
+              return <TemplateCategory category={category} key={category.id} />;
             })}
           </div>
         )}

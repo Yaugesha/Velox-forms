@@ -13,8 +13,30 @@ export function TemplatesProvider({ children }) {
   ]);
   const [templateCategories, setTemplateCategories] = useState([]);
 
-  async function renameTemplate(templateId, newName) {
-    const { status, message } = await API.renameTemplate(templateId, newName);
+  async function renameTemplate(template, newName) {
+    const { status, message } = await API.renameTemplate(template.id, newName);
+    if (status) {
+      setTemplates(
+        templates.map((templ) => {
+          if (templ.id !== template.id) return templ;
+          else return { ...templ, title: newName };
+        })
+      );
+      setTemplateCategories(
+        templateCategories.map((category) => {
+          if (category.id !== template.templateCategoryId) return category;
+          else
+            return {
+              ...category,
+              templates: category.templates.map((templ) => {
+                console.log(templ.id !== template.id);
+                if (templ.id !== template.id) return templ;
+                else return { ...templ, title: newName };
+              }),
+            };
+        })
+      );
+    }
     return { isRecieved: true, status: status, message: message };
   }
   async function renameTemplateCategory(templateId, newName) {
@@ -24,24 +46,57 @@ export function TemplatesProvider({ children }) {
     );
     return { isRecieved: true, status: status, message: message };
   }
-  async function deleteTemplateCategory(templateId, newName) {
+  async function deleteTemplateCategory(templateId) {
     const { status, message } = await API.deleteTemplateCategory(
       templateId,
       newName
     );
     return { isRecieved: true, status: status, message: message };
   }
-  async function deleteTemplate(templateId, newName) {
-    const { status, message } = await API.deleteTemplate(templateId, newName);
+  async function deleteTemplate(template) {
+    const { status, message } = await API.deleteTemplate(template.id);
+    if (status) {
+      setTemplates([
+        ...templates.filter((templ) => {
+          return templ.id !== template.id;
+        }),
+      ]);
+      setTemplateCategories(
+        templateCategories.map((category) => {
+          if (category.id !== template.templateCategoryId) return category;
+          else
+            return {
+              ...category,
+              templates: category.templates.filter((templ) => {
+                return templ.id !== template.id;
+              }),
+            };
+        })
+      );
+    }
     return { isRecieved: true, status: status, message: message };
   }
   async function saveTemplate(title, category, fields, userId) {
-    const { status, message } = await API.saveTemplate(
+    const { template, status, message } = await API.saveTemplate(
       title,
       category,
       fields,
       userId
     );
+    if (status) {
+      setTemplates([...templates, template]);
+      setTemplateCategories(
+        templateCategories.map((category) => {
+          console.log(category);
+          if (category.id !== template.templateCategoryId) return category;
+          else
+            return {
+              ...category,
+              templates: [...category.templates, template],
+            };
+        })
+      );
+    }
     return { isRecieved: true, status: status, message: message };
   }
   async function getRecentTemplates() {

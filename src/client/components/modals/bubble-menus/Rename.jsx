@@ -62,7 +62,7 @@ function Rename({ data, setBubbleMenu, setOpen, callback }) {
           <button
             className="bg-black text-white px-3 py-0.5"
             onClick={async () => {
-              setResultData(await callback(data.id, title));
+              setResultData(await callback(data, title));
             }}
           >
             OK

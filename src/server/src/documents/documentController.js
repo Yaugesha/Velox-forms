@@ -11,6 +11,18 @@ const jwtKey = () => {
   const jwtKey = result.parsed.JWT_SECRETE_KEY;
   return jwtKey;
 };
+const dateOptions = {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+};
+
+const parseDocument = (document) => {
+  return {
+    ...document,
+    date: document.date.toLocaleDateString("en-us", dateOptions),
+  };
+};
 
 class documentController {
   async saveDocument(req, res) {
@@ -24,12 +36,12 @@ class documentController {
       date: date,
       data: data,
       userId: userId,
-      file: file,
-    }).then(() => {
+    }).then((document) => {
       console.log("document saved");
       res.status(200).send({
+        document: parseDocument(document.dataValues),
         file: file,
-        messege: "Document saved",
+        message: "Document saved",
       });
     });
   }

@@ -22,17 +22,30 @@ export function DocunentsProvider({ children }) {
         })
       : documents;
 
-  async function renameDocument(templateId, newName) {
-    const { status, message } = await API.renameDocument(templateId, newName);
+  async function renameDocument(documentId, newName) {
+    const { status, message } = await API.renameDocument(documentId, newName);
+    if (status)
+      setDocuments(
+        documents.map((document) => {
+          if (document.id !== documentId) return document;
+          else return { ...document, title: newName };
+        })
+      );
     return { isRecieved: true, status: status, message: message };
   }
-  async function deleteDocument(templateId, newName) {
-    const { status, message } = await API.deleteDocument(templateId, newName);
+  async function deleteDocument(documentId, newName) {
+    const { status, message } = await API.deleteDocument(documentId, newName);
+    if (status)
+      setDocuments([
+        ...documents.filter((document) => {
+          return document.id !== documentId;
+        }),
+      ]);
     return { isRecieved: true, status: status, message: message };
   }
   async function saveDocument(title) {
-    const { status, message } = await API.saveDocument(title);
-    //if (status) setDocuments([...documents, ])
+    const { document, status, message } = await API.saveDocument(title);
+    if (status) setDocuments([...documents, document]);
     return { isRecieved: true, status: status, message: message };
   }
   async function getDocuments() {
