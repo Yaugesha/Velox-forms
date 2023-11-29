@@ -13,7 +13,7 @@ function ApplicationsHistory() {
   function openBubbleMenu(e) {
     setBubbleMenuOpen(true);
     setBubbleMenuY(e.target.getBoundingClientRect().top + 30);
-    setBubbleMenuX(e.target.getBoundingClientRect().left - 240);
+    setBubbleMenuX(e.target.getBoundingClientRect().left - 120);
   }
   const { applications, findApplications, deleteApplication, editApplication } =
     useApplications();
@@ -104,7 +104,7 @@ function ApplicationsHistory() {
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}
-          width={"264"}
+          width={"140"}
         />
       )}
       {isApplicationInfoOpen && (

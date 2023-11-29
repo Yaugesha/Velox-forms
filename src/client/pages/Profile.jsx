@@ -7,9 +7,9 @@ function Profile() {
   // const location = useLocation().pathname;
   // location.search("documents");
   return (
-    <>
+    <div className="min-h-full flex flex-col">
       <Header role={"user"} page={"Profile"} />
-      <main className="flex justify-center gap-[62px] mt-12">
+      <main className="flex justify-center flex-auto gap-[62px] mt-12">
         <div className="flex flex-col gap-2.5">
           <ProfileNavigationTab
             title={"Account Settings"}
@@ -35,7 +35,7 @@ function Profile() {
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

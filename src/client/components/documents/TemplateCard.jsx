@@ -26,17 +26,6 @@ function TemplateCard({ template }) {
       name: "Delete",
       action: deleteTemplate,
     },
-    // {
-    //   icon: "/src/client/assets/icons/general/icon-rename-description.svg",
-    //   name: "Change description",
-    //   action: "",
-    // },
-    // {
-    //   icon: "/src/client/assets/icons/general/icon-open-in-new-tab.svg",
-    //   name: "Open in new tab",
-    //   action: "",
-    // },
-    ,
   ];
 
   return (
@@ -67,7 +56,7 @@ function TemplateCard({ template }) {
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}
-          width={"264"}
+          width={"140"}
         />
       )}
     </div>

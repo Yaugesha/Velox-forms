@@ -20,9 +20,9 @@ function Users() {
     getAllUsers();
   }, []);
   return (
-    <>
+    <div className="min-h-full flex flex-col">
       <Header />
-      <main className="w-full flex flex-col items-center">
+      <main className="w-full flex flex-auto flex-col items-center">
         <div className="w-[980px] mt-8">
           <h1 className="text-2xl font-bold mb-4">Users</h1>
           <table className="w-[980px] border-none">
@@ -74,7 +74,7 @@ function Users() {
         </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 

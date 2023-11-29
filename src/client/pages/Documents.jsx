@@ -23,9 +23,9 @@ function Documents() {
       {location.pathname.split("/")[2] !== undefined ? (
         <Outlet />
       ) : (
-        <>
+        <div className="min-h-full flex flex-col">
           <Header isAuthorized={true} page={"Documents"} />
-          <main className="w-full flex flex-col items-center">
+          <main className="w-full flex flex-auto flex-col items-center">
             <TemplatesSection />
             {/* {documents.length === 0 ? (
               <p className="alig text-xl">
@@ -38,7 +38,7 @@ function Documents() {
             <DocumentsSection />
             {/* )} */}
           </main>
-        </>
+        </div>
       )}
       <Footer />
     </>

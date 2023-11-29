@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useApplications } from "../contexts/ApplicationsContext";
 import Input from "../components/custom-elements/Input";
 import DocumentHeader from "../components/header/DocumentHeader";
+import Footer from "../components/footers/Footer";
 import ChangeStatus from "../components/modals/applications/ChangeStatus";
 
 const onButtonClick = () => {
@@ -28,13 +29,13 @@ function ApplicationProcessing() {
   }, []);
 
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full min-h-full flex flex-col items-center">
       <DocumentHeader
         width="980px"
         page="Applicaton processing"
         position="fixed"
       />
-      <div className="w-[980px] pt-24">
+      <div className="w-[980px] pt-24 flex-auto">
         <div className="w-full flex justify-between items-end">
           <Input
             placeholder={"Category"}

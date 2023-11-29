@@ -53,7 +53,7 @@ function DocumentList({ document }) {
           top={bubbleMenuY}
           left={bubbleMenuX}
           items={bubbleMenuItems}
-          width={"264"}
+          width={"140"}
         />
       )}
     </div>
