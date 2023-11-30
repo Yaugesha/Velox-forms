@@ -82,6 +82,7 @@ export const saveApplication = async (category, title, fileLink, comment) => {
     throw Error(result.message);
   }
   return {
+    application: result.application,
     error: false,
     message: "Application recieved",
   };

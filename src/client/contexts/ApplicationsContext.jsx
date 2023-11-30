@@ -12,6 +12,15 @@ export function ApplicationProvider({ children }) {
   const [referenceFile, setReferenceFile] = useState(null);
   const [comment, setComment] = useState("");
 
+  const saveApplication = async () => {
+    const { application } = await API.submitAplication(
+      referenceFile,
+      category,
+      title,
+      comment
+    );
+    setApplications([...applications, application]);
+  };
   const findApplications = async () => {
     const userApplications = await API.findApplications();
     setApplications(userApplications);
@@ -26,6 +35,12 @@ export function ApplicationProvider({ children }) {
   };
   const deleteApplication = async (applicationId) => {
     const { message, status } = await API.deleteApplication(applicationId);
+    if (status)
+      setApplications([
+        ...applications.filter((application) => {
+          return application.id !== applicationId;
+        }),
+      ]);
     return { isRecieved: true, status: status, message: message };
   };
   const editApplication = async (application) => {
@@ -44,6 +59,19 @@ export function ApplicationProvider({ children }) {
       name,
       comment
     );
+    if (status)
+      setApplications(
+        applications.map((application) => {
+          console.log(application.id, applicationId);
+          if (application.id != applicationId) return application;
+          else {
+            application.statuses.at(-1).name = name;
+            application.statuses.at(-1).comment = comment;
+            console.log(application);
+            return application;
+          }
+        })
+      );
     return { isRecieved: true, status: status, message: message };
   };
 
@@ -60,6 +88,7 @@ export function ApplicationProvider({ children }) {
     setTitle,
     comment,
     setComment,
+    saveApplication,
     findAllApplications,
     findApplications,
     findApplication,

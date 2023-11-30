@@ -18,33 +18,28 @@ class applicationConroller {
   async createApplication(req, res) {
     const userId = req.user.id;
     const { category, title, file, comment } = req.body;
-    console.log(category, title, file, req.body, comment, userId);
     const date = new Date();
-    await Application.create({
+    const application = await Application.create({
       date: date,
       userId: userId,
-    }).then(async (application) => {
-      console.log(application);
-      await ApplicationData.create({
-        applicationId: application.dataValues.id,
-        category: category,
-        name: title,
-        fileRoute: file,
-        comment: comment,
-      }).then(() => {
-        console.log("application saved");
-        res.status(200).send({
-          file: file,
-          messege: "Application saved",
-        });
-      });
-      await ApplicationStatus.create({
-        applicationId: application.dataValues.id,
-        userId: userId,
-        name: "recieved",
-        comment: "Your application saved and soon will processed be by admin",
-        timeOfChange: date,
-      });
+    });
+    const data = await ApplicationData.create({
+      applicationId: application.dataValues.id,
+      category: category,
+      name: title,
+      fileRoute: file,
+      comment: comment,
+    });
+    const statuses = await ApplicationStatus.create({
+      applicationId: application.dataValues.id,
+      userId: userId,
+      name: "Recieved",
+      comment: "Your application saved and soon will processed be by admin",
+      timeOfChange: date,
+    });
+    res.status(200).send({
+      application: { ...application.dataValues, data, statuses: [statuses] },
+      messege: "Application saved",
     });
   }
 
@@ -66,7 +61,6 @@ class applicationConroller {
       where: { userId: userId },
       include: [ApplicationData, ApplicationStatus],
     });
-
     res.status(200).send({
       applications: applications.map((application) => {
         return {

@@ -9,7 +9,7 @@ function DocumnetsSection() {
 
   const [displayDocs, setDisplayDocs] = useState("table");
   const [nameSort, setNameSort] = useState("ascending");
-  const [dateSort, setDateSort] = useState("ascending");
+  const [dateSort, setDateSort] = useState("descending");
   const [active, setActive] = useState("date");
 
   return (
