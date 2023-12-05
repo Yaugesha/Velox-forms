@@ -1,4 +1,7 @@
+import { useDocuments } from "../../contexts/DocumentsContext";
+
 function SortButton({ type, kind, changeKind, active, setActive, callback }) {
+  const { sort } = useDocuments();
   function handleClick() {
     switch (type) {
       case "show":
@@ -6,24 +9,28 @@ function SortButton({ type, kind, changeKind, active, setActive, callback }) {
         break;
       case "name":
         setActive(type);
-        if (type === active)
-          kind === "ascending"
-            ? changeKind("descending")
-            : changeKind("ascending");
+        if (type === active) {
+          const newKind = kind === "ascending" ? "descending" : "ascending";
+          sort(type, newKind);
+          changeKind(newKind);
+        } else sort(type, kind);
         break;
       case "date":
         setActive(type);
-        if (type === active)
-          kind === "ascending"
-            ? changeKind("descending")
-            : changeKind("ascending");
+        if (type === active) {
+          const newKind = kind === "ascending" ? "descending" : "ascending";
+          sort(type, newKind);
+          changeKind(newKind);
+        } else sort(type, kind);
         break;
     }
   }
   const isActive = active === type ? "-active" : "";
   return (
     <img
-      onClick={handleClick}
+      onClick={() => {
+        handleClick();
+      }}
       className="cursor-pointer"
       src={`/src/client/assets/icons/sorts/icon-${
         type + "-" + kind + isActive

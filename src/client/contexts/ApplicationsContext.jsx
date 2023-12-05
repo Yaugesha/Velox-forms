@@ -62,12 +62,10 @@ export function ApplicationProvider({ children }) {
     if (status)
       setApplications(
         applications.map((application) => {
-          console.log(application.id, applicationId);
           if (application.id != applicationId) return application;
           else {
             application.statuses.at(-1).name = name;
             application.statuses.at(-1).comment = comment;
-            console.log(application);
             return application;
           }
         })

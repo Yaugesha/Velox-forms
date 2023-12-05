@@ -5,7 +5,7 @@ import DocumentList from "./DocumentList";
 import SortButton from "./SortButton";
 
 function DocumnetsSection() {
-  const { documents, setSearchQuery } = useDocuments();
+  const { documents, search } = useDocuments();
 
   const [displayDocs, setDisplayDocs] = useState("table");
   const [nameSort, setNameSort] = useState("ascending");
@@ -19,7 +19,8 @@ function DocumnetsSection() {
           <span>Recent documents</span>
           <input
             onChange={(e) => {
-              setSearchQuery(e.target.value);
+              console.log("input");
+              search(e.target.value);
             }}
             placeholder="Search: file name"
             className="w-[357px] h-8 border border-black pl-4 ml-[96px] mr-[214px]"

@@ -1,65 +1,54 @@
-import { useContext, useState, createContext, useEffect } from "react";
+import { useContext, createContext, useReducer } from "react";
 import * as API from "../api/documentsAPI";
+import reducer from "./reducers/docmentReducer";
 
 const DocunentsContext = createContext();
 
 export function DocunentsProvider({ children }) {
-  const [documents, setDocuments] = useState([]);
+  const [documents, dispatch] = useReducer(reducer, {
+    documents: [],
+  });
 
-  // const [documentRequest, setDocumentRequest] = useState({
-  //   isRecieved: false,
-  //   status: null,
-  //   message: "",
-  // });
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const searchDocuments =
-    searchQuery.length > 0
-      ? documents.filter((document) => {
-          return document.title
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase());
-        })
-      : documents;
-
+  function search(searchQuery) {
+    dispatch({ type: "search", payload: searchQuery });
+  }
+  function sort(type, kind) {
+    dispatch({ type: type + "-" + kind });
+    //dispatch({ type: "search", payload: searchQuery });
+  }
   async function renameDocument(documentId, newName) {
     const { status, message } = await API.renameDocument(documentId, newName);
     if (status)
-      setDocuments(
-        documents.map((document) => {
-          if (document.id !== documentId) return document;
-          else return { ...document, title: newName };
-        })
-      );
+      dispatch({
+        type: "document/renamed",
+        payload: { documentId: documentId, newName: newName },
+      });
     return { isRecieved: true, status: status, message: message };
   }
   async function deleteDocument(documentId, newName) {
     const { status, message } = await API.deleteDocument(documentId, newName);
-    if (status)
-      setDocuments([
-        ...documents.filter((document) => {
-          return document.id !== documentId;
-        }),
-      ]);
+    if (status) dispatch({ type: "document/deleted", payload: document });
     return { isRecieved: true, status: status, message: message };
   }
   async function saveDocument(title) {
     const { document, status, message } = await API.saveDocument(title);
-    if (status) setDocuments([...documents, document]);
+    if (status) dispatch({ type: "document/saved", payload: document });
     return { isRecieved: true, status: status, message: message };
   }
   async function getDocuments() {
     const result = await API.getDocuments();
-    setDocuments([...result]);
+    dispatch({ type: "documents/loaded", payload: result });
   }
 
   const value = {
-    documents: searchDocuments,
-    setSearchQuery,
+    documents: documents?.documents,
+    dispatch,
     saveDocument,
     renameDocument,
     deleteDocument,
     getDocuments,
+    search,
+    sort,
   };
 
   return (
