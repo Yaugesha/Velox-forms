@@ -9,10 +9,6 @@ function Applications() {
   const [application, setApplication] = useState({});
   const [isApplicationInfoOpen, setApplicationInfoOpen] = useState(false);
   const { applications, findAllApplications } = useApplications();
-  // const [requests, setRequests] = useState([]);
-  // const [sortedRequests, setSortedRequests] = useState([]);
-  // const [searchQuery, setSearchQuery] = useState("");
-  // const [sortOrder, setSortOrder] = useState("asc");
 
   useEffect(function () {
     findAllApplications();

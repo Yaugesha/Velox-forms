@@ -34,7 +34,6 @@ export default function reducer(state, action) {
       };
     }
     case "search": {
-      console.log(state);
       return {
         ...state,
         documents: state.allDocuments.filter((document) => {

@@ -5,13 +5,10 @@ import ApplicationForm from "./ApplicationForm";
 
 function CreateApplication() {
   const [result, setResult] = useState(null);
-  const { referenceFile, category, title, comment, saveApplication } =
-    useApplications();
+  const { formData, saveApplication } = useApplications();
   return (
     <div className="w-[590px] flex flex-wrap justify-between gap-y-4">
-      <ApplicationForm
-        application={{ referenceFile, category, title, comment }}
-      />
+      <ApplicationForm application={formData} />
       <button
         onClick={async () => {
           setResult(await saveApplication());

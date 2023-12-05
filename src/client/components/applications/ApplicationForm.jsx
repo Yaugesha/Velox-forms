@@ -1,14 +1,24 @@
 import { useApplications } from "../../contexts/ApplicationsContext";
 import DropdownButton from "../custom-elements/DropdownButton";
 import Input from "../custom-elements/Input";
+
 function ApplicationForm({ application }) {
-  const { setReferenceFile, setCategory, setTitle, setComment } =
-    useApplications();
+  const { updateFormData } = useApplications();
+
+  const setCategory = (category) => {
+    updateFormData("category", category);
+  };
+  const setTitle = (title) => {
+    updateFormData("category", title);
+  };
+  const setComment = (comment) => {
+    updateFormData("category", comment);
+  };
 
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
   const handleFileUpload = (e) => {
     if (e.target.files) {
-      setReferenceFile(e.target.files[0]);
+      updateFormData("referenceFile", e.target.files[0]);
     }
   };
 

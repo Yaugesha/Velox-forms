@@ -1,46 +1,42 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 import * as API from "../api/applicationsAPI";
+import { reducer } from "./reducers/applicationReduser";
 
 const ApplicationsContext = createContext();
 
+const initialValue = {
+  applications: [],
+  application: {},
+  formData: {},
+};
+
 export function ApplicationProvider({ children }) {
-  const [applications, setApplications] = useState([]);
-  const [application, setApplication] = useState({});
-  const [currentApplications, setCurrentApplications] = useState({});
-  const [category, setCategory] = useState();
-  const [title, setTitle] = useState("");
-  const [referenceFile, setReferenceFile] = useState(null);
-  const [comment, setComment] = useState("");
+  const [{ applications, application, formData }, dispatch] = useReducer(
+    reducer,
+    initialValue
+  );
 
   const saveApplication = async () => {
-    const { application } = await API.submitAplication(
-      referenceFile,
-      category,
-      title,
-      comment
-    );
-    setApplications([...applications, application]);
+    console.log(...formData);
+    const { application } = await API.submitAplication(...formData);
+    dispatch({ type: "application/save", payload: application });
   };
   const findApplications = async () => {
     const userApplications = await API.findApplications();
-    setApplications(userApplications);
+    dispatch({ type: "applications/getUser", payload: userApplications });
   };
   const findApplication = async (applicationId) => {
     const application = await API.findApplication(applicationId);
-    setApplication(application);
+    dispatch({ type: "application/get", payload: application });
   };
   const findAllApplications = async () => {
     const applications = await API.findAllApplications();
-    setApplications(applications);
+    dispatch({ type: "applications/getAll", payload: applications });
   };
   const deleteApplication = async (applicationId) => {
     const { message, status } = await API.deleteApplication(applicationId);
     if (status)
-      setApplications([
-        ...applications.filter((application) => {
-          return application.id !== applicationId;
-        }),
-      ]);
+      dispatch({ type: "application/delete", payload: applicationId });
     return { isRecieved: true, status: status, message: message };
   };
   const editApplication = async (application) => {
@@ -60,32 +56,21 @@ export function ApplicationProvider({ children }) {
       comment
     );
     if (status)
-      setApplications(
-        applications.map((application) => {
-          if (application.id != applicationId) return application;
-          else {
-            application.statuses.at(-1).name = name;
-            application.statuses.at(-1).comment = comment;
-            return application;
-          }
-        })
-      );
+      dispatch({
+        type: "application/changeStatus",
+        payload: applicationId,
+      });
     return { isRecieved: true, status: status, message: message };
+  };
+  const updateFormData = (field, value) => {
+    dispatch({ type: "formData/set", payload: { field: field, value: value } });
   };
 
   const value = {
     applications,
     application,
-    referenceFile,
-    setReferenceFile,
-    category,
-    currentApplications,
-    setCurrentApplications,
-    setCategory,
-    title,
-    setTitle,
-    comment,
-    setComment,
+    formData,
+    updateFormData,
     saveApplication,
     findAllApplications,
     findApplications,

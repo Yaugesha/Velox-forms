@@ -19,7 +19,6 @@ function DocumnetsSection() {
           <span>Recent documents</span>
           <input
             onChange={(e) => {
-              console.log("input");
               search(e.target.value);
             }}
             placeholder="Search: file name"
@@ -49,7 +48,7 @@ function DocumnetsSection() {
           </div>
         </div>
       </div>
-      {documents !== undefined && (
+      {documents.length !== 0 && (
         <>
           {displayDocs === "table" ? (
             <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
