@@ -24,11 +24,9 @@ const Footer = () => {
             </li>
           </ul>
         </nav>
-
-        {/* Данные о компании */}
         <div>
           <p className="text-sm">Velox-forms</p>
-          <p className="text-sm">Adress: P.Brovski 4, Minsk, Belarus</p>
+          <p className="text-sm">Adress: P.Brovki 4, Minsk, Belarus</p>
           <p className="text-sm">Phone: +375 (44) 456-78-90</p>
           <p className="text-sm">Email: velox-forms@example.com</p>
         </div>

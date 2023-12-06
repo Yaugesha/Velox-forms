@@ -36,7 +36,9 @@ function DropdownButton({ type, handleClick, valuesArr, initialValue, width }) {
       <button
         onClick={handleInputValue}
         id={type}
-        className={`w-[100%] flex items-center justify-between pr-[8px] mt-1`}
+        className={`w-[100%] flex items-center ${
+          value ? "justify-between" : "justify-end"
+        } pr-[8px] mt-1`}
       >
         {value}
         <img

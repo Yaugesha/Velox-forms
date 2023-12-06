@@ -17,9 +17,11 @@ export function ApplicationProvider({ children }) {
   );
 
   const saveApplication = async () => {
-    console.log(...formData);
-    const { application } = await API.submitAplication(...formData);
+    const { application, error, message } = await API.submitAplication(
+      formData
+    );
     dispatch({ type: "application/save", payload: application });
+    return { error, message };
   };
   const findApplications = async () => {
     const userApplications = await API.findApplications();
@@ -33,14 +35,17 @@ export function ApplicationProvider({ children }) {
     const applications = await API.findAllApplications();
     dispatch({ type: "applications/getAll", payload: applications });
   };
-  const deleteApplication = async (applicationId) => {
-    const { message, status } = await API.deleteApplication(applicationId);
+  const deleteApplication = async (application) => {
+    const { message, status } = await API.deleteApplication(application.id);
     if (status)
-      dispatch({ type: "application/delete", payload: applicationId });
+      dispatch({ type: "application/delete", payload: application.id });
     return { isRecieved: true, status: status, message: message };
   };
-  const editApplication = async (application) => {
-    const { message, status } = await API.editApplication(application);
+  const editApplication = async (applicationId) => {
+    const { message, status } = await API.editApplication({
+      ...formData,
+      applicationId,
+    });
     return { isRecieved: true, status: status, message: message };
   };
   const changeStatus = async (applicationId, name, comment) => {

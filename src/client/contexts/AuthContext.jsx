@@ -5,7 +5,7 @@ import { refreshToken, login, regist } from "../api/authAPI";
 const AuthContext = createContext();
 
 const initialState = {
-  id: "",
+  id: null,
   isAuthorized: false,
   role: "unAuthorizedUser",
 };

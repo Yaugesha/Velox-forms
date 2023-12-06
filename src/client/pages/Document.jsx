@@ -96,8 +96,10 @@ function Document() {
           Save document
         </div>
       </DocumentHeader>
-      <div className="container w-[1280px] flex gap-64 bg-white">
-        <FillingDocFields fields={fields} userData={userData} />
+      <div className="flex justify-center">
+        <div className="container w-[1280px] flex gap-64 bg-white">
+          <FillingDocFields fields={fields} userData={userData} />
+        </div>
       </div>
       {isPopupOpen ? <SaveDocument setIsOpen={setPopup} /> : ""}
     </>

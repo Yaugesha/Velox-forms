@@ -42,7 +42,7 @@ export function reducer(state, action) {
     case "formData/set":
       return {
         ...state,
-        ...(formData[action.payload.field] = action.payload.value),
+        ...(state.formData[action.payload.field] = action.payload.value),
       };
   }
 }

@@ -1,21 +1,30 @@
+import { useEffect } from "react";
 import { useApplications } from "../../contexts/ApplicationsContext";
 import DropdownButton from "../custom-elements/DropdownButton";
 import Input from "../custom-elements/Input";
 
 function ApplicationForm({ application }) {
-  const { updateFormData } = useApplications();
+  const { formData, updateFormData } = useApplications();
+
+  useEffect(function () {
+    setCategory(application.category);
+    setName(application.name);
+    setComment(application.comment);
+    updateFormData("referenceFile", application.referenceFile);
+  }, []);
 
   const setCategory = (category) => {
     updateFormData("category", category);
   };
-  const setTitle = (title) => {
-    updateFormData("category", title);
+  const setName = (name) => {
+    updateFormData("name", name);
   };
   const setComment = (comment) => {
-    updateFormData("category", comment);
+    updateFormData("comment", comment);
   };
 
   const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
+
   const handleFileUpload = (e) => {
     if (e.target.files) {
       updateFormData("referenceFile", e.target.files[0]);
@@ -36,10 +45,10 @@ function ApplicationForm({ application }) {
       </div>
       <Input
         placeholder={"Template name"}
-        defaultValue={application.title}
+        defaultValue={application.name}
         withLabel={true}
         width={"285px"}
-        handleInput={setTitle}
+        handleInput={setName}
       />
       <div className="w-[590px]">
         <p className="mb-2">Choose file which will be used as reference</p>
@@ -49,11 +58,20 @@ function ApplicationForm({ application }) {
             className="flex flex-col items-center justify-center w-full h-44 border-2 border-black border-dashed cursor-pointer "
           >
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <p className="mb-2">
-                <span className="font-semibold">Click to upload</span> or drag
-                and drop
-              </p>
-              <p className="text-xs">DOCX, PDF or TXT</p>
+              {formData.referenceFile || application.referenceFile ? (
+                <p className="text-xl">
+                  Uploaded:
+                  {application.referenceFile ?? formData.referenceFile.name}
+                </p>
+              ) : (
+                <>
+                  <p className="mb-2">
+                    <span className="font-semibold">Click to upload</span> or
+                    drag and drop
+                  </p>
+                  <p className="text-xs">DOCX, PDF or TXT</p>
+                </>
+              )}
             </div>
             <input
               id="dropzone-file"

@@ -14,7 +14,6 @@ export function DocunentsProvider({ children }) {
   }
   function sort(type, kind) {
     dispatch({ type: type + "-" + kind });
-    //dispatch({ type: "search", payload: searchQuery });
   }
   async function renameDocument(documentId, newName) {
     const { status, message } = await API.renameDocument(documentId, newName);
@@ -38,6 +37,7 @@ export function DocunentsProvider({ children }) {
   async function getDocuments() {
     const result = await API.getDocuments();
     dispatch({ type: "documents/loaded", payload: result });
+    dispatch({ type: "date-descending", payload: documents });
   }
 
   const value = {

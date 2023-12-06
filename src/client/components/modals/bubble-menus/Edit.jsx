@@ -5,8 +5,7 @@ import Popup from "../Popup";
 import ApplicationForm from "../../applications/ApplicationForm";
 
 function Edit({ data, setBubbleMenu, setOpen, callback }) {
-  const { referenceFile, category, title, comment, editApplication } =
-    useApplications();
+  const { editApplication } = useApplications();
   const [resultData, setResultData] = useState({
     isRecieved: false,
     status: "",
@@ -46,7 +45,7 @@ function Edit({ data, setBubbleMenu, setOpen, callback }) {
             application={{
               referenceFile: data.data.fileRoute,
               category: data.data.category,
-              title: data.data.name,
+              name: data.data.name,
               comment: data.data.comment,
             }}
           />
@@ -59,17 +58,7 @@ function Edit({ data, setBubbleMenu, setOpen, callback }) {
           />
         </div>
         <button
-          onClick={async () =>
-            setResultData(
-              await editApplication({
-                referenceFile: referenceFile,
-                category: category,
-                title: title,
-                comment: comment,
-                id: data.id,
-              })
-            )
-          }
+          onClick={async () => setResultData(await editApplication(data.id))}
           className="w-[590px] h-10 items-center bg-black text-white"
         >
           Edit application

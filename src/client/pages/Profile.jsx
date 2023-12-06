@@ -1,11 +1,9 @@
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import ProfileNavigationTab from "../components/profile-sections/ProfileNavigationTab";
 import Header from "../components/header/Header";
 import Footer from "../components/footers/Footer";
 
 function Profile() {
-  // const location = useLocation().pathname;
-  // location.search("documents");
   return (
     <div className="min-h-full flex flex-col">
       <Header role={"user"} page={"Profile"} />

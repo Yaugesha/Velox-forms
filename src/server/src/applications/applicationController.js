@@ -39,7 +39,7 @@ class applicationConroller {
     });
     res.status(200).send({
       application: { ...application.dataValues, data, statuses: [statuses] },
-      messege: "Application saved",
+      message: "Application saved",
     });
   }
 
@@ -47,7 +47,7 @@ class applicationConroller {
     const uploadedFile = req.file.path;
     res
       .status(200)
-      .send({ fileLink: uploadedFile, messege: "File uploaded successfully!" });
+      .send({ fileLink: uploadedFile, message: "File uploaded successfully!" });
   }
 
   async getUserApplications(req, res) {

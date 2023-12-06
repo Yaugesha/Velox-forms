@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import Popup from "./Popup";
 function ApplicationResult({ message, setMessage }) {
+  const navigate = useNavigate();
   const handleClose = (e) => {
     if (
       e.target.classList.contains("popup-container") ||
@@ -7,6 +9,7 @@ function ApplicationResult({ message, setMessage }) {
     ) {
       document.body.style.overflow = "auto";
       setMessage(false);
+      navigate("../history");
     }
   };
 
@@ -15,7 +18,7 @@ function ApplicationResult({ message, setMessage }) {
       <div className="w-[500px] h-[180px] flex flex-col justify-center items-center bg-white">
         <p className="text-xl mb-8 text-center">{message}</p>
         <button
-          className="close-btn bg-black text-white px-2"
+          className="close-btn bg-black text-white px-4 py-2"
           onClick={handleClose}
         >
           Close

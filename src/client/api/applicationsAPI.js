@@ -84,17 +84,17 @@ export const saveApplication = async (category, title, fileLink, comment) => {
   return {
     application: result.application,
     error: false,
-    message: "Application recieved",
+    message: result.message,
   };
 };
 
-export const submitAplication = async (
+export const submitAplication = async ({
   referenceFile,
   category,
-  title,
-  comment
-) => {
-  if (!referenceFile || !category || !title) {
+  name,
+  comment,
+}) => {
+  if (!referenceFile || !category || !name) {
     return {
       error: true,
       message: "You must fill category, title and provide reference file",
@@ -105,7 +105,7 @@ export const submitAplication = async (
   if (referenceFile) {
     fileLink = await uploadFile(referenceFile);
   }
-  return await saveApplication(category, title, fileLink, comment);
+  return await saveApplication(category, name, fileLink, comment);
 };
 
 export const deleteApplication = async (applicationId) => {
@@ -141,10 +141,10 @@ export const editApplication = async (application) => {
         Bearer: jwt,
       },
       body: JSON.stringify({
-        applicationId: application.id,
+        applicationId: application.applicationId,
         referenceFile: application.referenceFile,
         category: application.category,
-        name: application.title,
+        name: application.name,
         comment: application.comment,
       }),
     });

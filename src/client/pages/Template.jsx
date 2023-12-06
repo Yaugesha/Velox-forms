@@ -20,7 +20,7 @@ function Template() {
           Save template
         </div>
       </DocumentHeader>
-      <div className="w-[1280px] flex gap-64 bg-white">
+      <div className="w-[1280px] flex justify-center gap-64 bg-white">
         <Editor />
         <FillingTemplFields isTemplate={true} />
       </div>

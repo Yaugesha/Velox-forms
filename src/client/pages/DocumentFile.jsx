@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import Footer from "../components/footers/Footer";
 import DocumentHeader from "../components/header/DocumentHeader";
 
 function Document() {
@@ -45,7 +44,6 @@ function Document() {
     <>
       <DocumentHeader width="1280px" page="Document" />
       <div className="container w-[1280px] flex justify-center bg-white"></div>
-      <Footer />
     </>
   );
 }
