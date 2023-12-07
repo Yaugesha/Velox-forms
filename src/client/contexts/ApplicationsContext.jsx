@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from "react";
 import * as API from "../api/applicationsAPI";
-import { reducer } from "./reducers/applicationReduser";
+import { reducer } from "./reducers/applicationReducer";
 
 const ApplicationsContext = createContext();
 
@@ -21,6 +21,7 @@ export function ApplicationProvider({ children }) {
       formData
     );
     dispatch({ type: "application/save", payload: application });
+    restoreFormData();
     return { error, message };
   };
   const findApplications = async () => {
@@ -46,6 +47,7 @@ export function ApplicationProvider({ children }) {
       ...formData,
       applicationId,
     });
+    restoreFormData();
     return { isRecieved: true, status: status, message: message };
   };
   const changeStatus = async (applicationId, name, comment) => {
@@ -70,7 +72,9 @@ export function ApplicationProvider({ children }) {
   const updateFormData = (field, value) => {
     dispatch({ type: "formData/set", payload: { field: field, value: value } });
   };
-
+  const restoreFormData = () => {
+    dispatch({ type: "formData/restore" });
+  };
   const value = {
     applications,
     application,
@@ -83,6 +87,7 @@ export function ApplicationProvider({ children }) {
     deleteApplication,
     editApplication,
     changeStatus,
+    restoreFormData,
   };
   return (
     <ApplicationsContext.Provider value={value}>

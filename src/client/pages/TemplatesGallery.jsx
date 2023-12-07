@@ -1,9 +1,12 @@
 import { useTemplate } from "../contexts/TemplateContext";
+import { useBubbleMenu } from "../contexts/BubbleMenuContext";
 import DocumentHeader from "../components/header/DocumentHeader";
 import TemplateCategory from "../components/documents/TemplateCategory";
+import BubbleMenu from "../components/modals/bubble-menus/BubbleMenu";
 
 function TemplatesGaliery() {
   const { templateCategories } = useTemplate();
+  const { bubbleMenu } = useBubbleMenu();
 
   return (
     <div>
@@ -17,6 +20,7 @@ function TemplatesGaliery() {
             })}
           </div>
         )}
+        {bubbleMenu.isOpen && <BubbleMenu />}
       </main>
     </div>
   );

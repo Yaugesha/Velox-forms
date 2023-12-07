@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useBubbleMenu } from "../../../contexts/BubbleMenuContext";
 import BubbleMenuItem from "./BubbleMenuItem";
+import ActionModal from "./ActionModal";
 
-function BubbleMenu({ data, top, left, setIsOpen, items, width }) {
-  const [modal, setModal] = useState(<div></div>);
-  const [isModalOpen, setModalOpen] = useState(false);
+function BubbleMenu() {
+  const { bubbleMenu, close } = useBubbleMenu();
 
   function handleClose(e) {
     if (
@@ -12,7 +12,7 @@ function BubbleMenu({ data, top, left, setIsOpen, items, width }) {
         !e.target.className.includes("bubble-menu")) ||
       e.target.className.includes("container-bubble-menu")
     )
-      setIsOpen(false);
+      close();
   }
 
   return (
@@ -23,24 +23,21 @@ function BubbleMenu({ data, top, left, setIsOpen, items, width }) {
         className={`container-bubble-menu absolute top-0 left-0 w-full h-full`}
       >
         <div
-          style={{ top: top + "px", left: left + "px" }}
-          className={`bubble-menu relative w-[${width}px] py-2 px-2 shadow-md bg-white`}
+          style={{ top: bubbleMenu.y + "px", left: bubbleMenu.x + "px" }}
+          className={`bubble-menu relative w-[${140}px] py-2 px-2 shadow-md bg-white`}
         >
-          {items.map((item) => {
+          {bubbleMenu.items.map((item) => {
             return (
               <BubbleMenuItem
                 key={item.name}
-                data={data}
+                data={bubbleMenu.data}
                 item={item}
-                setModal={setModal}
-                setModalOpen={setModalOpen}
-                setIsOpen={setIsOpen}
               />
             );
           })}
         </div>
       </div>
-      {isModalOpen && modal}
+      {bubbleMenu.isModalOpen && <ActionModal>{bubbleMenu.modal}</ActionModal>}
     </>
   );
 }

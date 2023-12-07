@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import TemplateCard from "./TemplateCard";
 import { useTemplate } from "../../contexts/TemplateContext";
+import TemplateCard from "./TemplateCard";
 
 function TemplatesSection() {
   const { templates } = useTemplate();

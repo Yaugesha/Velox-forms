@@ -64,7 +64,7 @@ function Applications() {
                       <td className=" border-none">{application.userId}</td>
                       <td className=" border-none">{application.date}</td>
                       <td className=" border-none">
-                        {application.statuses.at(-1).name}
+                        {application.statuses[0].name}
                       </td>
                       <td className=" border-none">
                         {application.data.category}

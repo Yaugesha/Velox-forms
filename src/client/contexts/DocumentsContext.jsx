@@ -1,13 +1,19 @@
 import { useContext, createContext, useReducer } from "react";
 import * as API from "../api/documentsAPI";
-import reducer from "./reducers/docmentReducer";
+import reducer from "./reducers/documentReducer";
 
 const DocunentsContext = createContext();
 
+const initialState = {
+  documents: [],
+  allDocument: [],
+};
+
 export function DocunentsProvider({ children }) {
-  const [documents, dispatch] = useReducer(reducer, {
-    documents: [],
-  });
+  const [{ documents, allDocuments }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   function search(searchQuery) {
     dispatch({ type: "search", payload: searchQuery });
@@ -15,18 +21,19 @@ export function DocunentsProvider({ children }) {
   function sort(type, kind) {
     dispatch({ type: type + "-" + kind });
   }
-  async function renameDocument(documentId, newName) {
-    const { status, message } = await API.renameDocument(documentId, newName);
-    if (status)
+  async function renameDocument(document, newName) {
+    const { status, message } = await API.renameDocument(document.id, newName);
+    if (status) {
       dispatch({
         type: "document/renamed",
-        payload: { documentId: documentId, newName: newName },
+        payload: { documentId: document.id, newName: newName },
       });
+    }
     return { isRecieved: true, status: status, message: message };
   }
-  async function deleteDocument(documentId, newName) {
-    const { status, message } = await API.deleteDocument(documentId, newName);
-    if (status) dispatch({ type: "document/deleted", payload: document });
+  async function deleteDocument(document) {
+    const { status, message } = await API.deleteDocument(document.id);
+    if (status) dispatch({ type: "document/deleted", payload: document.id });
     return { isRecieved: true, status: status, message: message };
   }
   async function saveDocument(title) {
@@ -41,7 +48,7 @@ export function DocunentsProvider({ children }) {
   }
 
   const value = {
-    documents: documents?.documents,
+    documents,
     dispatch,
     saveDocument,
     renameDocument,

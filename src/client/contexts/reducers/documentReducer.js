@@ -10,23 +10,30 @@ export default function reducer(state, action) {
       return {
         ...state,
         documents: [...state.allDocuments, action.payload],
+        allDocuments: [...state.allDocuments, action.payload],
       };
     }
     case "document/deleted": {
       return {
         ...state,
-        documents: [
-          ...state.allDocuments.filter((document) => {
-            return document.id !== action.payload;
-          }),
-        ],
+        documents: state.documents.filter((document) => {
+          return document.id !== action.payload;
+        }),
+        allDocuments: state.allDocuments.filter((document) => {
+          return document.id !== action.payload;
+        }),
       };
     }
     case "document/renamed": {
       return {
-        ...state,
         documents: [
-          state.allDocuments.map((document) => {
+          ...state.documents.map((document) => {
+            if (document.id !== action.payload.documentId) return document;
+            else return { ...document, title: action.payload.newName };
+          }),
+        ],
+        allDocuments: [
+          ...state.allDocuments.map((document) => {
             if (document.id !== action.payload.documentId) return document;
             else return { ...document, title: action.payload.newName };
           }),

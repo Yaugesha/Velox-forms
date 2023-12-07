@@ -191,13 +191,13 @@ class applicationConroller {
 
   async changeApplicationStatus(req, res) {
     const { applicationId, comment, name } = req.body;
-    const application = await ApplicationStatus.findOne({
-      where: { applicationId },
+    const application = await ApplicationStatus.create({
+      applicationId: applicationId,
+      userId: req.user.id,
+      name: name,
+      comment: comment,
+      timeOfChange: new Date(),
     });
-    application.userId = req.user.id;
-    application.name = name;
-    application.comment = comment;
-    application.timeOfChange = new Date();
     await application
       .save()
       .then((result) => {

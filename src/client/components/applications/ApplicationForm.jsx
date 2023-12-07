@@ -27,6 +27,7 @@ function ApplicationForm({ application }) {
 
   const handleFileUpload = (e) => {
     if (e.target.files) {
+      console.log(formData, application);
       updateFormData("referenceFile", e.target.files[0]);
     }
   };
@@ -61,7 +62,8 @@ function ApplicationForm({ application }) {
               {formData.referenceFile || application.referenceFile ? (
                 <p className="text-xl">
                   Uploaded:
-                  {application.referenceFile ?? formData.referenceFile.name}
+                  {formData.referenceFile?.name ??
+                    application.referenceFile.name}
                 </p>
               ) : (
                 <>

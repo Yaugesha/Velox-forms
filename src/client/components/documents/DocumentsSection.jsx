@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useDocuments } from "../../contexts/DocumentsContext";
+import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
 import DocumentCard from "./DocumentCard";
 import DocumentList from "./DocumentList";
 import SortButton from "./SortButton";
+import { useBubbleMenu } from "../../contexts/BubbleMenuContext";
 
 function DocumnetsSection() {
   const { documents, search } = useDocuments();
+  const { bubbleMenu } = useBubbleMenu();
 
   const [displayDocs, setDisplayDocs] = useState("table");
   const [nameSort, setNameSort] = useState("ascending");
@@ -67,6 +70,7 @@ function DocumnetsSection() {
           )}
         </>
       )}
+      {bubbleMenu.isOpen && <BubbleMenu />}
     </section>
   );
 }

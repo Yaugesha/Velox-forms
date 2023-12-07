@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 import { useApplications } from "../../contexts/ApplicationsContext";
+import { useBubbleMenu } from "../../contexts/BubbleMenuContext";
 import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
 import Application from "../modals/applications/Application";
 
 function ApplicationsHistory() {
   const [application, setApplication] = useState({});
   const [isApplicationInfoOpen, setApplicationInfoOpen] = useState(false);
-  const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
-  const [bubbleMenuX, setBubbleMenuX] = useState("");
-  const [bubbleMenuY, setBubbleMenuY] = useState("");
 
-  function openBubbleMenu(e) {
-    setBubbleMenuOpen(true);
-    setBubbleMenuY(e.target.getBoundingClientRect().top + 30);
-    setBubbleMenuX(e.target.getBoundingClientRect().left - 120);
-  }
   const { applications, findApplications, deleteApplication, editApplication } =
     useApplications();
+  const { bubbleMenu, open } = useBubbleMenu();
 
   useEffect(function () {
     findApplications();
@@ -34,18 +28,8 @@ function ApplicationsHistory() {
       action: deleteApplication,
     },
   ];
-
-  // const applications = [
-  //   { name: "Labs PVI", date: "November 18, 2023", status: "recieved" },
-  //   { name: "Labs TPP", date: "November 18, 2023", status: "denied" },
-  //   { name: "Labs PPD", date: "November 18, 2023", status: "accepted" },
-  //   { name: "Labs EOIS", date: "November 18, 2023", status: "complited" },
-  //   {
   //     name: "max size max size max size max size m 40",
-  //     date: "November 18, 2023",
-  //     status: "complited",
-  //   },
-  // ];
+
   return (
     <div className="w-full">
       <h1 className="text-xl pb-8">History of your applications</h1>
@@ -85,7 +69,14 @@ function ApplicationsHistory() {
                   <img
                     onClick={(e) => {
                       setApplication(application);
-                      openBubbleMenu(e);
+                      open(
+                        {
+                          y: e.target.getBoundingClientRect().top,
+                          x: e.target.getBoundingClientRect().left,
+                        },
+                        application,
+                        bubbleMenuItems
+                      );
                     }}
                     className="bubble-menu-btn h-6 w-6 cursor-pointer"
                     src="/src/client/assets/icons/general/icon-more.svg"
@@ -97,16 +88,7 @@ function ApplicationsHistory() {
           })}
         </tbody>
       </table>
-      {isBubbleMenuOpen && (
-        <BubbleMenu
-          setIsOpen={setBubbleMenuOpen}
-          data={application}
-          top={bubbleMenuY}
-          left={bubbleMenuX}
-          items={bubbleMenuItems}
-          width={"140"}
-        />
-      )}
+      {bubbleMenu.isOpen && <BubbleMenu />}
       {isApplicationInfoOpen && (
         <Application
           application={application}

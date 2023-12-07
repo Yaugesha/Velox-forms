@@ -172,7 +172,7 @@ class templateController {
     const userId = req.user.id;
     TemplateCategory.update(
       { name: name },
-      { where: { id: categoryId, userId: userId } }
+      { where: { id: categoryId /*userId: userId*/ } }
     )
       .then((result) => {
         if (result[0] === 1) {
@@ -190,7 +190,7 @@ class templateController {
     const { categoryId } = req.body;
     const userId = req.user.id;
     await TemplateCategory.destroy({
-      where: { id: categoryId, userId: userId },
+      where: { id: categoryId /*userId: userId*/ },
     })
       .then((result) => {
         res.status(200).send({

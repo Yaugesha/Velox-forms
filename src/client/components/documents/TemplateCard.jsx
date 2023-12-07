@@ -1,19 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import { useTemplate } from "../../contexts/TemplateContext";
-import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
+import { useBubbleMenu } from "../../contexts/BubbleMenuContext";
+import { Link } from "react-router-dom";
 
 function TemplateCard({ template }) {
-  const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
-  const [bubbleMenuX, setBubbleMenuX] = useState("");
-  const [bubbleMenuY, setBubbleMenuY] = useState("");
-
-  function openBubbleMenu(e) {
-    setBubbleMenuOpen(true);
-    setBubbleMenuY(e.target.offsetTop + 30);
-    setBubbleMenuX(e.target.offsetLeft - 120);
-  }
   const { deleteTemplate, renameTemplate } = useTemplate();
+  const { open } = useBubbleMenu();
 
   const bubbleMenuItems = [
     {
@@ -43,22 +34,18 @@ function TemplateCard({ template }) {
           </div>
         </Link>
         <img
-          onClick={openBubbleMenu}
+          onClick={(e) =>
+            open(
+              { y: e.target.offsetTop, x: e.target.offsetLeft },
+              template,
+              bubbleMenuItems
+            )
+          }
           className="-mx-2 cursor-pointer"
           src="/src/client/assets/icons/general/icon-more.svg"
           alt="more"
         />
       </div>
-      {isBubbleMenuOpen && (
-        <BubbleMenu
-          setIsOpen={setBubbleMenuOpen}
-          data={template}
-          top={bubbleMenuY}
-          left={bubbleMenuX}
-          items={bubbleMenuItems}
-          width={"140"}
-        />
-      )}
     </div>
   );
 }

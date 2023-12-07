@@ -44,5 +44,10 @@ export function reducer(state, action) {
         ...state,
         ...(state.formData[action.payload.field] = action.payload.value),
       };
+    case "formData/restore":
+      return {
+        ...state,
+        formData: {},
+      };
   }
 }

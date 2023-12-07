@@ -1,19 +1,10 @@
-import { useState } from "react";
-import BubbleMenu from "../modals/bubble-menus/BubbleMenu";
 import { useDocuments } from "../../contexts/DocumentsContext";
+import { useBubbleMenu } from "../../contexts/BubbleMenuContext";
 import { Link } from "react-router-dom";
 
 function DocumentList({ document }) {
-  const [isBubbleMenuOpen, setBubbleMenuOpen] = useState(false);
-  const [bubbleMenuX, setBubbleMenuX] = useState("");
-  const [bubbleMenuY, setBubbleMenuY] = useState("");
-
-  function openBubbleMenu(e) {
-    setBubbleMenuOpen(true);
-    setBubbleMenuY(e.target.offsetTop + 30);
-    setBubbleMenuX(e.target.offsetLeft - 120);
-  }
   const { deleteDocument, renameDocument } = useDocuments();
+  const { open } = useBubbleMenu();
 
   const bubbleMenuItems = [
     {
@@ -41,21 +32,17 @@ function DocumentList({ document }) {
         </div>
       </Link>
       <img
-        onClick={openBubbleMenu}
+        onClick={(e) =>
+          open(
+            { y: e.target.offsetTop, x: e.target.offsetLeft },
+            document,
+            bubbleMenuItems
+          )
+        }
         className="h-6 w-6 cursor-pointer"
         src="/src/client/assets/icons/general/icon-more.svg"
         alt="more"
       />
-      {isBubbleMenuOpen && (
-        <BubbleMenu
-          setIsOpen={setBubbleMenuOpen}
-          data={document}
-          top={bubbleMenuY}
-          left={bubbleMenuX}
-          items={bubbleMenuItems}
-          width={"140"}
-        />
-      )}
     </div>
   );
 }

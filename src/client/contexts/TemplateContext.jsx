@@ -39,18 +39,15 @@ export function TemplatesProvider({ children }) {
     }
     return { isRecieved: true, status: status, message: message };
   }
-  async function renameTemplateCategory(templateId, newName) {
+  async function renameTemplateCategory(category, newName) {
     const { status, message } = await API.renameTemplateCategory(
-      templateId,
+      category.id,
       newName
     );
     return { isRecieved: true, status: status, message: message };
   }
-  async function deleteTemplateCategory(templateId) {
-    const { status, message } = await API.deleteTemplateCategory(
-      templateId,
-      newName
-    );
+  async function deleteTemplateCategory(category) {
+    const { status, message } = await API.deleteTemplateCategory(category.id);
     return { isRecieved: true, status: status, message: message };
   }
   async function deleteTemplate(template) {
