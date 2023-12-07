@@ -4,7 +4,9 @@ const {
   TemplateFields,
   UserPersonalData,
   UserWorkData,
+  User,
 } = require("../../models/models");
+const { Op } = require("sequelize");
 const dotenv = require("dotenv");
 const jwt = require("jsonwebtoken");
 
@@ -23,8 +25,18 @@ class templateController {
     const token = req.get("Bearer");
     const userId = req.body.userId ?? jwt.verify(token, jwtKey()).id;
     const date = new Date();
+    const admins = await User.findAll({
+      attributes: ["id"],
+      where: { role: "admin" },
+    });
+    const adminIdsArray = admins.map((admin) => admin.id);
     const [result, created] = await TemplateCategory.findOrCreate({
-      where: { name: category }, //userId: userId,
+      where: {
+        name: category,
+        userId: {
+          [Op.or]: [userId, ...adminIdsArray],
+        },
+      },
       defaults: { name: category, description: "", userId: userId },
     });
     const categoryId = result.id;
@@ -43,14 +55,28 @@ class templateController {
         });
       });
       res.status(200).send({
-        template: template,
-        messege: "Template saved",
+        template: {
+          ...template.dataValues,
+          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+          link: `document?templateId=${template.id}`,
+        },
+        message: "Template saved",
       });
     });
   }
 
   async getAllTemplates(req, res) {
+    const admins = await User.findAll({
+      attributes: ["id"],
+      where: { role: "admin" },
+    });
+    const adminIdsArray = admins.map((admin) => admin.id);
     const categories = await TemplateCategory.findAll({
+      where: {
+        userId: {
+          [Op.or]: [req.user.id, ...adminIdsArray],
+        },
+      },
       include: [Template],
     });
     if (categories === undefined)
@@ -60,13 +86,17 @@ class templateController {
         return {
           id: category.id,
           title: category.name,
-          templates: category.templates.map((template) => {
-            return {
-              ...template.dataValues,
-              picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
-              link: `document?templateId=${template.id}`,
-            };
-          }),
+          templates: category.templates
+            .filter((template) => {
+              return adminIdsArray.includes(template.userId);
+            })
+            .map((template) => {
+              return {
+                ...template.dataValues,
+                picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+                link: `document?templateId=${template.id}`,
+              };
+            }),
         };
       });
       res.status(200).send({
@@ -77,7 +107,17 @@ class templateController {
   }
 
   async getRecentTemplates(req, res) {
+    const admins = await User.findAll({
+      attributes: ["id"],
+      where: { role: "admin" },
+    });
+    const adminIdsArray = admins.map((admin) => admin.id);
     await Template.findAndCountAll({
+      where: {
+        userId: {
+          [Op.or]: [req.user.id, ...adminIdsArray],
+        },
+      },
       limit: 4,
     })
       .then((result) => {

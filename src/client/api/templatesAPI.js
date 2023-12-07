@@ -136,9 +136,13 @@ export async function deleteTemplateCategory(categoryId) {
 }
 
 export async function getRecentTemplates() {
+  const token = localStorage.getItem("jwt");
   try {
     const response = await fetch("/api/v1/templates/recent", {
       method: "GET",
+      headers: {
+        Bearer: token,
+      },
     });
     const result = await response.json();
 
@@ -153,9 +157,13 @@ export async function getRecentTemplates() {
 }
 
 export async function getTemplates() {
+  const token = localStorage.getItem("jwt");
   try {
     const response = await fetch("/api/v1/templates/all", {
       method: "GET",
+      headers: {
+        Bearer: token,
+      },
     });
     const result = await response.json();
 

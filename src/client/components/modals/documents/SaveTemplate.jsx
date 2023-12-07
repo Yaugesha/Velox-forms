@@ -27,12 +27,11 @@ function SaveTemplate({ setIsOpen }) {
   function handleClose(e) {
     if (
       e.target.classList.contains("w-full") ||
-      e.target.classList.contains("cancel-btn") ||
-      e.target.classList.contains("save-btn")
+      e.target.classList.contains("cancel-btn")
     ) {
       document.body.style.overflow = "auto";
       setIsOpen(false);
-      if (e.target.classList.contains("save-btn")) navigate("../.");
+      navigate("../.");
     }
   }
 
@@ -74,9 +73,10 @@ function SaveTemplate({ setIsOpen }) {
             className="cancel-btn h-8 bg-black text-white px-4 text-base"
             onClick={handleClose}
           >
-            Cancel
+            {isCorrectData.isRecieved ? "Exit" : "Cancel"}
           </button>
           <button
+            disabled={isCorrectData.isRecieved}
             onClick={async (e) => {
               const userId = searchParams.get("userId");
               const applicationId = searchParams.get("applicationId");

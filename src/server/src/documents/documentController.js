@@ -21,6 +21,8 @@ const parseDocument = (document) => {
   return {
     ...document,
     date: document.date.toLocaleDateString("en-us", dateOptions),
+    picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+    link: `documentFile?documentId=${document.id}`,
   };
 };
 

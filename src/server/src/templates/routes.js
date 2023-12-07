@@ -5,8 +5,8 @@ const authMiddleware = require("../users/authMiddleware");
 const router = Router();
 
 router.post("/save", controller.saveTemplate);
-router.get("/recent", controller.getRecentTemplates);
-router.get("/all", controller.getAllTemplates);
+router.get("/recent", authMiddleware, controller.getRecentTemplates);
+router.get("/all", authMiddleware, controller.getAllTemplates);
 router.post("/layout", authMiddleware, controller.getTemplate);
 router.post("/rename", authMiddleware, controller.renameTemplate);
 router.delete("/delete", authMiddleware, controller.deleteTemplate);

@@ -17,12 +17,11 @@ function SaveDocument({ setIsOpen }) {
   function handleClose(e) {
     if (
       e.target.classList.contains("w-full") ||
-      e.target.classList.contains("cancel-btn") ||
-      e.target.classList.contains("save-btn")
+      e.target.classList.contains("cancel-btn")
     ) {
       document.body.style.overflow = "auto";
       setIsOpen(false);
-      if (e.target.classList.contains("save-btn")) navigate("../.");
+      navigate("../.");
     }
   }
 
@@ -53,12 +52,12 @@ function SaveDocument({ setIsOpen }) {
             className="cancel-btn bg-black text-white px-4 text-base"
             onClick={handleClose}
           >
-            Cancel
+            {isCorrectData.isRecieved ? "Exit" : "Cancel"}
           </button>
           <button
+            disabled={isCorrectData.isRecieved}
             onClick={async (e) => {
               setCorrectData(await saveDocument(title));
-              handleClose(e);
             }}
             className="save-btn w-[90px] bg-black h-8 text-white px-4 text-base"
           >
