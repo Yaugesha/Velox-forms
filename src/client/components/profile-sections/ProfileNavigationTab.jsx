@@ -5,7 +5,9 @@ function ProfileNavigationTab({ title, subtitle, link }) {
     <NavLink
       className={({ isActive }) =>
         `w-[328px] h-[78px] pt-3.5 pb-4 pl-7 ${
-          isActive ? "bg-black text-white" : "border-2 border-black"
+          isActive
+            ? "bg-black text-white"
+            : "border-2 border-black duration-500 hover:bg-black hover:text-white"
         } `
       }
       to={link}

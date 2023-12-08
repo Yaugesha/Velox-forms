@@ -20,7 +20,7 @@ function DocumentCard({ document }) {
   ];
 
   return (
-    <div className="w-[225px] h-[340px] border-[1px] border-[#dadce0]">
+    <div className="w-[225px] h-[340px] border-[1px] border-[#dadce0] duration-500 hover:border-black">
       <Link to={document.link}>
         <div className="flex justify-center items-center w-[225px] h-[260px] border-b-[1px]">
           <img src={document.picture} alt="document" />
@@ -46,7 +46,7 @@ function DocumentCard({ document }) {
                 bubbleMenuItems
               )
             }
-            className="h-6 w-6 cursor-pointer"
+            className="p-1 -m-1 mr-0 cursor-pointer rounded-full duration-300 hover:bg-stone-200"
             src="/src/client/assets/icons/general/icon-more.svg"
             alt="more"
           />

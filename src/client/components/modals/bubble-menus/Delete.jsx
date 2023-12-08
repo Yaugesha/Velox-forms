@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useBubbleMenu } from "../../../contexts/BubbleMenuContext";
+import Button from "../../custom-elements/Button";
 import ResultMessage from "../ResultMessage";
 
 function Delete({ callback }) {
@@ -27,18 +28,18 @@ function Delete({ callback }) {
           message={resultData.message}
         />
       </div>
-      <div className=" w-full flex justify-end gap-8 mr-16 mt-6">
-        <button className="exit-btn bg-black text-white px-4 py-0.5">
-          {resultData.isRecieved ? "Exit" : "Cancel"}
-        </button>
-        <button
-          className="bg-black text-white px-3 py-0.5"
-          onClick={async () => {
+      <div className=" w-full flex justify-end gap-8 mr-16 mt-2">
+        <Button
+          clas={"exit-btn"}
+          name={resultData.isRecieved ? "Exit" : "Cancel"}
+        />
+        <Button
+          disabled={resultData.isRecieved}
+          name={"DELETE"}
+          callback={async () => {
             setResultData(await callback(bubbleMenu.data));
           }}
-        >
-          DELETE
-        </button>
+        />
       </div>
     </div>
   );

@@ -38,9 +38,9 @@ function Documents() {
             <DocumentsSection />
             {/* )} */}
           </main>
+          <Footer />
         </div>
       )}
-      <Footer />
     </>
   );
 }

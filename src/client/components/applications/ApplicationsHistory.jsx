@@ -58,14 +58,14 @@ function ApplicationsHistory() {
                     setApplicationInfoOpen(true);
                   }
                 }}
-                className="h-14 border-b-2 cursor-pointer"
+                className="h-14 border-b-2 cursor-pointer duration-100 hover:bg-zinc-50 hover:border-none"
               >
                 <td className=" border-none">{application.data.name}</td>
                 <td className=" border-none">{application.date}</td>
                 <td className=" border-none">
                   {application.statuses[application.statuses.length - 1].name}
                 </td>
-                <td className="bubble-menu-btn w-6 border-none">
+                <td className="bubble-menu-btn w-10 border-none">
                   <img
                     onClick={(e) => {
                       setApplication(application);
@@ -78,7 +78,7 @@ function ApplicationsHistory() {
                         bubbleMenuItems
                       );
                     }}
-                    className="bubble-menu-btn h-6 w-6 cursor-pointer"
+                    className="bubble-menu-btn p-[6px] cursor-pointer rounded-full duration-300 hover:bg-stone-200"
                     src="/src/client/assets/icons/general/icon-more.svg"
                     alt="more"
                   />

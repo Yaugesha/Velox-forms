@@ -88,7 +88,7 @@ function Document() {
         handleCLick={toggleFieldsInDoc}
       >
         <div
-          className="self-center px-1 border-2 border-black cursor-pointer"
+          className="self-center px-1 border-2 border-black cursor-pointer duration-300 hover:bg-black hover:text-white"
           onClick={() => {
             setPopup(true);
           }}

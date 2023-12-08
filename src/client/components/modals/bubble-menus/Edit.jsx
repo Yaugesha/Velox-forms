@@ -15,7 +15,7 @@ function Edit() {
   });
 
   return (
-    <div className="relative px-7 py-10 bg-white flex flex-col gap-4">
+    <div className="relative p-6 bg-white flex flex-col gap-4">
       <div className="w-[590px] flex flex-wrap justify-between gap-y-4">
         <ApplicationForm
           application={{

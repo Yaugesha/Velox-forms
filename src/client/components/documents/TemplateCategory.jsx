@@ -31,7 +31,7 @@ function TemplateCategory({ category }) {
               bubbleMenuItems
             )
           }
-          className="cursor-pointer"
+          className="p-1 cursor-pointer rounded-full duration-300 hover:bg-stone-200"
           src="/src/client/assets/icons/general/icon-more.svg"
           alt="show more"
         />

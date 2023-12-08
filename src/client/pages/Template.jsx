@@ -4,6 +4,7 @@ import { useState } from "react";
 import DocumentHeader from "../components/header/DocumentHeader";
 import SaveTemplate from "../components/modals/documents/SaveTemplate";
 import { EditorProvider } from "../contexts/EditorContext";
+import Button from "../components/custom-elements/Button";
 
 function Template() {
   const [isPopupOpen, setPopup] = useState(false);
@@ -12,7 +13,7 @@ function Template() {
     <EditorProvider>
       <DocumentHeader width="1280px" page="Document">
         <div
-          className="self-center px-1 border-2 border-black cursor-pointer"
+          className="self-center px-1 border-2 border-black cursor-pointer duration-300 hover:bg-black hover:text-white"
           onClick={() => {
             setPopup(true);
           }}

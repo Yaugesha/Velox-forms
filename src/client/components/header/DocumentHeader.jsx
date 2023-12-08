@@ -28,13 +28,13 @@ function DocumentHeader({
     <header
       className={`${position} w-full flex justify-between px-4 mb-4 border-b-2 bg-white border-solid border-black z-10`}
     >
-      <div className="flex items-center text-base leading-6 ">
-        <div
+      <div className="flex items-center text-base leading-10 mb-2">
+        <img
           onClick={() => navigate(-1)}
-          className="inline-block items-center w-12 cursor-pointer mr-5 -ml-3 p-3 font-bold leading-7 text-2xl text-black font-serif"
-        >
-          &larr;
-        </div>
+          className="rotate-180 mt-2 mr-5 p-2 cursor-pointer rounded-full duration-300 hover:bg-stone-200"
+          src="/src/client/assets/icons/general/icon-arrow-back.svg"
+          alt="back"
+        />
         <span className="mr-2 pt-2">{page}</span>
       </div>
       <div className="flex self-center w-30 h-8 ">

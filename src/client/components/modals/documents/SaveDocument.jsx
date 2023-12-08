@@ -1,9 +1,10 @@
 import { useState } from "react";
-import Input from "../../custom-elements/Input";
-import Popup from "../Popup";
 import { useNavigate } from "react-router-dom";
 import { useDocuments } from "../../../contexts/DocumentsContext";
+import Input from "../../custom-elements/Input";
+import Popup from "../Popup";
 import ResultMessage from "../ResultMessage";
+import Button from "../../custom-elements/Button";
 
 function SaveDocument({ setIsOpen }) {
   const [title, setTitle] = useState("");
@@ -21,7 +22,7 @@ function SaveDocument({ setIsOpen }) {
     ) {
       document.body.style.overflow = "auto";
       setIsOpen(false);
-      navigate("../.");
+      if (isCorrectData.status) navigate("../.");
     }
   }
 
@@ -29,40 +30,35 @@ function SaveDocument({ setIsOpen }) {
 
   return (
     <Popup handleClose={handleClose}>
-      <div
-        className="relative py-10 bg-white flex items-center flex-col gap-4"
-        style={{ width: "440px", height: "260px" }}
-      >
-        <p className="text-xl text-bold">Save document</p>
+      <div className="bg-white p-8 rounded shadow-md w-96">
+        <h2 className="text-xl font-bold mb-4">Create Document</h2>
         <Input
           placeholder={"Document name"}
-          width={"285px"}
+          width={"100%"}
           withLabel={true}
           handleInput={setTitle}
         />
-        <div className="mt-2">
+        <div className="mt-5">
           <ResultMessage
             isVisible={isCorrectData.isRecieved}
             isCorrect={isCorrectData.status}
             message={isCorrectData.message}
           />
         </div>
-        <div className="w-full flex justify-around">
-          <button
-            className="cancel-btn bg-black text-white px-4 text-base"
-            onClick={handleClose}
-          >
-            {isCorrectData.isRecieved ? "Exit" : "Cancel"}
-          </button>
-          <button
-            disabled={isCorrectData.isRecieved}
-            onClick={async (e) => {
+        <div className="flex justify-end mt-4 gap-2">
+          <Button
+            name={isCorrectData.isRecieved ? "Exit" : "Cancel"}
+            callback={handleClose}
+            notPrimary={true}
+            clas={"cancel-btn"}
+          />
+          <Button
+            name={"Save"}
+            callback={async (e) => {
               setCorrectData(await saveDocument(title));
             }}
-            className="save-btn w-[90px] bg-black h-8 text-white px-4 text-base"
-          >
-            Save
-          </button>
+            disabled={isCorrectData.isRecieved}
+          />
         </div>
       </div>
     </Popup>

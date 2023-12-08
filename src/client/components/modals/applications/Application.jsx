@@ -40,9 +40,11 @@ function Application({ application, setIsOpen }) {
                   <div className="mt-2 text-gray-700">
                     {application.statuses.map((status) => {
                       return (
-                        <details>
-                          <summary className="font-bold">{status.name}</summary>
-                          <ul key={application.id}>
+                        <details key={status.id}>
+                          <summary className="font-bold cursor-pointer">
+                            {status.name}
+                          </summary>
+                          <ul>
                             <li>Name: {status.name}</li>
                             <li>Comment: {status.comment}</li>
                             <li>Time of Change: {status.date}</li>

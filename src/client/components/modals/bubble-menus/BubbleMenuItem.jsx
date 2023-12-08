@@ -10,7 +10,7 @@ function BubbleMenuItem({ data, item }) {
   const editModal = <Edit data={data} callback={item.action} />;
   return (
     <div
-      className="bubble-menu-item flex items-center gap-6 mt-2 cursor-pointer"
+      className="bubble-menu-item flex items-center gap-6 mt-1 p-1 cursor-pointer duration-100 hover:bg-zinc-100 hover:border-none"
       key={item.name}
       onClick={() => {
         if (item.name === "Rename") openModal(renameModal, "rename");

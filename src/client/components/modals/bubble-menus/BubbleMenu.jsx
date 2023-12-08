@@ -19,7 +19,7 @@ function BubbleMenu() {
     <>
       <div
         onClick={handleClose}
-        style={{ height: document.body.scrollHeight + "px" }}
+        style={{ height: document.body.scrollHeight - 1 + "px" }}
         className={`container-bubble-menu absolute top-0 left-0 w-full h-full`}
       >
         <div

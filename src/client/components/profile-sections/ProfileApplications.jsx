@@ -9,7 +9,9 @@ function Applications() {
             to="history"
             className={({ isActive }) =>
               `text-xl border-2 border-black px-4 ${
-                isActive && "bg-black text-white"
+                isActive
+                  ? "bg-black text-white"
+                  : " duration-500 hover:bg-black hover:text-white"
               } `
             }
           >
@@ -19,7 +21,9 @@ function Applications() {
             to="create"
             className={({ isActive }) =>
               `text-xl border-2 border-black px-4 ${
-                isActive && "bg-black text-white"
+                isActive
+                  ? "bg-black text-white"
+                  : " duration-500 hover:bg-black hover:text-white"
               } `
             }
           >

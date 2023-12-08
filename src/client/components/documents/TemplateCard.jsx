@@ -20,7 +20,7 @@ function TemplateCard({ template }) {
   ];
 
   return (
-    <div>
+    <div className="duration-100 hover:drop-shadow-md">
       <Link to={template.link}>
         <div className="flex justify-center items-center mb-2.5 w-[180px] h-[233px] border-[1px] border-[#dadce0] pointer">
           <img src={template.picture} alt="template photo" />
@@ -41,7 +41,7 @@ function TemplateCard({ template }) {
               bubbleMenuItems
             )
           }
-          className="-mx-2 cursor-pointer"
+          className="p-0.5 -mx-2 cursor-pointer rounded-full duration-300 hover:bg-stone-200"
           src="/src/client/assets/icons/general/icon-more.svg"
           alt="more"
         />

@@ -88,7 +88,10 @@ class templateController {
           title: category.name,
           templates: category.templates
             .filter((template) => {
-              return adminIdsArray.includes(template.userId);
+              return (
+                adminIdsArray.includes(template.userId) ||
+                template.userId === req.user.id
+              );
             })
             .map((template) => {
               return {
