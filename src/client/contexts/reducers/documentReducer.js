@@ -86,5 +86,10 @@ export default function reducer(state, action) {
         }),
       };
     }
+    case "error":
+      return {
+        ...state,
+        message: action.payload,
+      };
   }
 }

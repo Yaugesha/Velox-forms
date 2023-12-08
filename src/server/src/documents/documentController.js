@@ -61,7 +61,13 @@ class documentController {
     });
     if (documents === undefined)
       return res.status(400).send("Documents not found");
-    else {
+    else if (documents.length === 0) {
+      res.status(400).send({
+        message: `You haven't created any documents yet. Select a template and fill it out to create your first
+           document using Velox Forms. Or, if you don't find one that suits you, you can apply for a new
+            template to be created on your profile.`,
+      });
+    } else {
       const result = documents.map((document) => {
         return {
           id: document.id,
@@ -74,7 +80,7 @@ class documentController {
       });
       res.status(200).send({
         documents: result,
-        messege: "Documents found",
+        message: "Documents found",
       });
     }
   }
@@ -83,7 +89,7 @@ class documentController {
     const id = req.body.documentId;
     const document = await Document.findByPk(id);
     if (document)
-      res.status(200).send({ layout: document.file, messege: "File found" });
+      res.status(200).send({ layout: document.file, message: "File found" });
     else res.status(400).send("File not found");
   }
 

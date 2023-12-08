@@ -73,8 +73,7 @@ class applicationConroller {
           statuses: application["application statuses"].map((status) => {
             status = status.dataValues;
             return {
-              name: status.name,
-              comment: status.comment,
+              ...status,
               date: status.timeOfChange.toLocaleDateString(
                 "en-us",
                 dateOptions
@@ -110,8 +109,7 @@ class applicationConroller {
         statuses: application["application statuses"].map((status) => {
           status = status.dataValues;
           return {
-            name: status.name,
-            comment: status.comment,
+            ...status,
             date: status.timeOfChange.toLocaleDateString("en-us", dateOptions),
           };
         }),
@@ -142,8 +140,7 @@ class applicationConroller {
           statuses: application["application statuses"].map((status) => {
             status = status.dataValues;
             return {
-              name: status.name,
-              comment: status.comment,
+              ...status,
               date: status.timeOfChange.toLocaleDateString(
                 "en-us",
                 dateOptions

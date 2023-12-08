@@ -65,7 +65,7 @@ export function ApplicationProvider({ children }) {
     if (status)
       dispatch({
         type: "application/changeStatus",
-        payload: applicationId,
+        payload: { applicationId, name, comment },
       });
     return { isRecieved: true, status: status, message: message };
   };

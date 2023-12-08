@@ -7,10 +7,11 @@ const DocunentsContext = createContext();
 const initialState = {
   documents: [],
   allDocument: [],
+  message: "",
 };
 
 export function DocunentsProvider({ children }) {
-  const [{ documents, allDocuments }, dispatch] = useReducer(
+  const [{ documents, allDocuments, message }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -43,12 +44,15 @@ export function DocunentsProvider({ children }) {
   }
   async function getDocuments() {
     const result = await API.getDocuments();
-    dispatch({ type: "documents/loaded", payload: result });
-    dispatch({ type: "date-descending", payload: documents });
+    if (!result.error) {
+      dispatch({ type: "documents/loaded", payload: result.documents });
+      dispatch({ type: "date-descending", payload: documents });
+    } else dispatch({ type: "error", payload: result.message });
   }
 
   const value = {
     documents,
+    message,
     dispatch,
     saveDocument,
     renameDocument,

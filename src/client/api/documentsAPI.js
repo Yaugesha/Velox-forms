@@ -99,8 +99,8 @@ export async function getDocuments() {
     if (!response.ok) {
       throw result;
     }
-    return result.documents;
+    return { error: false, documents: result.documents };
   } catch (error) {
-    console.log(error.message);
+    return { error: true, message: error.message };
   }
 }

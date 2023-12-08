@@ -31,13 +31,33 @@ export function reducer(state, action) {
       return {
         ...state,
         applications: state.applications.map((application) => {
-          if (application.id != action.payload) return application;
-          else {
-            application.statuses.at(-1).name = state.name;
-            application.statuses.at(-1).comment = state.comment;
+          if (application.id != action.payload.applicationId)
             return application;
+          else {
+            return {
+              ...application,
+              statuses: [
+                {
+                  name: action.payload.name,
+                  comment: action.payload.comment,
+                  date: new Date().toLocaleDateString("en-us", dateOptions),
+                },
+                ...application.statuses,
+              ],
+            };
           }
         }),
+        application: {
+          ...state.application,
+          statuses: [
+            ...state.application.statuses,
+            {
+              name: action.payload.name,
+              comment: action.payload.comment,
+              date: new Date().toLocaleDateString("en-us", dateOptions),
+            },
+          ],
+        },
       };
     case "formData/set":
       return {
@@ -51,3 +71,9 @@ export function reducer(state, action) {
       };
   }
 }
+
+const dateOptions = {
+  month: "long",
+  day: "numeric",
+  year: "numeric",
+};

@@ -7,7 +7,7 @@ import SortButton from "./SortButton";
 import { useBubbleMenu } from "../../contexts/BubbleMenuContext";
 
 function DocumnetsSection() {
-  const { documents, search } = useDocuments();
+  const { documents, search, message } = useDocuments();
   const { bubbleMenu } = useBubbleMenu();
 
   const [displayDocs, setDisplayDocs] = useState("table");
@@ -21,6 +21,7 @@ function DocumnetsSection() {
         <div className="flex items-center">
           <span>Recent documents</span>
           <input
+            disabled={documents.length === 0}
             onChange={(e) => {
               search(e.target.value);
             }}
@@ -51,7 +52,7 @@ function DocumnetsSection() {
           </div>
         </div>
       </div>
-      {documents.length !== 0 && (
+      {documents.length !== 0 ? (
         <>
           {displayDocs === "table" ? (
             <div className="flex w-[100%] flex-wrap gap-y-5 gap-x-6">
@@ -69,6 +70,8 @@ function DocumnetsSection() {
             </div>
           )}
         </>
+      ) : (
+        <p className="text-xl">{message}</p>
       )}
       {bubbleMenu.isOpen && <BubbleMenu />}
     </section>
