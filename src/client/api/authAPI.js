@@ -100,3 +100,22 @@ export const regist = async (email, password) => {
     }
   }
 };
+
+export const deleteUser = async () => {
+  const token = localStorage.getItem("jwt");
+  try {
+    const response = await fetch("/api/v1/users/delete", {
+      method: "DELETE",
+      headers: {
+        Bearer: token,
+      },
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      throw result;
+    }
+    localStorage.removeItem("jwt");
+  } catch (errors) {
+    console.log(errors);
+  }
+};

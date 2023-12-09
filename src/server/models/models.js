@@ -143,28 +143,28 @@ const ApplicationStatus = sequelize.define(
   }
 );
 
-User.hasMany(Document);
+User.hasMany(Document, { onDelete: "CASCADE" });
 Document.belongsTo(User);
 
-User.hasMany(Template);
+User.hasMany(Template, { onDelete: "CASCADE" });
 Template.belongsTo(User);
 
-TemplateCategory.hasMany(Template);
+TemplateCategory.hasMany(Template, { onDelete: "CASCADE" });
 Template.belongsTo(TemplateCategory);
 
-Template.hasMany(TemplateFields);
+Template.hasMany(TemplateFields, { onDelete: "CASCADE" });
 TemplateFields.belongsTo(Template);
 
-User.hasMany(TemplateCategory);
+User.hasMany(TemplateCategory, { onDelete: "CASCADE" });
 TemplateCategory.belongsTo(User);
 
-User.hasOne(UserPersonalData);
+User.hasOne(UserPersonalData, { onDelete: "CASCADE" });
 UserPersonalData.belongsTo(User);
 
-User.hasOne(UserWorkData);
+User.hasOne(UserWorkData, { onDelete: "CASCADE" });
 UserWorkData.belongsTo(User);
 
-User.hasMany(Application);
+User.hasMany(Application, { onDelete: "CASCADE" });
 Application.belongsTo(User);
 
 Application.hasOne(ApplicationData, { onDelete: "CASCADE" });

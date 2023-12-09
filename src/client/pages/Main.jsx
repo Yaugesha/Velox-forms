@@ -8,7 +8,7 @@ function Main() {
       <Header role={undefined} page={"Main"} />
       <main className="w-full flex flex-col items-center">
         <Outlet />
-        <section className="w-[980px] mt-10 mb-[72px] flex flex-col items-center gap-y-[72px]">
+        {/* <section className="w-[980px] mt-10 mb-[72px] flex flex-col items-center gap-y-[72px]">
           <h2 className="text-2xl">
             The original online Free PDF editor & form filler.
           </h2>
@@ -35,8 +35,8 @@ function Main() {
               <span>Find a template with us</span>
             </div>
           </div>
-        </section>
-        <section className="w-[980px] flex flex-col items-center">
+        </section> */}
+        <section className="w-[980px] mt-10 flex flex-col items-center">
           <img src="src/client/assets/icons/logo/logo-main.png" alt="Logo" />
           <h2 className="text-xl font-bold mt-4 mb-12">
             The easiest way to fill forms online

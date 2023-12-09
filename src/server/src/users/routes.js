@@ -32,6 +32,7 @@ router.post(
 router.post("/login", controller.loginUser);
 router.get("/check-authtoken", authMiddleware, controller.checkToken);
 router.post("/refresh-token", authMiddleware, controller.refreshToken);
+router.delete("/delete", authMiddleware, controller.deleteUser);
 router.post(
   "/change-email",
   authMiddleware,

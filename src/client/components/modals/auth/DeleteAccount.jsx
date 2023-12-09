@@ -3,7 +3,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 import Popup from "../Popup";
 
 function DeleteAccount({ setIsOpen }) {
-  //const { logOut } = useAuth();
+  const { deleteUsser } = useAuth();
   const navigate = useNavigate();
 
   function handleClose(e) {
@@ -18,11 +18,6 @@ function DeleteAccount({ setIsOpen }) {
       document.body.style.overflow = "auto";
       navigate("/");
     }
-  }
-
-  function handleSignOut() {
-    localStorage.removeItem("jwt");
-    //logOut();
   }
 
   return (
@@ -50,9 +45,9 @@ function DeleteAccount({ setIsOpen }) {
             Cancel
           </button>
           <button
-            onClick={(e) => {
+            onClick={async (e) => {
+              await deleteUsser();
               handleClose(e);
-              handleSignOut();
             }}
             className="bg-black w-[162px] h-14 mt-4 flex items-center justify-center text-white exit-btn"
           >

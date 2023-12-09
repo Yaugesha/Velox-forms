@@ -25,7 +25,6 @@ function ProfileSettings() {
 
   const handleInputPersonalData = (e) => {
     const { id, value } = e.target;
-    console.log(value);
     setPersonalUserData({
       ...personalUserData,
       [id]: value,

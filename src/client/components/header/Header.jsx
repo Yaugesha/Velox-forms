@@ -14,8 +14,8 @@ function Header() {
       switch (role) {
         case "user":
           setTabs([
-            { name: "About", link: "/" },
-            { name: "Documentation", link: "/" },
+            // { name: "About", link: "/" },
+            // { name: "Documentation", link: "/" },
             { name: "Documents", link: "/documents" },
             { name: "Profile", link: "/profile" },
           ]);
@@ -30,8 +30,8 @@ function Header() {
           break;
         default:
           setTabs([
-            { name: "About", link: "" },
-            { name: "Documentation", link: "" },
+            // { name: "About", link: "" },
+            // { name: "Documentation", link: "" },
             { name: "Sign In", link: "signIn" },
             { name: "Sign Up", link: "signUp" },
           ]);

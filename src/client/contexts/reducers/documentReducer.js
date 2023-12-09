@@ -9,8 +9,8 @@ export default function reducer(state, action) {
     case "document/saved": {
       return {
         ...state,
-        documents: [action.payload, ...state.allDocuments],
-        allDocuments: [action.payload, ...state.allDocuments],
+        documents: [action.payload, ...state?.allDocuments],
+        allDocuments: [action.payload, ...state?.allDocuments],
       };
     }
     case "document/deleted": {

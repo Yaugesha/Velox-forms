@@ -126,7 +126,20 @@ class userController {
       });
     });
   }
-
+  async deleteUser(req, res) {
+    const userId = req.user.id;
+    await User.destroy({
+      where: { id: userId },
+    })
+      .then((result) => {
+        res.status(200).send({
+          message: "User deleted",
+        });
+      })
+      .catch((error) => {
+        res.status(400).send({ message: error });
+      });
+  }
   async getUserData(req, res) {
     const id = req.user.id;
     // const role = req.user.role;
