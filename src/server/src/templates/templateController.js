@@ -57,7 +57,7 @@ class templateController {
       res.status(200).send({
         template: {
           ...template.dataValues,
-          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/documents/icon-template.svg",
           link: `document?templateId=${template.id}`,
         },
         message: "Template saved",
@@ -96,7 +96,7 @@ class templateController {
             .map((template) => {
               return {
                 ...template.dataValues,
-                picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+                picture: "/src/client/assets/icons/documents/icon-template.svg",
                 link: `document?templateId=${template.id}`,
               };
             }),
@@ -128,7 +128,7 @@ class templateController {
           templates: result.rows.map((template) => {
             return {
               ...template.dataValues,
-              picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+              picture: "/src/client/assets/icons/documents/icon-template.svg",
               link: `document?templateId=${template.id}`,
             };
           }),
@@ -245,7 +245,33 @@ class templateController {
       });
   }
 
-  // async getTemplateCategories(req, res) {}
+  async getTemplateCategories(req, res) {
+    const userId = req.user.id;
+    console.log(userId);
+    const admins = await User.findAll({
+      attributes: ["id"],
+      where: { role: "admin" },
+    });
+    const adminIdsArray = admins.map((admin) => admin.id);
+    const categories = await TemplateCategory.findAll({
+      where: {
+        userId: {
+          [Op.or]: [userId, ...adminIdsArray],
+        },
+      },
+    });
+    if (categories === undefined)
+      return res.status(400).send("Templates not found");
+    else {
+      const result = categories.map((category) => {
+        return category.name;
+      });
+      res.status(200).send({
+        categories: result,
+        messege: "Templates found",
+      });
+    }
+  }
 }
 
 function camelize(str) {

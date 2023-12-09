@@ -2,7 +2,11 @@ const { Router } = require("express");
 const controller = require("./userController");
 const { check } = require("express-validator");
 const authMiddleware = require("./authMiddleware");
-const { validate, passwordValidationRules } = require("./passwordValidator.js");
+const {
+  validatePassword,
+  passwordValidationRules,
+} = require("./passwordValidator.js");
+const { validateEmail, emailValidationRules } = require("./emailValidator.js");
 
 const router = Router();
 
@@ -28,12 +32,18 @@ router.post(
 router.post("/login", controller.loginUser);
 router.get("/check-authtoken", authMiddleware, controller.checkToken);
 router.post("/refresh-token", authMiddleware, controller.refreshToken);
-router.post("/change-email", authMiddleware, controller.changeEmail);
+router.post(
+  "/change-email",
+  authMiddleware,
+  emailValidationRules(),
+  validateEmail,
+  controller.changeEmail
+);
 router.post(
   "/change-password",
   authMiddleware,
   passwordValidationRules(),
-  validate,
+  validatePassword,
   controller.changePassword
 );
 router.post("/personal-data", authMiddleware, controller.getUserData);

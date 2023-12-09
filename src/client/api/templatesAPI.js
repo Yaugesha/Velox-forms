@@ -175,3 +175,22 @@ export async function getTemplates() {
     console.log(error);
   }
 }
+
+export async function getCategories() {
+  const token = localStorage.getItem("jwt");
+  try {
+    const response = await fetch("/api/v1/templates/category/get", {
+      method: "GET",
+      headers: {
+        Bearer: token,
+      },
+    });
+    const result = await response.json();
+    if (response.status !== 200) {
+      throw Error(result.message);
+    }
+    return result.categories;
+  } catch (error) {
+    console.log(error);
+  }
+}

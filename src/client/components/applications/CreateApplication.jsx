@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useApplications } from "../../contexts/ApplicationsContext";
-import ApplicationResult from "../modals/ApplicationResult";
+import ResultModal from "../modals/ResultModal";
 import ApplicationForm from "./ApplicationForm";
 
 function CreateApplication() {
@@ -25,7 +25,11 @@ function CreateApplication() {
         Submit application
       </button>
       {result && (
-        <ApplicationResult message={result.message} setMessage={setResult} />
+        <ResultModal
+          message={result.message}
+          setMessage={setResult}
+          page={"application"}
+        />
       )}
     </div>
   );

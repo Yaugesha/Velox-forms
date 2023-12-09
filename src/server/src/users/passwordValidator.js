@@ -11,20 +11,19 @@ const passwordValidationRules = () => {
   ];
 };
 
-const validate = (req, res, next) => {
+const validatePassword = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     return next();
   }
-  const extractedErrors = [];
-  errors.array().map((err) => extractedErrors.push({ [err.param]: err.msg }));
 
-  return res.status(422).json({
-    errors: extractedErrors,
+  return res.status(422).send({
+    message:
+      "Password must contains more then 6 symbols (include: 1 capital, 1 number and 1 symbol)",
   });
 };
 
 module.exports = {
   passwordValidationRules,
-  validate,
+  validatePassword,
 };

@@ -10,6 +10,7 @@ router.get("/all", authMiddleware, controller.getAllTemplates);
 router.post("/layout", authMiddleware, controller.getTemplate);
 router.post("/rename", authMiddleware, controller.renameTemplate);
 router.delete("/delete", authMiddleware, controller.deleteTemplate);
+router.get("/category/get", authMiddleware, controller.getTemplateCategories);
 router.post(
   "/category/rename",
   authMiddleware,

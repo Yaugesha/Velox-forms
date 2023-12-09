@@ -88,32 +88,35 @@ class userController {
     const recievedPassword = req.body.password;
     const user = await User.findOne({ where: { id: id } });
     if (recievedPassword === user.password) {
-      User.update({ email: newEmail }, { where: { email: user.email } }).then(
-        (result) => {
-          // if this email hasn't been used by another user
-          if (result[0] === 1) {
-            const token = jwt.sign({ id: id, role: role }, jwtKey);
-            console.log("Email changed");
-            res.status(200).send({
-              jwt: token,
-              message: "User email changed succesfully",
-            });
-          } else
-            return res
-              .status(400)
-              .send("User with this email has already exists");
-        }
-      );
-    } else return res.status(400).send("Incorrect password");
+      User.update({ email: newEmail }, { where: { email: user.email } })
+        .then((result) => {
+          const token = jwt.sign({ id: id, role: role }, jwtKey);
+          console.log("Email changed");
+          res.status(200).send({
+            jwt: token,
+            message: "User email changed succesfully",
+          });
+        })
+        .catch(() => {
+          return res
+            .status(400)
+            .send({ message: "User with this email has already exists" });
+        });
+    } else return res.status(400).send({ message: "Incorrect password" });
   }
 
   async changePassword(req, res) {
-    const { newPassword, currentPassword } = req.body;
+    const { newPassword, newPasswordConfirmation, currentPassword } = req.body;
     const id = req.user.id;
     const role = req.user.role;
+    if (newPassword !== newPasswordConfirmation) {
+      return res.status(400).send({ message: "Passwords mismatch" });
+    }
     const user = await User.findByPk(id);
     if (user.password !== currentPassword)
-      return res.status(400).send("Current password doesn't match");
+      return res
+        .status(400)
+        .send({ message: "Current password doesn't match" });
     User.update({ password: newPassword }, { where: { id: id } }).then(() => {
       const token = jwt.sign({ id: id, role: role }, jwtKey);
       console.log("Email changed");

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ResultModal from "../modals/ResultModal";
 import Input from "../custom-elements/Input";
 
 function ProfileSettings() {
@@ -20,6 +21,7 @@ function ProfileSettings() {
     workZipCode: "",
     workEmail: "",
   });
+  const [result, setResult] = useState(null);
 
   const handleInputPersonalData = (e) => {
     const { id, value } = e.target;
@@ -63,10 +65,6 @@ function ProfileSettings() {
 
   async function saveData() {
     const jwt = localStorage.getItem("jwt");
-    console.log({
-      personal: personalUserData,
-      work: workUserData,
-    });
     const response = await fetch("/api/v1/users/save-personal-data", {
       method: "POST",
       headers: {
@@ -81,10 +79,10 @@ function ProfileSettings() {
       }),
     });
     const result = await response.json();
-
     if (response.status !== 200) {
       throw Error(result.message);
     }
+    setResult(result.message);
   }
 
   return (
@@ -234,6 +232,7 @@ function ProfileSettings() {
           UPDATE INFORMATION
         </button>
       </div>
+      {result && <ResultModal message={result} setMessage={setResult} />}
     </div>
   );
 }

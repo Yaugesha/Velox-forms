@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useApplications } from "../../../contexts/ApplicationsContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEditors } from "../../../contexts/EditorContext";
@@ -11,9 +11,10 @@ import ResultMessage from "../ResultMessage";
 
 function SaveTemplate({ setIsOpen }) {
   const { fields } = useEditors();
+  const { categories, saveTemplate, getTemplateCategories } = useTemplate();
   const { changeStatus } = useApplications();
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
   const [category, setCategory] = useState(
     searchParams.get("category") ?? categories[0]
   );
@@ -25,6 +26,10 @@ function SaveTemplate({ setIsOpen }) {
     message: "",
   });
 
+  useEffect(function () {
+    getTemplateCategories();
+  }, []);
+
   function handleClose(e) {
     if (
       e.target.classList.contains("w-full") ||
@@ -35,8 +40,6 @@ function SaveTemplate({ setIsOpen }) {
       if (isCorrectData.status) navigate("../.");
     }
   }
-
-  const { saveTemplate } = useTemplate();
 
   return (
     <Popup handleClose={handleClose}>

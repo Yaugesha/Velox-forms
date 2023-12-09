@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import Popup from "./Popup";
-function ApplicationResult({ message, setMessage }) {
+import Button from "../custom-elements/Button";
+
+function ResultModal({ message, setMessage, page }) {
   const navigate = useNavigate();
   const handleClose = (e) => {
     if (
@@ -9,7 +11,7 @@ function ApplicationResult({ message, setMessage }) {
     ) {
       document.body.style.overflow = "auto";
       setMessage(false);
-      navigate("../history");
+      if (page === "application") navigate("../history");
     }
   };
 
@@ -17,15 +19,10 @@ function ApplicationResult({ message, setMessage }) {
     <Popup handleClose={handleClose}>
       <div className="w-[500px] h-[180px] flex flex-col justify-center items-center bg-white">
         <p className="text-xl mb-8 text-center">{message}</p>
-        <button
-          className="close-btn bg-black text-white px-4 py-2"
-          onClick={handleClose}
-        >
-          Close
-        </button>
+        <Button callback={handleClose} name={"Close"} clas={"close-btn"} />
       </div>
     </Popup>
   );
 }
 
-export default ApplicationResult;
+export default ResultModal;

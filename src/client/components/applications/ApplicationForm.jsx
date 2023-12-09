@@ -1,16 +1,19 @@
 import { useEffect } from "react";
 import { useApplications } from "../../contexts/ApplicationsContext";
+import { useTemplate } from "../../contexts/TemplateContext";
 import DropdownButton from "../custom-elements/DropdownButton";
 import Input from "../custom-elements/Input";
 
 function ApplicationForm({ application }) {
   const { formData, updateFormData } = useApplications();
+  const { categories, getTemplateCategories } = useTemplate();
 
   useEffect(function () {
     setCategory(application.category);
     setName(application.name);
     setComment(application.comment);
     updateFormData("referenceFile", application.referenceFile);
+    getTemplateCategories();
   }, []);
 
   const setCategory = (category) => {
@@ -22,8 +25,6 @@ function ApplicationForm({ application }) {
   const setComment = (comment) => {
     updateFormData("comment", comment);
   };
-
-  const categories = ["Bank documents", "Fee documents", "Labs titulniks"];
 
   const handleFileUpload = (e) => {
     if (e.target.files) {

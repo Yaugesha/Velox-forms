@@ -39,7 +39,12 @@ function TemplateCategory({ category }) {
       {category.templates !== undefined && (
         <div className="flex flex-wrap gap-5">
           {category.templates.map((template) => {
-            return <TemplateCard template={template} key={template.title} />;
+            return (
+              <TemplateCard
+                template={{ ...template, link: `../${template.link}` }}
+                key={template.id}
+              />
+            );
           })}
         </div>
       )}

@@ -12,6 +12,7 @@ export function TemplatesProvider({ children }) {
     },
   ]);
   const [templateCategories, setTemplateCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   async function renameTemplate(template, newName) {
     const { status, message } = await API.renameTemplate(template.id, newName);
@@ -40,10 +41,23 @@ export function TemplatesProvider({ children }) {
     return { isRecieved: true, status: status, message: message };
   }
   async function renameTemplateCategory(category, newName) {
+    const categoryId = category.id;
     const { status, message } = await API.renameTemplateCategory(
-      category.id,
+      categoryId,
       newName
     );
+    if (status) {
+      setTemplateCategories(
+        templateCategories.map((category) => {
+          if (category.id !== categoryId) return category;
+          else
+            return {
+              ...category,
+              title: newName,
+            };
+        })
+      );
+    }
     return { isRecieved: true, status: status, message: message };
   }
   async function deleteTemplateCategory(category) {
@@ -104,9 +118,14 @@ export function TemplatesProvider({ children }) {
     const result = await API.getTemplates();
     setTemplateCategories([...result]);
   }
+  async function getTemplateCategories() {
+    const result = await API.getCategories();
+    setCategories([...result]);
+  }
 
   const value = {
     templates,
+    categories,
     templateCategories,
     saveTemplate,
     renameTemplate,
@@ -115,6 +134,7 @@ export function TemplatesProvider({ children }) {
     deleteTemplateCategory,
     getRecentTemplates,
     getTemplates,
+    getTemplateCategories,
   };
 
   return (

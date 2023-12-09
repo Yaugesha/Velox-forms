@@ -51,7 +51,7 @@ function DropdownButton({ type, handleClick, valuesArr, initialValue, width }) {
         style={{ width: width + "px" }}
         className={`hidden absolute ml-[-8px] mt-[9px] z-10 bg-white border-2 border-black  group-hover:flex flex-col justify-center`}
       >
-        {valuesArr.map((value) => {
+        {valuesArr?.map((value) => {
           return (
             <button
               onClick={() => handleChoose(value)}

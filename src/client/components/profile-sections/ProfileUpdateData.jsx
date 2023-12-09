@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ResultModal from "../modals/ResultModal";
 import Input from "../custom-elements/Input";
 
 function ProfileUpdateData() {
@@ -7,48 +8,61 @@ function ProfileUpdateData() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
+  const [result, setResult] = useState(null);
 
   const callBackendAPIChangeEmail = async () => {
     const jwt = localStorage.getItem("jwt");
-    const response = await fetch("/api/v1/users/change-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        Bearer: jwt,
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    });
-    const result = await response.json();
+    try {
+      const response = await fetch("/api/v1/users/change-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Bearer: jwt,
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+      const result = await response.json();
 
-    if (response.status !== 200) {
-      throw Error(result.message);
+      if (response.status !== 200) {
+        throw Error(result.message);
+      }
+      localStorage.setItem("jwt", result.jwt);
+      setResult(result.message);
+    } catch (error) {
+      console.log(error.message);
+      setResult(error.message);
     }
-    localStorage.setItem("jwt", result.jwt);
   };
 
   const callBackendAPIChangePassword = async () => {
     const jwt = localStorage.getItem("jwt");
-    const response = await fetch("/api/v1/users/change-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-        Bearer: jwt,
-      },
-      body: JSON.stringify({
-        currentPassword: currentPassword,
-        newPassword: newPassword,
-        newPasswordConfirmation: newPasswordConfirm,
-      }),
-    });
-    const result = await response.json();
+    try {
+      const response = await fetch("/api/v1/users/change-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Bearer: jwt,
+        },
+        body: JSON.stringify({
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+          newPasswordConfirmation: newPasswordConfirm,
+        }),
+      });
+      const result = await response.json();
 
-    if (response.status !== 200) {
-      throw Error(result.message);
+      if (response.status !== 200) {
+        throw Error(result.message);
+      }
+      localStorage.setItem("jwt", result.jwt);
+      setResult(result.message);
+    } catch (error) {
+      console.log(error.message);
+      setResult(error.message);
     }
-    localStorage.setItem("jwt", result.jwt);
   };
 
   return (
@@ -60,7 +74,7 @@ function ProfileUpdateData() {
         <Input
           placeholder={"Email"}
           width={"590px"}
-          id={"email"}
+          // id={"email"}
           handleInput={setEmail}
           withLabel={true}
         />
@@ -68,7 +82,7 @@ function ProfileUpdateData() {
           placeholder={"Password"}
           type={"password"}
           width={"590px"}
-          id={"password"}
+          // id={"password"}
           handleInput={setPassword}
           withLabel={true}
         />
@@ -88,7 +102,7 @@ function ProfileUpdateData() {
           placeholder={"Current password"}
           type={"password"}
           width={"590px"}
-          id={"currentPassword"}
+          // id={"currentPassword"}
           withLabel={true}
         />
         <Input
@@ -96,7 +110,7 @@ function ProfileUpdateData() {
           placeholder={"New password"}
           type={"password"}
           width={"590px"}
-          id={"newPassword1"}
+          // id={"newPassword1"}
           withLabel={true}
         />
         <Input
@@ -104,7 +118,7 @@ function ProfileUpdateData() {
           placeholder={"New password"}
           type={"password"}
           width={"590px"}
-          id={"newPassword2"}
+          // id={"newPassword2"}
           withLabel={true}
         />
         <button
@@ -114,6 +128,7 @@ function ProfileUpdateData() {
           CHANGE PASSWORD
         </button>
       </div>
+      {result && <ResultModal message={result} setMessage={setResult} />}
     </div>
   );
 }

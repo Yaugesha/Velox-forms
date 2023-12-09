@@ -21,7 +21,7 @@ const parseDocument = (document) => {
   return {
     ...document,
     date: document.date.toLocaleDateString("en-us", dateOptions),
-    picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+    picture: "/src/client/assets/icons/documents/icon-document.svg",
     link: `documentFile?documentId=${document.id}`,
   };
 };
@@ -74,7 +74,7 @@ class documentController {
           title: document.title,
           type: "doc",
           date: document.date.toLocaleDateString("en-us", dateOptions),
-          picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
+          picture: "/src/client/assets/icons/documents/icon-document.svg",
           link: `documentFile?documentId=${document.id}`,
         };
       });
