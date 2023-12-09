@@ -61,8 +61,14 @@ function FillingTemplFields() {
     updateFieldsArray(input);
   }
 
-  function handleAddField(field) {
-    editor.chain().focus().insertContent(`<field>${field}</field>&nbsp;`).run();
+  function handleAddField(field, index) {
+    editor
+      .chain()
+      .focus()
+      .insertContent(
+        `<field index=${index} field=${field}>${field}</field>&nbsp;`
+      )
+      .run();
   }
 
   return (
@@ -77,6 +83,7 @@ function FillingTemplFields() {
                 width={"285px"}
                 id={generateClassName(field)}
                 key={index}
+                index={index}
                 handleInput={handleInput}
                 typeClass={`field-input index-${index}`}
                 buttonHandler={handleAddField}

@@ -4,15 +4,27 @@ const authMiddleware = require("../users/authMiddleware");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./uploads");
+  destination: (req, file, callback) => {
+    callback(null, "./uploads");
   },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
+  filename: (req, file, callback) => {
+    console.log(file);
+    callback(null, new Date().toISOString() + "-" + file.originalname);
   },
 });
 
-const upload = multer({ storage });
+const types = ["file/docx", "file/txt", "file/pdf"];
+
+const fileFilter = (req, file, callback) => {
+  console.log(file.mimetype, file);
+  if (types.includes(file.mimetype)) {
+    callback(null, true);
+  } else {
+    callback(null, false);
+  }
+};
+
+const upload = multer({ storage /*, fileFilter */ });
 
 const router = Router();
 router.post("/save", upload.single("file"), controller.saveReferenceFile);

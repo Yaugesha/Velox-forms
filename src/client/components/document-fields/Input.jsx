@@ -7,6 +7,7 @@ function Input({
   defaultValue,
   buttonHandler,
   isTemplate,
+  index,
 }) {
   return (
     <div className={`w-[${width}] flex flex-col gap-2 col-span-2 ${id}`}>
@@ -17,7 +18,7 @@ function Input({
         {isTemplate && (
           <button
             className="ml-4 px-2 border-[1px] border-black"
-            onClick={() => buttonHandler(id)}
+            onClick={() => buttonHandler(id, index)}
           >
             insert
           </button>
@@ -28,7 +29,7 @@ function Input({
         className={`w-[100%] h-[45px] border-2 border-black pl-4 ${typeClass}`}
         placeholder={placeholder}
         id={`${id}`}
-        type={`${placeholder.split(" ").at(-1)}`}
+        //type={`${placeholder.split(" ").at(-1)}`}
         defaultValue={defaultValue}
       />
     </div>

@@ -5,16 +5,7 @@ import Input from "../components/custom-elements/Input";
 import DocumentHeader from "../components/header/DocumentHeader";
 import Footer from "../components/footers/Footer";
 import ChangeStatus from "../components/modals/applications/ChangeStatus";
-
-const onButtonClick = () => {
-  const pdfUrl = "../../../uploads";
-  const link = document.createElement("a");
-  link.href = pdfUrl;
-  link.download = "Эоис 4-5"; // specify the filename
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-};
+import Button from "../components/custom-elements/Button";
 
 function ApplicationProcessing() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -49,12 +40,13 @@ function ApplicationProcessing() {
             withLabel={true}
             disabled={true}
           />
-          <button
-            className="h-[45px] bg-black text-white px-2"
-            onClick={onButtonClick}
+          <a
+            className="h-[45px] flex items-center border-2 border-black px-2 cursor-pointer duration-300 hover:bg-black hover:text-white"
+            href={`../../../${application.data?.fileRoute}`}
+            download
           >
             Download reference document
-          </button>
+          </a>
         </div>
         <div className="mt-4">
           <label htmlFor="user-comment">User's comment for application</label>
@@ -79,36 +71,31 @@ function ApplicationProcessing() {
           <p>Comment: {application.statuses?.at(-1).comment}</p>
         </div>
         <div className="flex justify-end gap-16 mt-6">
-          <button
+          <Button
             disabled={application.statuses?.at(-1).name === "Rejected"}
-            className="bg-black text-white px-4 py-2"
-            onClick={() => {
+            callback={() => {
               setIsReject(true);
             }}
-          >
-            Reject
-          </button>
+            name={"Reject"}
+          />
           {application.statuses?.at(-1).name === "Accepted" ? (
-            <button
-              className="bg-black text-white px-4 py-2"
-              onClick={() => {
+            <Button
+              disabled={application.statuses?.at(-1).name === "Rejected"}
+              callback={() => {
                 navigate(
                   `../../documents/template?applicationId=${application.id}&userId=${application.userId}&title=${application.data.name}&category=${application.data.category}`
                 );
               }}
-            >
-              Create template
-            </button>
+              name={"Create template"}
+            />
           ) : (
-            <button
+            <Button
               disabled={application.statuses?.at(-1).name === "Accepted"}
-              className="bg-black text-white px-4 py-2"
-              onClick={() => {
+              callback={() => {
                 setIsAccept(true);
               }}
-            >
-              Accept
-            </button>
+              name={"Accept"}
+            />
           )}
         </div>
       </div>

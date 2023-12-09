@@ -70,12 +70,12 @@ function Document() {
     {
       image:
         "/src/client/assets/icons/text-editor/icon-document-mode-preview.svg",
-      alt: "document view",
+      alt: "view",
     },
     {
       image:
         "/src/client/assets/icons/text-editor/icon-document-mode-editing.svg",
-      alt: "document filling",
+      alt: "fill",
     },
   ];
 

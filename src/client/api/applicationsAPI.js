@@ -101,7 +101,6 @@ export const submitAplication = async ({
     };
   }
   let fileLink = "";
-  console.log(referenceFile);
   if (referenceFile) {
     fileLink = await uploadFile(referenceFile);
   }

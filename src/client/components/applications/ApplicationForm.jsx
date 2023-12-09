@@ -63,15 +63,16 @@ function ApplicationForm({ application }) {
                 <p className="text-xl">
                   Uploaded:
                   {formData.referenceFile?.name ??
-                    application.referenceFile.name}
+                    application.referenceFile.split("-").at(-1)}
                 </p>
               ) : (
                 <>
                   <p className="mb-2">
-                    <span className="font-semibold">Click to upload</span> or
-                    drag and drop
+                    <span className="font-semibold">Click to upload file</span>{" "}
+                    {/*or
+                    drag and drop*/}
                   </p>
-                  <p className="text-xs">DOCX, PDF or TXT</p>
+                  <p className="text-xs">DOCX or PDF</p>
                 </>
               )}
             </div>

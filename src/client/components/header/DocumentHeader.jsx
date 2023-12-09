@@ -46,7 +46,11 @@ function DocumentHeader({
                 key={index}
                 onClick={() => handleCLick(button.alt)}
               >
-                <img src={button.image} alt={button.alt} />
+                <img
+                  src={button.image}
+                  alt={button.alt}
+                  className={`${index === 1 && "invert"}`}
+                />
               </div>
             );
           })}

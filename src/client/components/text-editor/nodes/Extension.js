@@ -13,7 +13,7 @@ export default Node.create({
   content: "text*",
 
   addAttributes() {
-    return { index: { default: 0 } };
+    return { index: { default: 0 }, field: { default: "field" } };
   },
 
   parseHTML() {

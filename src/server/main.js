@@ -5,7 +5,6 @@ const userRoutes = require("./src/users/routes");
 const templateRoutes = require("./src/templates/routes");
 const documentRoutes = require("./src/documents/routes");
 const applicationRoutes = require("./src/applications/routes");
-const models = require("./models/models");
 
 const app = express();
 
