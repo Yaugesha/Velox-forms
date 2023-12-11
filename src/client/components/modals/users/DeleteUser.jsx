@@ -1,11 +1,15 @@
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useState } from "react";
+import { deleteUserByAdmin } from "../../../api/authAPI";
 import Popup from "../Popup";
 import Button from "../../custom-elements/Button";
+import ResultMessage from "../ResultMessage";
 
-function DeleteAccount({ setIsOpen }) {
-  const { deleteUser } = useAuth();
-  const navigate = useNavigate();
+function DeleteUser({ setIsOpen, userId, users, setUsers }) {
+  const [isCorrectData, setCorrectData] = useState({
+    isRecieved: false,
+    status: false,
+    message: "",
+  });
 
   function handleClose(e) {
     if (
@@ -14,10 +18,6 @@ function DeleteAccount({ setIsOpen }) {
     ) {
       document.body.style.overflow = "auto";
       setIsOpen(false);
-    }
-    if (e.target.classList.contains("exit-btn")) {
-      document.body.style.overflow = "auto";
-      navigate("/");
     }
   }
 
@@ -29,12 +29,19 @@ function DeleteAccount({ setIsOpen }) {
       >
         <div className="flex flex-col">
           <span className="text-3xl">
-            Are you sure you want to delete your account?
+            Are you sure you want to delete account of {userId}?
           </span>
           <span className="text-sm mb-[60px]">
             Once you delete your account, there is no going back. Please be
             certain.
           </span>
+          <div>
+            <ResultMessage
+              isVisible={isCorrectData.isRecieved}
+              isCorrect={isCorrectData.status}
+              message={isCorrectData.message}
+            />
+          </div>
         </div>
         <div className="w-full h-20 pt-6 flex justify-end gap-8">
           <Button
@@ -42,13 +49,19 @@ function DeleteAccount({ setIsOpen }) {
             callback={(e) => {
               handleClose(e);
             }}
-            name={"Cancel"}
+            name={!isCorrectData.isRecieved ? "Cancel" : "Exit"}
           />
           <Button
+            disabled={isCorrectData.isRecieved}
             clas={"exit-btn"}
             callback={async (e) => {
-              await deleteUser();
-              handleClose(e);
+              const { status, message } = await deleteUserByAdmin(userId);
+              setCorrectData({
+                isRecieved: true,
+                status: status,
+                message: message,
+              });
+              setUsers([...users.filter((user) => user.id != userId)]);
             }}
             name={"Delete"}
           />
@@ -58,4 +71,4 @@ function DeleteAccount({ setIsOpen }) {
   );
 }
 
-export default DeleteAccount;
+export default DeleteUser;

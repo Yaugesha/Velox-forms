@@ -28,14 +28,18 @@ function FillingDocFields({ fields, userData }) {
   }
 
   function insertUserData(field) {
-    const documentFields = Array.from(
-      document.querySelectorAll(".react-component")
-    );
+    const documentFields = document.querySelectorAll(".react-component");
+    //fix it
     documentFields.forEach((documentFiled) => {
       const fieldName = documentFiled.classList[6];
-      if (fieldName === field.replaceAll(" ", "")) {
+      const inputValue = document.querySelector(`#${fieldName}`)?.value;
+
+      if (
+        fieldName === field.replaceAll(" ", "") &&
+        inputValue === userData[field]
+      ) {
         documentFiled.innerText = userData[field];
-        document.querySelector(`#${fieldName}`).value = userData[field];
+        document.querySelector(`#${fieldName}`).defaultValue = userData[field];
       }
     });
   }
@@ -55,7 +59,7 @@ function FillingDocFields({ fields, userData }) {
                 key={index}
                 handleInput={handleInput}
                 typeClass={`field-input index-${index}`}
-                defaultValue={userData[field]}
+                defaultValue={userData[field] ?? field}
               />
             );
           })}

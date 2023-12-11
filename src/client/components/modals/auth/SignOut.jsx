@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 import Popup from "../Popup";
+import Button from "../../custom-elements/Button";
 
 function SignOut({ setIsOpen }) {
   const { logOut } = useAuth();
@@ -37,24 +38,22 @@ function SignOut({ setIsOpen }) {
             You will be asked to verify your identity next time you sign in.
           </span>
         </div>
-        <div className="flex gap-[286px]">
-          <button
-            onClick={(e) => {
+        <div className="w-full h-20 pt-6 flex justify-end gap-8">
+          <Button
+            clas={"cancel-btn"}
+            callback={(e) => {
               handleClose(e);
             }}
-            className="bg-black w-[140px] h-14 mt-4 flex items-center justify-center text-white cancel-btn"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={(e) => {
+            name={"Cancel"}
+          />
+          <Button
+            clas={"exit-btn"}
+            callback={(e) => {
               handleClose(e);
               handleSignOut();
             }}
-            className="bg-black w-[162px] h-14 mt-4 flex items-center justify-center text-white exit-btn"
-          >
-            Sign Out
-          </button>
+            name={"Sign Out"}
+          />
         </div>
       </div>
     </Popup>

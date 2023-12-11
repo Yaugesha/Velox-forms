@@ -26,7 +26,7 @@ function TemplatesSection() {
       {templates !== undefined && (
         <div className="w-[980px] flex gap-5 mb-7">
           {templates.map((template) => {
-            return <TemplateCard template={template} key={template.title} />;
+            return <TemplateCard template={template} key={template.id} />;
           })}
         </div>
       )}

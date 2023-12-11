@@ -9,7 +9,7 @@ import Input from "../../custom-elements/Input";
 import Popup from "../Popup";
 import ResultMessage from "../ResultMessage";
 
-function SaveTemplate({ setIsOpen }) {
+function SaveTemplate({ setIsOpen, editorRef }) {
   const { fields } = useEditors();
   const { categories, saveTemplate, getTemplateCategories } = useTemplate();
   const { changeStatus } = useApplications();
@@ -35,9 +35,10 @@ function SaveTemplate({ setIsOpen }) {
       e.target.classList.contains("w-full") ||
       e.target.classList.contains("cancel-btn")
     ) {
-      document.body.style.overflow = "auto";
+      //document.body.style.overflow = "auto";
       setIsOpen(false);
       if (isCorrectData.status) navigate("../.");
+      window.location.reload(false); //fix it in tmplateAPI saveTemplate
     }
   }
 
@@ -82,7 +83,7 @@ function SaveTemplate({ setIsOpen }) {
               const userId = searchParams.get("userId");
               const applicationId = searchParams.get("applicationId");
               setCorrectData(
-                await saveTemplate(title, category, fields, userId)
+                await saveTemplate(title, category, fields, userId, editorRef)
               );
               if (userId && applicationId)
                 changeStatus(

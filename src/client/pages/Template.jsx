@@ -1,13 +1,13 @@
 import FillingTemplFields from "../components/document-fields/FillingTemplFields";
 import Editor from "../components/text-editor/Editor";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import DocumentHeader from "../components/header/DocumentHeader";
 import SaveTemplate from "../components/modals/documents/SaveTemplate";
 import { EditorProvider } from "../contexts/EditorContext";
-import Button from "../components/custom-elements/Button";
 
 function Template() {
   const [isPopupOpen, setPopup] = useState(false);
+  const editor = useRef(0);
 
   return (
     <EditorProvider>
@@ -23,10 +23,14 @@ function Template() {
           </div>
         </DocumentHeader>
         <div className="w-[1280px] flex justify-center gap-64 bg-white">
-          <Editor />
+          <Editor editorRef={editor} />
           <FillingTemplFields isTemplate={true} />
         </div>
-        {isPopupOpen ? <SaveTemplate setIsOpen={setPopup} /> : ""}
+        {isPopupOpen ? (
+          <SaveTemplate setIsOpen={setPopup} editorRef={editor} />
+        ) : (
+          ""
+        )}
       </div>
     </EditorProvider>
   );

@@ -6,6 +6,7 @@ const TemplatesContext = createContext();
 export function TemplatesProvider({ children }) {
   const [templates, setTemplates] = useState([
     {
+      id: 0,
       title: "Create new template",
       picture: "/src/client/assets/icons/tamplates/icon-plus.svg",
       link: "template",

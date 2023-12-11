@@ -34,13 +34,14 @@ function TemplateCard({ template }) {
           </div>
         </Link>
         <img
-          onClick={(e) =>
+          onClick={(e) => {
+            console.log({ y: e.target.offsetTop, x: e.target.offsetLeft });
             open(
               { y: e.target.offsetTop, x: e.target.offsetLeft },
               template,
               bubbleMenuItems
-            )
-          }
+            );
+          }}
           className="p-0.5 -mx-2 cursor-pointer rounded-full duration-300 hover:bg-stone-200"
           src="/src/client/assets/icons/general/icon-more.svg"
           alt="more"

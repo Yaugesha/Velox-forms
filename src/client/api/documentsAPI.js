@@ -37,8 +37,7 @@ export const saveDocument = async (title) => {
         Bearer: jwt,
       },
       body: JSON.stringify({
-        data: data,
-        file: data.replaceAll(fieldStyle, ""),
+        data: data.replaceAll(fieldStyle, ""),
         title: title,
       }),
     });

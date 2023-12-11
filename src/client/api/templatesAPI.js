@@ -1,6 +1,10 @@
 export const saveTemplate = async (title, category, fields, userId) => {
   try {
     const jwt = localStorage.getItem("jwt");
+    document.querySelectorAll(".node-field").forEach((field) => {
+      field.className = field.firstElementChild.className;
+      field.innerText = field.firstElementChild.innerText;
+    });
     const fily = document.querySelector(".tiptap").innerHTML;
     const data = `<div class="document mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black">${fily}</div>`;
     const response = await fetch("/api/v1/templates/save", {

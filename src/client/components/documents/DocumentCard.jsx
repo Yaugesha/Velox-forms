@@ -28,9 +28,7 @@ function DocumentCard({ document }) {
       </Link>
       <div className="pt-4 pb-5 pl-4">
         <Link to={document.link}>
-          <span>
-            {document.title}.{document.type}
-          </span>
+          <span>{document.title}</span>
         </Link>
         <div className="w-[204px] flex justify-between items-center">
           <Link to={document.link}>

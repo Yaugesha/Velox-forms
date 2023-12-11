@@ -57,11 +57,12 @@ function Document() {
       const textStyle = "bg-white text-black px-0";
       fields.forEach((field) => {
         const fieldClassName = field.className;
-        if (state === "document view") {
+        if (state === "view") {
           field.className = fieldClassName.replaceAll(fieldStyle, textStyle);
         } else {
           field.className = fieldClassName.replaceAll(textStyle, fieldStyle);
         }
+        console.log(field.className);
       });
     }
   }

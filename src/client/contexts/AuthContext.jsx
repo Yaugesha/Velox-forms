@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 import { jwtDecode } from "jwt-decode";
-import { refreshToken, login, regist, deleteUser } from "../api/authAPI";
+import * as API from "../api/authAPI";
 
 const AuthContext = createContext();
 
@@ -58,7 +58,7 @@ export function AuthProvider({ children }) {
   }
 
   async function authorize(email, password) {
-    const { authDispatch, status, message } = await login(email, password);
+    const { authDispatch, status, message } = await API.login(email, password);
     if (authDispatch)
       dispatch({ type: authDispatch.type, payload: authDispatch.payload });
     return {
@@ -68,7 +68,7 @@ export function AuthProvider({ children }) {
   }
 
   async function register(email, password) {
-    const { authDispatch, status, message } = await regist(email, password);
+    const { authDispatch, status, message } = await API.regist(email, password);
     if (authDispatch)
       dispatch({ type: authDispatch.type, payload: authDispatch.payload });
     return {
@@ -81,9 +81,9 @@ export function AuthProvider({ children }) {
     dispatch({ type: "logOut" });
   }
 
-  async function deleteUsser() {
-    await deleteUser();
-    logOut;
+  async function deleteUser() {
+    await API.deleteUser();
+    logOut();
   }
 
   const [{ id, role, isAuthorized }, dispatch] = useReducer(
@@ -106,7 +106,7 @@ export function AuthProvider({ children }) {
     authorize,
     register,
     logOut,
-    deleteUsser,
+    deleteUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

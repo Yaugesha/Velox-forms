@@ -33,6 +33,7 @@ router.post("/login", controller.loginUser);
 router.get("/check-authtoken", authMiddleware, controller.checkToken);
 router.post("/refresh-token", authMiddleware, controller.refreshToken);
 router.delete("/delete", authMiddleware, controller.deleteUser);
+router.delete("/delete-user", controller.deleteUserByAdmin);
 router.post(
   "/change-email",
   authMiddleware,

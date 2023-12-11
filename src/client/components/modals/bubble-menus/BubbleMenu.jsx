@@ -23,7 +23,11 @@ function BubbleMenu() {
         className={`container-bubble-menu absolute top-0 left-0 w-full h-full`}
       >
         <div
-          style={{ top: bubbleMenu.y + "px", left: bubbleMenu.x + "px" }}
+          style={{
+            top: bubbleMenu.y + "px",
+            left: bubbleMenu.x + "px",
+            width: "140px",
+          }}
           className={`bubble-menu relative w-[${140}px] py-2 px-2 shadow-md bg-white`}
         >
           {bubbleMenu.items.map((item) => {

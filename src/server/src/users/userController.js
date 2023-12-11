@@ -1,7 +1,14 @@
 const { pool } = require("../../db");
 const queries = require("./queries");
 const { validationResult } = require("express-validator");
-const { User, UserPersonalData, UserWorkData } = require("../../models/models");
+const {
+  User,
+  UserPersonalData,
+  UserWorkData,
+  Document,
+  Template,
+  Application,
+} = require("../../models/models");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { where } = require("sequelize");
@@ -14,10 +21,24 @@ const jwtKey = result.parsed.JWT_SECRETE_KEY;
 
 class userController {
   async getUsers(req, res) {
-    pool.query(queries.getUsers, (error, results) => {
-      if (error) throw error;
-      res.status(200).json(results.rows);
+    const users = await User.findAll({
+      include: [Document, Template, Application],
     });
+    console.log(users);
+    const result = users.map((user) => {
+      console.log(user.dataValues);
+      return {
+        ...user.dataValues,
+        documents: user.dataValues.documents.length,
+        templates: user.dataValues.templates.length,
+        applications: user.dataValues.applications.length,
+      };
+    });
+    res.status(200).send({ users: result });
+    // pool.query(queries.getUsers, (error, results) => {
+    //   if (error) throw error;
+    //   res.status(200).json(results.rows);
+    // });
   }
 
   async getUserById(req, res) {
@@ -126,8 +147,24 @@ class userController {
       });
     });
   }
+
   async deleteUser(req, res) {
     const userId = req.user.id;
+    await User.destroy({
+      where: { id: userId },
+    })
+      .then((result) => {
+        res.status(200).send({
+          message: "User deleted",
+        });
+      })
+      .catch((error) => {
+        res.status(400).send({ message: error });
+      });
+  }
+  /*redo*/
+  async deleteUserByAdmin(req, res) {
+    const userId = req.body.userId;
     await User.destroy({
       where: { id: userId },
     })

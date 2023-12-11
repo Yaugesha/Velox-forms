@@ -7,11 +7,18 @@ export default function reducer(state, action) {
       };
     }
     case "document/saved": {
-      return {
-        ...state,
-        documents: [action.payload, ...state?.allDocuments],
-        allDocuments: [action.payload, ...state?.allDocuments],
-      };
+      if (state.documents.length === 0)
+        return {
+          documents: [action.payload],
+          allDocuments: [action.payload],
+          message: "",
+        };
+      else
+        return {
+          ...state,
+          documents: [action.payload, ...state?.allDocuments],
+          allDocuments: [action.payload, ...state?.allDocuments],
+        };
     }
     case "document/deleted": {
       return {

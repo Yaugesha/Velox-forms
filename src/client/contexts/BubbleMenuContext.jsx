@@ -13,6 +13,7 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "open":
+      console.log(action.payload.x, action.payload.y);
       return {
         isOpen: true,
         x: action.payload.x - 130,

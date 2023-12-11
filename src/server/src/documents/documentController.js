@@ -28,7 +28,7 @@ const parseDocument = (document) => {
 
 class documentController {
   async saveDocument(req, res) {
-    const { title, data, file } = req.body;
+    const { title, data } = req.body;
     const token = req.get("Bearer");
     const userId = jwt.verify(token, jwtKey()).id;
     const date = new Date();
@@ -42,7 +42,7 @@ class documentController {
       console.log("document saved");
       res.status(200).send({
         document: parseDocument(document.dataValues),
-        file: file,
+        data: data,
         message: "Document saved",
       });
     });
@@ -72,7 +72,6 @@ class documentController {
         return {
           id: document.id,
           title: document.title,
-          type: "doc",
           date: document.date.toLocaleDateString("en-us", dateOptions),
           picture: "/src/client/assets/icons/documents/icon-document.svg",
           link: `documentFile?documentId=${document.id}`,
@@ -89,7 +88,7 @@ class documentController {
     const id = req.body.documentId;
     const document = await Document.findByPk(id);
     if (document)
-      res.status(200).send({ layout: document.file, message: "File found" });
+      res.status(200).send({ layout: document.data, message: "File found" });
     else res.status(400).send("File not found");
   }
 

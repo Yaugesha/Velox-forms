@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/footers/Footer";
 import Header from "../components/header/Header";
+import DeleteUser from "../components/modals/users/DeleteUser";
 
 function Users() {
   const [users, setUsers] = useState([]);
+  const [userId, setUserId] = useState(null);
+  const [isDelete, setDelete] = useState(false);
 
   useEffect(function () {
     const getAllUsers = async () => {
@@ -12,7 +15,7 @@ function Users() {
         method: "GET",
       });
       const result = await response.json();
-      setUsers(result);
+      setUsers(result.users);
       if (response.status !== 200) {
         throw Error(result.message);
       }
@@ -41,8 +44,17 @@ function Users() {
                   Documents
                 </th>
                 <th align="start" className="font-bold border-none">
-                  Applications
+                  Templates
                 </th>
+                <th align="start" className="font-bold border-none">
+                  Applications3
+                </th>
+                {/* <th align="start" className="font-bold border-none">
+                  Documents
+                </th>
+                <th align="start" className="font-bold border-none">
+                  Applications
+                </th> */}
               </tr>
             </thead>
             <tbody>
@@ -52,17 +64,26 @@ function Users() {
                     <td className="border-none">{user.id}</td>
                     <td className="border-none">{user.email}</td>
                     <td className="border-none">{user.role}</td>
+                    <td className="border-none">{user.documents}</td>
+                    <td className="border-none">{user.templates}</td>
+                    <td className="border-none">{user.applications}</td>
 
-                    <td className="border-none underline">
+                    {/* <td className="border-none underline">
                       <Link to="">Documents</Link>
                     </td>
 
                     <td className="border-none underline">
                       <Link to="">Applications</Link>
-                    </td>
+                    </td> */}
 
                     <td align="end" className="border-none">
-                      <button className="bg-black text-white px-2">
+                      <button
+                        className="bg-black text-white px-2"
+                        onClick={() => {
+                          setUserId(user.id);
+                          setDelete(true);
+                        }}
+                      >
                         Delete
                       </button>
                     </td>
@@ -72,6 +93,14 @@ function Users() {
             </tbody>
           </table>
         </div>
+        {isDelete && (
+          <DeleteUser
+            setIsOpen={setDelete}
+            userId={userId}
+            users={users}
+            setUsers={setUsers}
+          />
+        )}
       </main>
       <Footer />
     </div>

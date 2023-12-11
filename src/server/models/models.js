@@ -22,7 +22,6 @@ const Document = sequelize.define(
     title: { type: DataTypes.STRING },
     date: { type: DataTypes.DATE },
     data: { type: DataTypes.TEXT },
-    file: { type: DataTypes.TEXT },
   },
   {
     timestamps: false,
@@ -61,7 +60,6 @@ const TemplateCategory = sequelize.define(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING },
-    description: { type: DataTypes.TEXT },
   },
   {
     timestamps: false,

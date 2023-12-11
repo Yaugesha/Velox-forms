@@ -2,7 +2,7 @@ import { EditorContent, BubbleMenu } from "@tiptap/react";
 import EditorMenu from "./EditorMenu";
 import { useEditors } from "../../contexts/EditorContext";
 
-function Editor({ displayMenu }) {
+function Editor({ displayMenu, editorRef }) {
   const { editor } = useEditors();
 
   function handleClickOnPage(event) {
@@ -15,6 +15,7 @@ function Editor({ displayMenu }) {
       <EditorMenu display={displayMenu} />
       <div className="overflow-none">
         <div
+          ref={editorRef}
           onClick={handleClickOnPage}
           className="editor mt-[15] overflow-auto w-[21cm] h-[29.7cm] px-[16mm] py-[27mm] border-2 border-black"
         >

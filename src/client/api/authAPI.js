@@ -119,3 +119,25 @@ export const deleteUser = async () => {
     console.log(errors);
   }
 };
+
+export const deleteUserByAdmin = async (userId) => {
+  try {
+    const response = await fetch("/api/v1/users/delete-user", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": contentType,
+      },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    });
+    const result = await response.json();
+    if (!response.ok) {
+      throw result;
+    }
+    return { status: true, message: result.message };
+  } catch (errors) {
+    console.log(errors);
+    return { status: true, message: errors.message };
+  }
+};
